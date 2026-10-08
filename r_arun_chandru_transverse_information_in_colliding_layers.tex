@@ -1,0 +1,3889 @@
+\documentclass[aps,pra,reprint,superscriptaddress,longbibliography]{revtex4-2}
+\usepackage[T1]{fontenc}
+% Conditional typography fallbacks for incomplete offline font caches.
+\IfFileExists{ec-lmr5.tfm}{}{%
+ \IfFileExists{t1lmr.fd}{%
+  \input{t1lmr.fd}%
+  \DeclareFontShape{T1}{lmr}{m}{n}
+   {<-6.5>ec-lmr6 <6.5-7.5>ec-lmr7 <7.5-8.5>ec-lmr8
+    <8.5-9.5>ec-lmr9 <9.5-11>ec-lmr10 <11-15>ec-lmr12
+    <15->ec-lmr17}{}%
+ }{}%
+}
+\usepackage{amsmath,amssymb,bm,booktabs,graphicx}
+\IfFileExists{eufm7.pfb}{}{%
+ \input{ueuf.fd}%
+ \DeclareFontShape{U}{euf}{m}{n}{<->eufm10}{}%
+}
+\IfFileExists{cmbx7.pfb}{}{%
+ \input{ot1cmr.fd}%
+ \DeclareFontShape{OT1}{cmr}{bx}{n}
+  {<5>cmbx5 <6>cmbx6 <7>cmbx8 <8>cmbx8 <9>cmbx9
+   <10>cmbx10 <10.95>cmbx10 <12>cmbx12 <14.4>cmbx12
+   <17.28>cmbx12 <20.74>cmbx12 <24.88>cmbx12}{}%
+}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\dd}{\mathrm d}
+\newcommand{\ee}{\mathrm e}
+\newcommand{\id}{\mathbb I}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\ket}[1]{\lvert#1\rangle}
+\newcommand{\bra}[1]{\langle#1\rvert}
+\newcommand{\ip}[2]{\langle#1,#2\rangle}
+\newcommand{\one}{\mathbf 1}
+\begin{document}
+\title{Transverse information beyond thermal scalar limits in colliding layers}
+\author{R. Arun Chandru}
+\email{arun.chandru@gmail.com}
+\date{\today}
+\begin{abstract}
+Thermal scalar observables can approach the same limits while coherent
+layer measurements retain information about a collapsing geometry.
+We establish this separation for the actual Green operators of finitely
+many weighted curves approaching a common curve. A joint separation--temperature
+limit determines the partition function, normalized heat state, and
+transverse population, including their high-frequency tails. In a subsequent
+high-temperature limit, the one-excitation entropy differences vanish,
+whereas $M$ equally weighted layers remain distinguishable from their
+collapsed reference with trace distance tending to $1-1/M$. The finite
+crossover has a strict counting deficit, and its low-temperature
+transverse population detects rotation of the lowest spectral branch.
+We then distinguish controlled one-excitation preparation from a full
+number-conserving Bose ensemble. Calibrated occupation thresholds tolerate
+fixed sorting errors; a common infrared filter yields exponentially small
+error with an explicit stopband-leakage budget. Exact circular Green blocks
+give a finite instance with average error below $0.0032$ under
+specified collection loss, sorting errors, and dark counts. Preparation,
+occupied modes, and the common-vacuum assumption are also included.
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+
+Thermal measurements compress a spectrum. Partition functions, mean
+energies, and entropies summarize the occupations of its modes, but a
+measurement that mixes those modes also probes their orientation in the
+accessible Hilbert space. The distinction is particularly consequential
+when a geometric limit and a thermal limit occur together. Modes that
+disappear at every fixed spectral index can still carry a finite fraction
+of the information in a temperature-dependent spectral window. The
+question addressed here is whether this mechanism survives for an actual
+continuum geometry, with a controlled measurement and preparation cost.
+
+Consider mass supported on several close curves in a planar carrier.
+Their common displacement and relative displacements define longitudinal
+and transverse layer combinations. At fixed energy the curves merge,
+but wavelengths comparable with their separation resolve the layers.
+We compute the resulting joint limit rather than first replacing the
+layers by a single curve. The limiting object is a positive matrix-valued
+symbol whose off-diagonal entries are decaying exponentials of the
+normal separations. Its eigenvalues determine thermal scalar quantities;
+its eigenvectors determine the coherent transverse response.
+
+There are close precedents on both sides of this problem. Singular
+interactions supported by curves, parallel lines, and colliding supports
+have a substantial spectral theory
+\cite{KondejKrejcirik2013,KondejKrejcirik2016}. The sharp
+one-dimensional Lieb--Thirring inequality for measures
+\cite{HundertmarkLiebThomas1998} controls a finite-profile counting
+deficit that appears below. Neither singular interactions nor their
+exponential Birman--Schwinger kernels are new ingredients. Concentrating
+physical mass has also been studied through boundary layers and thin
+heavy inclusions \cite{DallaRivaProvenzano2018,Golovaty2022}; their
+bulk-mass and boundary regimes differ from the interior pushforward
+probability masses used here.
+High-index spectral limits under concentrated mass have also been studied
+for branched surfaces with Kirchhoff junctions
+\cite{GolovatyGomezPerezMartinez2025}. Our limit instead concerns
+fixed-total-mass curves that collide and their trace-class thermal
+information laws. Matrix semiclassical trace formulas and
+nonsmooth matrix-symbol tests provide established analytic context
+\cite{AssalDimassiFujii2019,Kuster2017,BollmannMuller2024}.
+The singular inverse symbol and both frequency tails still require
+the actual-operator comparison proved below. On the
+measurement side, optical source discrimination already uses a reference
+mode and its orthogonal complement to detect information missed by
+direct imaging \cite{Lu2018}. The failure of an ideal dark-port rule
+under imperfect mode sorting, and its replacement by a calibrated
+threshold, are also established \cite{Schlichtholz2024}.
+Background-robust discrimination using reduced spatial-mode
+demultiplexing has recently been studied in a weak-source Poisson
+regime \cite{Liu2026}; the count bounds below retain full Bose
+occupation statistics. Bosonic
+determinant identities and passive optical synthesis provide the relevant
+counting and implementation tools \cite{Klich2002,Clements2016}.
+
+The contribution is the connection of these ingredients through a
+specific continuum limit and its operational consequences. We prove an
+all-mode joint law for the actual curved Green operators, including a
+trace-norm comparison on a common space. This gives a separation between
+thermal scalar agreement and transverse discrimination, a strict
+finite-crossover deficit, and a profile-dependent distinction between
+excited-branch occupation and rotation of the lowest branch. We then
+derive preparation and measurement statements in two explicitly
+different ensembles. In the full Bose model a common low-frequency
+rejection filter preserves a macroscopic signal while controlling the
+largest modal fluctuations; its error exponent has an explicit dependence
+on stopband leakage. Finally, a finite circular example replaces an
+unspecified asymptotic onset by exact Green matrices and validated
+probability bounds.
+
+The physical model is specified at two levels. The continuum operator
+describes a static Dirichlet energy with mass on curves. Its quantum
+access model uses common, number-conserving modes, which can be programmed
+in a finite optical encoding. An ordinary mechanical quantization can
+require an additional Bogoliubov transformation because its vacuum
+changes with the frequencies. Separating these levels allows the
+statistical conclusions to be stated without attributing an unbuilt
+measurement architecture to a membrane. The distinction between thermal
+scalars and coherence also has antecedents in quantum thermodynamics
+\cite{Lostaglio2015}. Here each state is Gibbs-diagonal in its own
+Hamiltonian: the comparison concerns different geometric Hamiltonians
+in a common layer alignment, not coherence relative to one fixed
+Hamiltonian or an additional work-extraction law. Full derivations are included
+in the appendices.
+
+\section{Geometry, alignment, and the resolved thermal scale}
+\label{sgt:main:model}
+
+Let $\Gamma$ be a smooth embedded closed curve of length $L$ in a bounded
+planar Dirichlet carrier $\Omega$. Its fixed tubular neighborhood lies
+strictly inside $\Omega$. Write $s$ for arclength, $\gamma_0(s)$ for its
+position, and $n(s)$ for a chosen unit normal. Fix distinct heights
+$a_1<\cdots<a_M$, positive weights $\alpha_i$ with
+$\sum_i\alpha_i=1$, and a smooth positive density $w$ satisfying
+$\int_\Gamma w\,\dd s=1$. For sufficiently small $h>0$, the mass measure is
+\begin{equation}
+ \nu_h=\sum_{i=1}^M\alpha_i
+       (s\mapsto\gamma_0(s)+ha_i n(s))_*(w(s)\,\dd s).
+ \label{sgt:main:measure}
+\end{equation}
+Thus the mass is prescribed by pushforward, not by inserting the
+arclength Jacobian of each offset curve. Fixed absorbing sets outside
+the tube may be incorporated into the carrier.
+
+Restrict the Dirichlet Green kernel to these curves and conjugate by
+$\sqrt{\alpha_iw}$. The resulting positive compact inverse $R_h$ acts on
+the common space
+\begin{equation}
+\begin{gathered}
+ \mathcal H=L^2(\Gamma,\dd s)\otimes\mathbb C^M,
+ \\
+ v_i=\sqrt{\alpha_i},\\
+ P=vv^*,\\
+ Q=I-P.
+ \label{sgt:main:alignment}
+\end{gathered}
+\end{equation}
+Equivalently, $L_h=R_h^{-1}$ is the energy operator obtained by minimizing
+the bulk Dirichlet energy at fixed curve values, with the stated mass
+normalization. The collapsed inverse is $R_0=R_{\mathrm b}\otimes P$.
+Its $Q$ complement has zero heat weight: it represents excluded modes,
+not additional zero-energy excitations.
+
+Fix a dispersion exponent $\gamma>0$ and set
+\begin{equation}
+\begin{gathered}
+ H_h=L_h^\gamma,\\
+ \beta=\tau h^\gamma,\\
+ A_h=\ee^{-\beta H_h},\\
+ \rho_h=A_h/Z_h,\\
+ Z_h=\Tr A_h .
+ \label{sgt:main:state}
+\end{gathered}
+\end{equation}
+Here and below the displayed energy and temperature scales are
+dimensionless. The mechanical frequency convention corresponds to
+$\gamma=1/2$ when $L_h$ is a squared-frequency operator. A reference
+state $\rho_{0,h}$ uses $R_0$ at the same $\beta$. Every geometric
+parameter, $M$, the positive weights, $\gamma$, and $\tau$ is fixed
+before $h\downarrow0$. Limits in $\tau$ are subsequent limits; none of
+the conclusions presupposes uniformity when the number of layers grows
+or their weights degenerate with $h$.
+
+For $q=|\xi|>0$ define
+\begin{align}
+ T(q)_{ij}&=\sqrt{\alpha_i\alpha_j}\,
+               \ee^{-q|a_i-a_j|},\nonumber\\
+ B(s,\xi)&=\frac{w(s)}{2q}T(q),
+ &B_0(s,\xi)&=\frac{w(s)}{2q}P,\nonumber\\
+ F(s,\xi)&=\ee^{-\tau B(s,\xi)^{-\gamma}},
+ &F_0(s,\xi)&=\ee^{-\tau(2q/w(s))^\gamma}P.
+ \label{sgt:main:symbol}
+\end{align}
+The value of the heat function at a zero inverse eigenvalue is zero.
+The exponential matrix $T(q)$ is strictly positive for distinct heights.
+It contains the entire finite-profile crossover; the remote boundary
+contributes lower-order terms on this scale.
+
+\section{What thermal scalar measurements miss}
+\label{sgt:main:separation}
+
+Define the phase-space coefficients
+\begin{align}
+ C(\tau)&=\frac1{2\pi}\int_\Gamma\int_{\mathbb R}
+                        \operatorname{tr} F\,\dd\xi\,\dd s,\nonumber\\
+ C_Q(\tau)&=\frac1{2\pi}\int_\Gamma\int_{\mathbb R}
+                        \operatorname{tr}(QF)\,\dd\xi\,\dd s,\nonumber\\
+ C_0(\tau)&=\frac{\Gamma(1+1/\gamma)}{2\pi\tau^{1/\gamma}}.
+ \label{sgt:main:C}
+\end{align}
+The actual operators obey
+\begin{gather}
+ hZ_h\longrightarrow C(\tau),\\
+ hZ_{0,h}\longrightarrow C_0(\tau),\\
+ \Tr(Q\rho_h)\longrightarrow p_Q(\tau)=C_Q(\tau)/C(\tau),
+ \label{sgt:main:joint}\\
+ \frac12\norm{\rho_h-\rho_{0,h}}_1\longrightarrow
+\\
+ D(\tau)=\frac1{4\pi}\int_\Gamma\int_{\mathbb R}
+ \operatorname{tr}\left|\frac F{C(\tau)}-\frac{F_0}{C_0(\tau)}\right|
+ \,\dd\xi\,\dd s .
+ \label{sgt:main:distance}
+\end{gather}
+For a nontrivial profile, $0<p_Q(\tau)\le D(\tau)<1$ at every fixed
+$\tau>0$. These statements include the low- and high-frequency tails
+of the actual Green operators, not only a formal symbol calculation.
+Appendix~\ref{sgt:geo:appendix} gives the positive Fourier comparison
+and trace argument.
+
+The clearest separation occurs upon subsequently taking $\tau\downarrow0$.
+Then $C/C_0\to1$, while
+\begin{equation}
+ p_Q(\tau)\longrightarrow1-\sum_i\alpha_i^2.
+ \label{sgt:main:Qhot}
+\end{equation}
+For equal masses, the complete trace-distance limit agrees with this
+simple layer measurement. The usual binary discrimination relation
+\cite{Watrous2018} then gives its operational meaning:
+\begin{equation}
+ \lim_{\tau\downarrow0}\lim_{h\downarrow0}
+ \frac12\norm{\rho_h-\rho_{0,h}}_1=1-\frac1M.
+ \label{sgt:main:equal}
+\end{equation}
+With equal prior probabilities, a single controlled excitation can
+therefore be classified with limiting error $1/(2M)$. On $N$ independent
+controlled excitations, declaring the split geometry when at least one
+$Q$ event occurs gives limiting error $1/(2M^N)$. The latter is the
+performance of this specified receiver, without a claim of optimality
+over all collective $N$-copy measurements.
+
+This surviving information is compatible with agreement of a substantial
+set of thermal scalars. For $p>0$ put
+\begin{equation}
+ C_p(\tau)=\frac1{2\pi}\int
+   \operatorname{tr}\bigl[(\tau B^{-\gamma})^p
+                        \ee^{-\tau B^{-\gamma}}\bigr]\,\dd s\,\dd\xi.
+ \label{sgt:main:moments}
+\end{equation}
+At fixed $\tau$, the one-excitation entropy and energy satisfy
+\begin{align}
+ S(\rho_h)&=\log(1/h)+\log C+C_1/C+o(1),\nonumber\\
+ \beta\langle H_h\rangle&\longrightarrow C_1/C,\nonumber\\
+ \beta^2\operatorname{Var}_{\rho_h}(H_h)&\longrightarrow
+                              C_2/C-(C_1/C)^2.
+ \label{sgt:main:scalars}
+\end{align}
+Every fixed positive-order R\'enyi entropy has an analogous formula.
+As $\tau\downarrow0$, the additive entropy differences from the collapsed
+reference vanish, and
+$C_p/C\to\Gamma(p+1/\gamma)/\Gamma(1/\gamma)$.
+Both states also have the same limiting expectations against fixed
+smooth spatial multipliers. Thermal scalar agreement here means these
+specified limits. It does not mean equality of the spectra or of
+arbitrary measurements at finite separation and temperature.
+
+\section{Counting deficit and rotation of the lowest branch}
+\label{sgt:main:structure}
+
+The same matrix symbol connects the crossover with a classical
+one-dimensional spectral problem. Let $-\kappa_j(g)^2$ be the negative
+eigenvalues of
+\begin{equation}
+ -\frac{\dd^2}{\dd a^2}-g\sum_i\alpha_i\delta_{a_i}
+ \quad\hbox{on }\mathbb R,
+ \label{sgt:main:delta}
+\end{equation}
+with absent branches contributing zero. The actual growing-index count is
+\begin{equation}
+\begin{gathered}
+ h\,\#\{\lambda_k(L_h)\le E/h\}\longrightarrow
+\\
+ \mathcal N(E)=\frac1\pi\int_\Gamma
+                \sum_j\kappa_j(w(s)E)\,\dd s
+ <\frac{E}{2\pi}
+ \label{sgt:main:count}
+\end{gathered}
+\end{equation}
+for $E>0$ and at least two distinct positive-mass layers. The strict
+inequality is the finite-profile consequence of the sharp
+Lieb--Thirring bound for measures
+\cite{HundertmarkLiebThomas1998}; we include its finite-atomic argument
+to make the connection transparent. Integrating the counting law gives
+$C(\tau)<C_0(\tau)$ at every finite $\tau$. Thus the high-temperature
+agreement of leading coefficients coexists with a strict crossover
+deficit, not with an exactly invisible spectral change.
+
+There is also a useful distinction within the transverse response.
+Define
+\begin{gather}
+ d_i=\sum_j\alpha_j|a_i-a_j|,\\
+ G=\sum_i\alpha_i d_i,\\
+ V=\sum_i\alpha_i(d_i-G)^2,\nonumber\\
+ I_k=\int_\Gamma w(s)^k\,\dd s,\\
+ G_\gamma=\Gamma(1+1/\gamma).
+ \label{sgt:main:profile}
+\end{gather}
+After the joint limit, the large-$\tau$ expansions are
+\begin{align}
+ C(\tau)&=\frac{G_\gamma}{2\pi}\tau^{-1/\gamma}
+ -\frac{G I_2\Gamma(1+2/\gamma)}{4\pi}\tau^{-2/\gamma}
+ +O(\tau^{-3/\gamma}),\nonumber\\
+ p_Q(\tau)&=\frac{V I_3\Gamma(1+3/\gamma)}{12G_\gamma}
+                   \tau^{-2/\gamma}+O(\tau^{-3/\gamma}).
+ \label{sgt:main:rotation}
+\end{align}
+Excited branches of the limiting symbol are exponentially suppressed in
+$\tau$, but the lowest eigenvector rotates away from the fixed common
+layer vector $v$. The mean-distance statistic $G$ in the first line
+is the classical weak-coupling coefficient \cite{Simon1976,Simon2022}.
+The second line measures the rotation. Its coefficient
+vanishes only for a single layer or two equally weighted layers; in the
+latter case the lowest eigenvector remains exactly symmetric and the
+transverse response decays exponentially. Replacing $Q$ by the
+instantaneous excited-branch projector would therefore remove a genuine
+observable effect. The tridiagonal inverse of $T(q)$ gives all finite
+branch thresholds and proves these assertions in
+Appendix~\ref{sgt:geo:structure}.
+
+\section{Preparing the one-excitation state}
+\label{sgt:main:preparation}
+
+The state $\rho_h$ is a normalized one-excitation Gibbs state. Conditioning
+a full equilibrium sample on exactly one excitation need not be an
+efficient way to prepare it. A uniform spectral estimate for the actual
+curves resolves the finite-dimensional requirement:
+\begin{equation}
+ r_j(R_h)\le K/j,\qquad \lambda_j(L_h)\ge cj.
+ \label{sgt:main:weakS1}
+\end{equation}
+The constants are uniform through the collision at fixed geometric
+data. Self-layer regularity and positivity of the full block operator
+prove this without assuming uniformly smooth cross-layer kernels.
+For fixed trace accuracy $\delta$, the required energy truncation has
+\begin{equation}
+ J=O\bigl(h^{-1}[1+\log(1/\delta)]^{1/\gamma}\bigr).
+ \label{sgt:main:J}
+\end{equation}
+A common tensor space containing the retained vectors of both hypotheses
+has dimension at most $M(M+1)J$ and preserves $P$ and $Q$ exactly.
+Selected energy and entropy observables are controlled by their own
+weighted tails, rather than inferred from trace distance alone.
+
+On this known finite encoding, start from the maximally mixed
+one-excitation input and apply the retained heat contraction $A_J^{1/2}$.
+The success probability is $Z_J/D$, bounded below at fixed accuracy
+because both $Z$ and $D$ scale as $h^{-1}$. An optical unitary dilation
+realizes the contraction; universal interferometer synthesis
+\cite{Clements2016} costs $O(D^2)$ elements and depth $O(D)$.
+These are costs of a programmed state source with known matrix data.
+Input heralding, rejected trials, mode-dependent loss, and reset remain
+part of its resource budget. Balanced direct eigenvector preparation
+offers a different tradeoff, described in
+Appendix~\ref{sgt:prep:appendix}.
+
+For $\gamma=1/2$, subordination gives an exact alternative using a
+no-loss evolution generated by $L$:
+\begin{equation}
+ \ee^{-\beta\sqrt L}=\int_0^\infty
+ \frac{\beta\ee^{-\beta^2/(4u)}}{2\sqrt\pi u^{3/2}}
+ \ee^{-uL}\,\dd u .
+ \label{sgt:main:subordination}
+\end{equation}
+The successful, unnormalized outputs must be pooled before
+normalization. The sampling law has infinite mean time, but a controlled
+cutoff gives fixed accuracy; alternatively, aborting at the first
+detected loss gives mean attempted evolution time $O(h)$ in the
+dimensionless generator units. Bounding the physical decay rate rescales
+this time to $O(1)$ at fixed accuracy. The construction thus pays for
+the growing generator bandwidth instead of interpreting a shrinking
+mathematical time as unlimited laboratory speed. A local bulk stiffness
+matrix reduces to a generally dense boundary operator, so its static
+Schur complement alone does not implement the required dynamics.
+
+\section{A full Bose ensemble is a different resource}
+\label{sgt:main:bose}
+
+Now specify a common number-conserving Fock model on
+$\mathcal F_s(\mathcal H)$:
+\begin{equation}
+\begin{gathered}
+ \mathbb H_h=\dd\Gamma(H_h),\\
+ \varrho_h=\det(I-A_h)\,\Gamma(A_h),\\
+ N_h=A_h(I-A_h)^{-1}.
+ \label{sgt:main:fock}
+\end{gathered}
+\end{equation}
+The chemical potential is zero and the reference has its thermal
+state on $P$ and exact vacuum on $Q$. This ensemble has variable
+particle number; it is not the canonical ensemble at a fixed number
+of excitations. Energies are excitation energies relative to the
+declared vacuum.
+
+For an orthogonal detected subspace $E$, efficiency $0\le\eta\le1$,
+and $0\le z\le1$, the occupation generating function is
+\begin{equation}
+ \mathbb E z^K=\det\bigl(I+\eta(1-z)EN_hE\bigr)^{-1}.
+ \label{sgt:main:PGF}
+\end{equation}
+This familiar bosonic determinant \cite{Klich2002,Quesada2018} does not require
+$E$ to commute with $A_h$. In particular, an ideal $Q$ receiver has
+zero false-positive probability and
+\begin{equation}
+ p_{\rm off}\le
+ \exp\{-\log(1+\eta)[C_Q(\tau)+o(1)]/h\}.
+ \label{sgt:main:off}
+\end{equation}
+This is distinguishability of an entire many-excitation ensemble.
+The same determinant mechanism underlies established thermal
+source-discrimination receivers \cite{Lu2018}.
+
+The total resource follows from the continuum law. Define
+\begin{align}
+ \mathcal L(\tau)&=\sum_{k\ge1}C(k\tau)/k,&
+ \mathcal E(\tau)&=\sum_{k\ge1}C_1(k\tau)/k,\nonumber\\
+ \mathcal V(\tau)&=\sum_{k\ge1}C_2(k\tau)/k,&
+ \mathcal B(\tau)&=\sum_{k\ge1}C(k\tau).
+ \label{sgt:main:bosecoeff}
+\end{align}
+For every $\gamma>0$, $h\log\mathcal Z_B\to\mathcal L$,
+$h\beta\langle\mathbb H_h\rangle\to\mathcal E$, and
+$h\beta^2\operatorname{Var}(\mathbb H_h)\to\mathcal V$.
+The Fock entropy satisfies $hS(\varrho_h)\to\mathcal L+\mathcal E$.
+For $0<\gamma<1$, the number sum also converges and
+$h\Tr N_h\to\mathcal B$. At $\gamma=1/2$, mean particle number is
+$\Theta(h^{-1})$ and mean excitation energy is $\Theta(h^{-3/2})$.
+Agreement in a subsequent high-temperature limit concerns ratios of
+these extensive coefficients, not vanishing additive Fock-entropy
+differences. Indeed the strict finite-$\tau$ partition deficit implies
+an exponentially small ratio of the split and collapsed Bose partition
+functions.
+
+The probability that a full Bose sample contains exactly one excitation
+is $Z_h/\mathcal Z_B\le Z_h\ee^{-Z_h}$, exponentially small in $h^{-1}$.
+Controlled preparation avoids that particular postselection cost;
+unconditioned Bose readout instead uses the many available excitations.
+These are two consistent experiments, not interchangeable copy counts.
+
+\section{Robust counting and the role of infrared rejection}
+\label{sgt:main:robust}
+
+A dark-port rule is sensitive to a false-click floor. With a sorter $V$
+and reference covariance supported on $P$, leakage amplitude
+$\theta=\norm{QVP}$ gives reference population at most
+$\theta^2\Tr N_{0,h}$. Thus fixed crosstalk can make an any-click rule
+unreliable as the number of occupied modes grows. This is the familiar
+reason to replace a dark-port decision by a calibrated count threshold
+\cite{Schlichtholz2024}.
+
+For the present geometry, let $0<\gamma<1$ and let a common detection
+effect differ from $Q$ by a sufficiently small fixed operator norm.
+The two mean counts still differ by a positive multiple of $h^{-1}$.
+The uniform estimate~\eqref{sgt:main:weakS1} bounds the largest Bose
+occupation by $O(h^{-\gamma})$. A geometric-count moment-generating
+bound then gives a midpoint-threshold error
+\begin{equation}
+ P_{\rm err}\le \exp[-c h^{\gamma-1}].
+ \label{sgt:main:threshold}
+\end{equation}
+Independent calibrated Poisson background with mean $O(h^{-1})$
+is allowed. The detector resolves total occupation, with a dynamic
+range of order $h^{-1}$; a single bucket-detector bit is a different
+measurement.
+
+The loss in the exponent comes from very highly occupied infrared
+modes. A common filter can remove them under both hypotheses. Choose
+a small fixed $b>0$ and exclude a $P$-invariant span containing both
+low-energy spaces below $b/h$. Its rank is $O(b/h)$ and its lost mean
+population is at most $O(b^{1-\gamma}/h)$. For small $b$, a positive
+transverse mean gap remains. A subsequent common finite Fourier
+restriction produces a projection $\Xi_h$ of rank $O(h^{-1})$,
+commuting with $P$, on which both covariances are uniformly bounded.
+A fixed sufficiently small error within this retained space therefore
+permits
+\begin{equation}
+ P_{\rm err}\le\exp(-c/h).
+ \label{sgt:main:filtered}
+\end{equation}
+The filter is constructed from the two known candidate operators and
+is used unchanged under both hypotheses.
+
+This conclusion has a quantitative stopband condition. For a physical
+passive contraction $T_h$ into $O(h^{-1})$ output modes, set
+$\ell_h=\norm{T_h(I-\Xi_h)}$ and assume
+$\norm{\Xi_hT_h^*T_h\Xi_h-\Xi_hQ}\le e$.
+For fixed positive efficiency, if $e+2\ell_h+\ell_h^2$ stays below
+the fixed tolerance preserving the positive mean gap, then
+\begin{equation}
+ P_{\rm err}\le
+ \exp\left[-\frac{c}{h(1+\ell_h^2h^{-\gamma})}\right].
+ \label{sgt:main:leakage}
+\end{equation}
+In particular, amplitude leakage $O(h^{\gamma/2})$ retains the full
+exponent; at $\gamma=1/2$ this is $O(h^{1/4})$. The distinction between
+fixed errors inside the passband and leakage from a highly populated
+stopband is essential. Appendix~\ref{sgt:bose:appendix} proves the
+finite-space construction, count concentration, and leakage estimate.
+
+\section{An exact finite circular instance}
+\label{sgt:main:finite}
+
+A rotationally invariant example provides finite numbers without a
+Weyl approximation. In the unit Dirichlet disk take circles of radii
+$99/200$ and $101/200$, each carrying mass $1/2$ uniformly in angle.
+The reference is the mass-one circle of radius $1/2$, aligned with
+the symmetric layer mode. For angular order $n\ge1$ the exact inverse
+block is
+\begin{equation}
+ (R_n)_{ij}=\frac1{8\pi n}
+ \left[\left(\frac{\min(r_i,r_j)}{\max(r_i,r_j)}\right)^n
+                         -(r_ir_j)^n\right].
+ \label{sgt:main:circle}
+\end{equation}
+Both angular signs are included. Use $\gamma=1/2$, $\beta=1/20$,
+and measure the antisymmetric-like output in $50\le|n|\le500$.
+Allow a separate fixed real sorting-angle error in
+$[-1/10,1/10]$ radians in each sector, collection efficiency $7/10$,
+and independent Poisson dark counts of total mean at most $1/10$.
+Declare the split geometry when the total recorded occupation is at
+least five. Validated arithmetic gives the bounds in Table~\ref{sgt:main:table}.
+\begin{table}[b]
+ \caption{Rigorous bounds for the finite circular count experiment.
+ They bound the specified receiver error, not the optimal error.}
+ \label{sgt:main:table}
+ \begin{ruledtabular}
+ \begin{tabular}{lc}
+ Quantity & Upper bound\\
+ \hline
+ False positive & $0.0057$\\
+ False negative & $0.00072$\\
+ Equal-prior error & $0.0032$
+ \end{tabular}
+ \end{ruledtabular}
+\end{table}
+There are $902$ measured output modes and $1804$ prepared-band modes.
+Mean prepared occupations are approximately $61.7931$ and $81.3157$
+for the split and reference states. The corresponding excitation
+energies are approximately $3550.20$ and $3590.81$ in the stated units.
+The bound is uniform over the specified sectorwise angles and dark-count
+means. Its derivation uses exact $2\times2$ functional calculus,
+geometric occupation generating functions, and interval-certified
+Chernoff bounds; the complete calculation is in
+Appendix~\ref{sgt:finite:certificate}.
+
+The entire two-layer angular band is a reducing subspace. Its Gaussian
+marginal may be prepared alone while reproducing these measured
+statistics; omitted modes of a full ensemble are traced out. The finite
+instance assumes ideal rejection outside the selected angular band.
+It establishes neither matched brightness nor finite-parameter thermal
+scalar agreement. The asymptotic leakage law in
+Sec.~\ref{sgt:main:robust} is a separate result, not an uncomputed
+finite tolerance for this example.
+
+\section{Physical realization and interpretation}
+\label{sgt:main:physics}
+
+Two implementation facts determine how to interpret these results.
+First, a finite gauge-invariant Gaussian state with covariance $N$ has
+a positive coherent-state representation: sample a complex Gaussian
+amplitude with covariance $N$ and prepare that coherent amplitude.
+This established representation \cite{Lu2018} gives a programmed
+optical implementation of any declared finite marginal. For a
+general detector subspace the correct input is its compressed
+covariance, not the Bose function of a compressed Hamiltonian. Dense
+covariance factorization and sampling cost $O(D^3)$ once and $O(D^2)$
+per draw, respectively, with $D$ mode controls. This simulator knows
+the covariance; an unknown-specimen sensor additionally needs a
+physical coupling that supplies it.
+
+Second, a common one-particle alignment does not automatically align
+mechanical vacua \cite{BruneauDerezinski2007}. In fixed annihilation
+coordinates a real symmetric
+positive matrix $H$
+gives the number-conserving Hamiltonian
+\begin{equation}
+ \dd\Gamma(H)=\tfrac12(x^{\mathsf T}Hx+p^{\mathsf T}Hp-\Tr H).
+ \label{sgt:main:fixedvac}
+\end{equation}
+An ordinary oscillator instead has
+$(p^2+\omega^2x^2)/2$ and frequency-dependent annihilation operators.
+Relative to a reference frequency, its vacuum is squeezed, with
+$r=\tfrac12\log(\omega/\omega_{\rm ref})$ and mean reference occupation
+$\sinh^2r$. Raising a mechanical frequency is therefore not the same
+operation as making a fixed optical port empty. A native realization
+must pay for canonical conversion, added noise, bandwidth, and reset,
+as in the broader optomechanical setting \cite{Aspelmeyer2014}.
+For example, restoring a fixed frequency unit $\Omega_*$ at
+$\gamma=1/2$ gives $\beta=\hbar\Omega_*/(k_BT)=\tau\sqrt h$.
+The joint regime then has $T\propto h^{-1/2}$ and a retained frequency
+band of order $\Omega_*h^{-1/2}$ at fixed truncation accuracy.
+An optical simulator at a fixed carrier reproduces the programmed
+occupation statistics, not these mechanical temperature and energy units.
+
+The mathematical infinite-energy reference has controlled finite
+replacements. In a one-excitation model, retain longitudinal dispersion
+and add a gap $\Delta$ to each of the $M-1$ transverse channels. Their
+total probability is
+\begin{equation}
+ \frac{(M-1)\ee^{-\beta\Delta}}
+             {1+(M-1)\ee^{-\beta\Delta}}.
+ \label{sgt:main:gapone}
+\end{equation}
+For a full Bose reference with $D_Q$ detected transverse modes,
+their expected detected occupation is bounded by
+$\eta D_Q/(\ee^{\beta\Delta}-1)$. The condition
+$\beta\Delta-\log D_Q\to+\infty$ suffices for an any-click vacuum
+approximation, whereas a calibrated
+count threshold only requires an adequate mean margin. A scalar gap
+alone on infinitely many modes has infinite thermal trace; longitudinal
+confinement must remain present.
+
+A collapsing geometry can
+retain transverse information after a broad set of normalized thermal
+summaries has converged. Accessing it can use a controlled excitation
+or a many-excitation ensemble, with different costs. In the latter,
+the largest modal occupations, rather than the total signal alone,
+govern robustness. Common infrared rejection separates the signal
+budget from the fluctuation budget and yields an explicit interpolation
+between the two error exponents. The finite circular certificate gives
+a directly reproducible target for a common-mode emulator. A native
+geometric device would further require a uniform thin-layer, carrier,
+and mode-conversion approximation over its occupied band.
+
+\begin{acknowledgments}
+The author declares the substantial use of consumer-grade Gemini-3 and GPT-6 models for literature search, exploring and developing ideas, codes and proofs, drafting and LaTeX typesetting; the author takes full and sole responsibility for all contents of this work.
+\end{acknowledgments}
+
+\section*{Data availability}
+Numerical results reported here are reproducible from the verification
+scripts and certificate data in the repository - Repository - 
+\href{https://github.com/arun-chandru/colliding_layers}{github.com/arun-chandru/colliding\_layers}.
+
+
+\appendix
+% Standalone mathematical content, included after the manuscript's \appendix.
+% Uses only standard AMS commands and the shared macros Tr, dd, ee, id, norm.
+% All hypotheses and all auxiliary arguments used below are stated here.
+
+\section{Physical mass, alignment, and the complete joint trace law}
+\label{sgt:geo:setup}
+\label{sgt:geo:appendix}
+
+Let $\Omega\subset\mathbb R^2$ be a fixed bounded open set, and let
+$\Gamma$ be a smooth embedded closed curve of length $\ell$ (the
+quantity denoted by $L$ in the main text).  Write
+$\mathbf r(s)$ for its arclength parametrization, with
+$s\in\mathbb R/\ell\mathbb Z$, and $n(s)$ for a smooth unit normal.
+A closed tubular neighborhood of $\Gamma$ is assumed to lie compactly
+inside $\Omega$.  This allows any fixed absorbing masks a positive
+distance from the tube, without regularity assumptions on their
+distant boundaries.  Fix a smooth positive function $w$ with
+$\int_\Gamma w\,\dd s=1$, distinct fixed heights
+$a_1<\cdots<a_M$, and positive fixed weights $\alpha_i$ with
+$\sum_i\alpha_i=1$.  For sufficiently small $h>0$ put
+\begin{equation}
+ T_{i,h}(s)=\mathbf r(s)+ha_i n(s),\qquad
+ \nu_h=\sum_{i=1}^M\alpha_i(T_{i,h})_*(w\,\dd s).
+ \label{sgt:geo:mass}
+\end{equation}
+The sheets are then disjoint and embedded.  The measure in
+\eqref{sgt:geo:mass} is the physical mass: its expression in the
+coordinate $s$ is $\alpha_iw(s)\dd s$.  In particular there is no
+arclength Jacobian to insert when a sheet is moved.
+
+For clarity, the Green inverse used here has a direct variational
+definition.  Give $H^1_0(\Omega)$ the energy inner product
+$\int_\Omega\nabla u\cdot\overline{\nabla v}\,\dd x$, with no factor
+$1/2$, and let $J_hu$ be its traces on the sheets, considered as an
+element of $L^2(\nu_h)$.  The usual local trace estimate in a smooth
+tube, followed by Poincare's inequality on the bounded carrier, makes
+$J_h$ bounded.  The trace lies locally in $H^{1/2}$; compactness of
+$H^{1/2}(\Gamma)\hookrightarrow L^2(\Gamma)$ makes $J_h$ compact.
+Its range is dense: smooth data on finitely many disjoint sheets can
+be extended separately inside disjoint smaller tubes.  The physical
+closed form is
+\[
+\begin{gathered}
+ \mathcal E_h(f)=\inf\left\{
+   \int_\Omega|\nabla u|^2\,\dd x:J_hu=f\right\},
+ \\
+ f\in J_hH^1_0(\Omega).
+\end{gathered}
+\]
+The infimum is attained on the energy-orthogonal complement of
+$\ker J_h$.  That complement is complete in energy norm; the bounded
+trace map identifies it with this form domain, proving closedness.
+The inverse of its positive self-adjoint generator is $J_hJ_h^*$.
+Indeed $u=J_h^*f$ is the unique weak solution with sheet source $f\nu_h$,
+and its trace is $J_hJ_h^*f$.  Density of the range proves injectivity of
+this positive compact inverse.  Denote the generator by $L_h$ and its
+inverse by $R_h=L_h^{-1}$.
+
+Let $G_\Omega$ be the Dirichlet Green kernel for this energy.  The weak
+solution representation gives the integral kernel $G_\Omega(x,y)$ on
+$L^2(\nu_h)$.  Conjugating by the exact unitary map
+\begin{equation}
+\begin{gathered}
+ (U_hf)_i(s)=\sqrt{\alpha_iw(s)}\,f(T_{i,h}(s))
+ \\
+\hbox{onto}\\
+ \mathcal H=L^2(\Gamma,\dd s)\otimes\mathbb C^M
+ \label{sgt:geo:unitary}
+\end{gathered}
+\end{equation}
+gives the matrix kernel
+$\sqrt{w(s)w(t)\alpha_i\alpha_j}\,
+G_\Omega(T_{i,h}(s),T_{j,h}(t))$, again denoted by $R_h$.
+All logarithmic diagonal singularities are square integrable, so
+$R_h\in\mathfrak S_2$.  Thus all positive-time heat traces and their
+fixed polynomial energy moments below are finite: the decreasing
+inverse eigenvalues satisfy $r_j\leq\norm{R_h}_2/\sqrt j$, which already
+implies summability of $\exp[-t r_j^{-\gamma}]$ for every $t,\gamma>0$.
+The stronger estimate used for Bose singularities elsewhere is not an
+input to the argument in this appendix.
+
+Set
+\[
+\begin{gathered}
+ v=(\sqrt{\alpha_1},\ldots,\sqrt{\alpha_M})^t,\\
+ P=vv^*,\\
+ Q=I_M-P,\\
+ z(s)=\sqrt{w(s)}.
+\end{gathered}
+\]
+The corresponding projections on $\mathcal H$ have the same names.
+The collapsed physical space is embedded as $L^2(\dd s)\otimes v$.
+If $R$ is the base-curve Green inverse conjugated from $L^2(w\dd s)$
+to $L^2(\dd s)$, its aligned extension is $R_0=R\otimes P$.
+The orthogonal $Q$ space has inverse zero and heat zero.  It represents
+an alignment complement, not physical modes of zero energy.
+
+For $q>0$ define
+\begin{equation}
+\begin{gathered}
+ T(q)_{ij}=\sqrt{\alpha_i\alpha_j}\,\ee^{-q|a_i-a_j|},
+ \\
+ B(s,\xi)=\frac{w(s)}{2|\xi|}T(|\xi|),\\
+ B_0(s,\xi)=\frac{w(s)}{2|\xi|}P.
+ \label{sgt:geo:symbol}
+\end{gathered}
+\end{equation}
+Fix $\gamma>0$ and $\tau>0$.  With the value at zero defined to be zero,
+write
+\[
+\begin{gathered}
+ f_{\tau,\gamma}(b)=\ee^{-\tau b^{-\gamma}},\\
+ X_h=R_h/h,\\
+ X_{0,h}=R_0/h,\\
+ A_h(\tau)=f_{\tau,\gamma}(X_h),\\
+ A_{0,h}(\tau)=f_{\tau,\gamma}(X_{0,h}).
+\end{gathered}
+\]
+These are the heat operators at inverse temperature
+$\beta=\tau h^\gamma$ for $L_h^\gamma$.  In particular $\gamma=1/2$
+weights single-excitation frequencies if $L_h$ gives squared
+frequencies.  Thus $H_h=L_h^\gamma$ is the one-particle Hamiltonian,
+and $A_h(\tau)=\exp(-\beta H_h)$ is its heat operator.  Let
+$Z_h=\Tr A_h$, $Z_{0,h}=\Tr A_{0,h}$ and
+$\rho_h=A_h/Z_h$, $\rho_{0,h}=A_{0,h}/Z_{0,h}$.  Put
+\begin{gather}
+ F(s,\xi)=f_{\tau,\gamma}(B(s,\xi)),\\
+ F_0(s,\xi)=\ee^{-\tau(2|\xi|/w(s))^\gamma}P,\notag\\
+ C_\gamma(\tau)=\frac1{2\pi}\int_\Gamma\int_{\mathbb R}
+                         \operatorname{tr}F(s,\xi)\,\dd\xi\dd s,\\
+ G_\gamma=\Gamma(1+1/\gamma),\notag\\
+ C_{\mathrm{col},\gamma}(\tau)=
+             \frac{G_\gamma}{2\pi\tau^{1/\gamma}}.
+ \label{sgt:geo:coefficients}
+\end{gather}
+Lowercase $\operatorname{tr}$ denotes a finite matrix trace.
+Values at $\xi=0$ have no effect on these integrals.
+
+The complete actual-operator conclusions are
+\begin{gather}
+ hZ_h\longrightarrow C_\gamma(\tau),\\
+ hZ_{0,h}\longrightarrow C_{\mathrm{col},\gamma}(\tau),
+ \label{sgt:geo:heat-law}\\
+ \frac12\norm{\rho_h-\rho_{0,h}}_1
+ \longrightarrow
+\\
+ D_\gamma(\tau):=\frac1{4\pi}\int_\Gamma\int_{\mathbb R}
+\\
+ \operatorname{tr}\left|
+ \frac{F}{C_\gamma(\tau)}-
+ \frac{F_0}{C_{\mathrm{col},\gamma}(\tau)}
+ \right|\,\dd\xi\dd s,
+ \label{sgt:geo:distance}\\
+ \Tr(Q\rho_h)\longrightarrow
+ p_{Q,\gamma}(\tau):=\frac{C_{Q,\gamma}(\tau)}{C_\gamma(\tau)},\\
+ C_{Q,\gamma}(\tau)=\frac1{2\pi}\int_\Gamma\int_{\mathbb R}
+                    \operatorname{tr}(QF)\,\dd\xi\dd s.
+ \label{sgt:geo:q-law}
+\end{gather}
+For $M\geq2$ these coefficients obey
+$0<p_{Q,\gamma}(\tau)\leq D_\gamma(\tau)<1$.
+All data $M,a_i,\alpha_i,\Gamma,w,\Omega,\gamma,\tau$ are fixed before
+$h\downarrow0$.  Constants may depend on all of them.  Endpoint limits
+in $\tau$ below are subsequent limits of these functions.  No uniform
+claim is made when $M$ grows, a weight or height separation vanishes,
+a mask approaches the tube, or $\tau$ is chosen as an arbitrary function
+of $h$.
+
+\subsection{A positive-resolvent comparison that retains every mode}
+\label{sgt:geo:resolvent}
+
+We prove a slightly larger functional-calculus statement.  Let $g$ be
+real and continuous on $[0,\infty]$, with $g(0)=0$ and a finite limit
+of $g(x)/x^2$ at zero.  For $\mathcal T(A)=A(I+A)^{-1}$ and
+$\Phi(y)=g(y/(1-y))$, the function $\Phi(y)/y^2$ is continuous on
+$[0,1]$.  For every $\eta>0$ a polynomial $p$ therefore satisfies
+\begin{equation}
+ |\Phi(y)-y^2p(y)|\leq\eta y^2\quad(0\leq y\leq1).
+ \label{sgt:geo:polynomial}
+\end{equation}
+Suppose $U=\mathcal T(A)$, $V=\mathcal T(D)$ for positive compact operators, with
+$\Tr U^2+\Tr V^2\leq C/h$, and
+$U-V=J+E$, where $\operatorname{rank}J\leq r$,
+$\norm{J}\leq C_J$ and $\norm{E}_2\leq e$.
+For a monomial of degree $k\geq2$ use
+\[
+ U^k-V^k=\sum_{j=0}^{k-1}U^j(J+E)V^{k-1-j}.
+\]
+Each $J$ term has trace norm at most $C_Jr$.  In each $E$ term at
+least one outside exponent is positive, and the corresponding factor
+has Hilbert--Schmidt norm at most
+$\max(\norm{U}_2,\norm{V}_2)$.  Schatten Holder's inequality then gives
+\begin{equation}
+ h\norm{g(A)-g(D)}_1
+ \leq C\eta+C_p\bigl(hC_Jr+\sqrt h\,e\bigr).
+ \label{sgt:geo:comparison}
+\end{equation}
+Here the two approximation errors in \eqref{sgt:geo:polynomial} cost
+at most $\eta\Tr(U^2+V^2)$, by spectral calculus.
+
+For a decomposition $A-D=J_{\rm raw}+E_{\rm raw}$, the exact identity
+\begin{equation}
+ \mathcal T(A)-\mathcal T(D)=(I+A)^{-1}(A-D)(I+D)^{-1}
+ \label{sgt:geo:resolvent-identity}
+\end{equation}
+preserves the rank bound and does not increase the residual
+Hilbert--Schmidt norm.  If $\norm{E_{\rm raw}}\leq C$ uniformly, the
+transformed finite-rank term has norm at most $1+C$, since the
+difference of two positive contractions has norm at most one.
+Even without that operator-norm bound, a uniformly bounded rank-$r$
+decomposition is available.  Set $K=U-V$ and keep its $r$ largest
+singular values, with their signs, to obtain $J$.  Then $\norm{J}\leq1$.
+The squared Hilbert--Schmidt residual is the sum of the remaining
+squared singular values, and is no larger than for any other rank-$r$
+approximation; applying this to the rank-$r$ term already supplied by
+the resolvent identity gives $\norm{K-J}_2\leq\norm{E_{\rm raw}}_2$.
+For completeness, that minimizing property follows by projecting onto
+the range of any proposed rank-$r$ approximation: its discarded
+Hilbert--Schmidt norm is at least the sum after the largest $r$
+eigenvalues of $KK^*$, by the variational principle for their partial
+sum.  Spectral truncation attains the bound.  The difference $K$ is
+Hilbert--Schmidt already, because the resolvent identity writes it as
+a finite-rank term plus such a residual.  Thus one may always take
+$C_J=1$ after this additional truncation; no bound on the size of
+$J_{\rm raw}$ is needed.  If only the budget for $V$ is initially known,
+\[
+ \norm{U}_2\leq\norm{V}_2+C_J\sqrt r+e
+\]
+supplies it whenever the displayed right side is $O(h^{-1/2})$.
+In particular $hr=o(1)$ and $\sqrt h\,e=o(1)$ imply a whole-operator
+$o(h^{-1})$ trace-norm comparison.  This proof uses no scalar
+Lipschitz assertion in trace norm and no short-time extrapolation of
+a fixed-temperature bound.
+
+\subsection{The curved kernel and a manifestly positive model}
+\label{sgt:geo:kernel}
+
+Write $k_n=2\pi n/\ell=\varrho n$.  Define the positive matrix
+convolution operator $\mathcal C_h$ by its Fourier multipliers
+\begin{equation}
+\begin{gathered}
+ \mathcal C_h(0)=I_M,\\
+ \mathcal C_h(n)=\frac{T(h|k_n|)}{2|k_n|}\\
+(n\ne0),
+ \\
+ \mathcal A_h=h^{-1}M_z\mathcal C_hM_z.
+ \label{sgt:geo:model}
+\end{gathered}
+\end{equation}
+For the collapsed model use the scalar convolution $\mathcal C_0$
+with multipliers $\mathcal C_0(0)=1$,
+$\mathcal C_0(n)=(2|k_n|)^{-1}$ for $n\ne0$, and
+$\mathcal A_{0,h}=h^{-1}(M_z\mathcal C_0M_z)\otimes P$.
+The finitely many zero-frequency choices affect no leading trace.
+Positivity follows from
+\[
+ \ee^{-q|a-b|}=\frac1\pi\int_{\mathbb R}
+       \frac{q\ee^{it(a-b)}}{q^2+t^2}\,\dd t.
+\]
+A nonzero finite exponential sum at distinct heights is not identically
+zero, so the associated quadratic form is strictly positive for $q>0$.
+Consequently $T(q)>0$, $\operatorname{tr}T(q)=1$, and $\norm{T(q)}\leq1$.
+At most $M$ eigenvalues occur at each Fourier index and each is
+$O((1+|n|)^{-1})$.  Min--max after multiplication by bounded $z$ yields
+\begin{equation}
+\begin{gathered}
+ \Tr\mathcal T(\mathcal A_h)^2+\Tr\mathcal T(\mathcal A_{0,h})^2
+\\
+ \leq C\sum_{j\geq1}\min\{1,(hj)^{-2}\}\leq C'/h.
+ \label{sgt:geo:model-budget}
+\end{gathered}
+\end{equation}
+
+The regular part
+$G_\Omega(x,y)+(2\pi)^{-1}\log|x-y|$ is smooth on the product of
+the closed tube with itself.  Both partial Laplacians vanish
+distributionally there; their sum is elliptic in four variables, so
+interior regularity includes the diagonal.  This argument is local
+and does not require smooth distant boundary components.  Define
+\[
+\begin{gathered}
+ \ell_*(u)=\frac\ell\pi\left|\sin\frac{\pi u}{\ell}\right|,
+ \\
+ \Lambda_\delta(u)=-\frac1{4\pi}
+              \log\left(1+\frac{\delta^2}{\ell_*(u)^2}\right),
+ \\
+ D(s,t)=n(s)\cdot\nabla_xG_\Omega(\mathbf r(s),\mathbf r(t)).
+\end{gathered}
+\]
+The latter off-diagonal expression extends smoothly: the normal
+numerator in the logarithmic part vanishes to order $(s-t)^2$, as
+does the chord-length squared denominator.  The ratio of the geometric
+chord to $\ell_*(s-t)$ is smooth and positive across the diagonal.
+It follows that $R=M_z\mathcal C_0M_z+\mathcal S_0$, with
+$\mathcal S_0$ a smooth-kernel operator.
+
+For $\delta=h|a_i-a_j|$, the required uniform kernel expansion is
+\begin{gather}
+ G_\Omega(T_{i,h}(s),T_{j,h}(t))
+\\
+ =G_\Omega(\mathbf r(s),\mathbf r(t))+\Lambda_\delta(s-t)
+\\
+     +h\{a_iD(s,t)+a_jD(t,s)\}+\mathcal E_{h,ij}(s,t),\notag\\
+ |\mathcal E_{h,ij}(s,t)|
+ \leq Ch^2+Ch\frac{\delta^2}{u^2+\delta^2},
+ \label{sgt:geo:strip}
+\end{gather}
+where $u$ is the short periodic coordinate, and the fraction is zero
+when $\delta=0$.  Here and below kernels may be specified off their
+null diagonal.  To verify the singular part, put
+$p=\mathbf r(s)-\mathbf r(t)$,
+$b=n(s)-n(t)$, $c=n(s)+n(t)$,
+$m=(a_i+a_j)/2$, and $d=(a_i-a_j)/2$.
+The changed chord is $p+h(mb+dc)$ and $b\cdot c=0$.
+The smooth quotients satisfy
+\[
+\begin{gathered}
+ \frac{p\cdot b}{|p|^2}=O(1),\\
+ \frac{p\cdot c}{|p|^2}=O(|u|),\\
+ \frac{|b|^2}{|p|^2}=O(1),\\
+ \frac{|c|^2}{|p|^2}=\frac4{\ell_*(u)^2}+O(1).
+\end{gathered}
+\]
+These follow by Taylor expansion of an arclength parametrization and
+$n\perp\mathbf r'$.  Expand the logarithm of
+$|p+h(mb+dc)|^2/|p|^2$ about $1+\delta^2/\ell_*(u)^2$.
+The relative perturbation is $O(h)$, its quadratic logarithm error is
+$O(h^2)$, and replacing the denominator of the linear term by one
+costs at most the second term in \eqref{sgt:geo:strip}.
+The smooth regular part and points away from the diagonal have the
+ordinary $O(h^2)$ Taylor remainder.  This proves the estimate, including
+unequal, uncentered profiles.  A uniformly $O(h^2)$ pointwise remainder
+would in general be false.  Squaring and integrating its strip term
+gives $O(h^2\delta)=O(h^3)$; hence the weighted matrix remainder has
+Hilbert--Schmidt norm $O(h^{3/2})$.
+
+The exact Fourier multipliers of $\Lambda_\delta$, for convolution
+against $\dd s$, are
+\begin{equation}
+\begin{gathered}
+ b_\delta=2\operatorname{arsinh}(\varrho\delta/2),\\
+ \Lambda_\delta(0)=-\frac{b_\delta}{2\varrho},\\
+ \Lambda_\delta(n)=-\frac{1-\ee^{-b_\delta|n|}}
+                            {2\varrho|n|}\\
+(n\ne0).
+ \label{sgt:geo:log-fourier}
+\end{gathered}
+\end{equation}
+For example factor
+$\sin^2(\theta/2)+\sinh^2(b_\delta/2)
+=(\cosh b_\delta-\cos\theta)/2$ and expand the logarithm in its
+integrable Fourier series.  Its constant term is $b_\delta$, and its
+cosine coefficient is $2(1-\ee^{-b_\delta n})/n$, giving precisely
+\eqref{sgt:geo:log-fourier}.  For each fixed nonzero height difference,
+\[
+\begin{gathered}
+ |b_{h|a_i-a_j|}-\varrho h|a_i-a_j||\leq Ch^3,\\
+ \min\{b_{h|a_i-a_j|},\varrho h|a_i-a_j|\}\geq ch.
+\end{gathered}
+\]
+The mean value theorem therefore bounds the discrepancy of nonzero
+Fourier multipliers by $Ch^3\ee^{-ch|n|}$.  Its squared sum is
+$O(h^5)$; diagonal matrix entries have zero discrepancy.
+One must use the positive model \eqref{sgt:geo:model}, not assume
+positivity of the matrix obtained from the exact periodic replacement.
+Collecting terms gives
+\begin{equation}
+\begin{gathered}
+ R_h=M_z\mathcal C_hM_z+\mathcal S_0\otimes P+h\mathcal S_1
+       +J_{0,h}+\mathcal R_h+\mathcal E_h,
+ \\
+ \operatorname{rank}J_{0,h}\leq M,\\
+ \norm{\mathcal R_h}_2=O(h^{5/2}),\\
+ \norm{\mathcal E_h}_2=O(h^{3/2}).
+ \label{sgt:geo:normal-form}
+\end{gathered}
+\end{equation}
+Here $\mathcal S_1$ is the fixed smooth matrix kernel formed from the
+normal derivatives.  The zero-frequency discrepancy, sandwiched by
+$z$, has range in $\operatorname{span}\{z\}\otimes\mathbb C^M$, giving
+the stated rank.  Its norm will not be needed.
+
+If $\Pi_N$ projects onto $|n|\leq N$ in every component, any fixed
+smooth matrix kernel $\mathcal S$ satisfies
+$\norm{\mathcal S-\Pi_N\mathcal S\Pi_N}_2\leq C_kN^{-k}$ for every
+integer $k$, by repeated integration by parts in both Fourier indices.
+Take $N=\lceil h^{-1/2}\rceil$, $k\geq4$, and divide
+\eqref{sgt:geo:normal-form} by $h$.  The result is a finite-rank term
+of rank $O(h^{-1/2})$ and a Hilbert--Schmidt residual $O(h^{1/2})$.
+Equations \eqref{sgt:geo:resolvent-identity} and
+\eqref{sgt:geo:model-budget} first give the actual resolvent-square
+budget and then \eqref{sgt:geo:comparison} gives
+\begin{equation}
+\begin{gathered}
+ h\norm{g(X_h)-g(\mathcal A_h)}_1\longrightarrow0,
+ \\
+ h\norm{g(X_{0,h})-g(\mathcal A_{0,h})}_1\longrightarrow0.
+ \label{sgt:geo:actual-model}
+\end{gathered}
+\end{equation}
+Both operators compared are positive.  No positivity is attributed to
+an intermediate truncated geometric perturbation.
+
+\subsection{Matrix Fourier words, low and high frequencies, and sharp bands}
+\label{sgt:geo:fourier}
+
+Choose $0<2d<R$ and a smooth $0\leq\chi\leq1$ supported where
+$d\leq|\xi|\leq2R$, equal to one where $2d\leq|\xi|\leq R$.
+Replace the nonzero multipliers of $\mathcal C_h/h$ by
+$\chi(hk_n)T(|hk_n|)/(2|hk_n|)$, and set the zero multiplier to zero.
+Keep the two multiplications by $z$; call the result
+$\mathcal A_h^{d,R}$.  Use the same construction for the reference.
+These positive operators have rank $O(R/h)$ and uniformly bounded
+norm at fixed $d,R$.  They are below their full models in operator
+order, so eigenvalue comparison preserves the resolvent-square trace
+budget.  The discarded low-frequency part has rank $O(d/h)+O(1)$.
+The high-frequency part obeys
+\begin{equation}
+ \norm{E_{\rm hi}}\leq C/R,\qquad
+ \norm{E_{\rm hi}}_2^2\leq C/(hR).
+ \label{sgt:geo:frequency-tail}
+\end{equation}
+Indeed these follow by summing $(h|n|)^{-2}$ over $|hk_n|>R$ and
+using $\norm{T(q)}\leq1$; bounded multiplication by $z$ changes only
+constants.  After the resolvent identity the finite-rank part has
+norm at most $1+C/R$, independently of $d$.  Consequently
+\begin{equation}
+ \limsup_{h\downarrow0}h\norm{g(\mathcal A_h)
+                              -g(\mathcal A_h^{d,R})}_1
+ \leq C\eta+C_p(d+R^{-1/2}),
+ \label{sgt:geo:cutoff-removal}
+\end{equation}
+and identically for the reference.  For each fixed approximation
+polynomial first let $d\downarrow0$, $R\uparrow\infty$, and then
+$\eta\downarrow0$.  This controls all original Fourier modes outside
+the annulus; no arbitrary eigenvalue reindexing is involved.
+
+Here is the trace calculation on the fixed annulus.  Expand a word
+in operators $M_{z_j}m_j(hD_s)M_{z_j}$, with smooth scalar $z_j$ and
+smooth compactly supported matrix multipliers $m_j$, in the basis
+$\ell^{-1/2}\ee^{ik_ns}$.  Each multiplication shifts the index by an
+integer and has rapidly decreasing, absolutely summable Fourier
+coefficients.  For any fixed list of shifts $r_j$,
+$m_j(hk_{n+r_j})-m_j(hk_n)=o(1)$ uniformly in $n$.
+The number of contributing $n$ is $O(h^{-1})$ uniformly in the shifts,
+by anchoring to any one compactly supported multiplier factor; the
+remaining factors are bounded.  The absolute sum of the products of
+Fourier coefficients is finite.  Dominated convergence therefore
+permits summing over the shift lists.  The zero-total-shift condition
+reconstructs the spatial average of the position factors.  The
+remaining frequency sum is a Riemann sum of spacing $2\pi h/\ell$.
+Thus, retaining matrix order,
+\begin{equation}
+\begin{gathered}
+ h\Tr(\mathcal B_{1,h}\cdots\mathcal B_{r,h})
+\\
+ \longrightarrow\frac1{2\pi}\int_\Gamma\int_{\mathbb R}
+        \operatorname{tr}(b_1(s,\xi)\cdots b_r(s,\xi))
+                         \,\dd\xi\dd s.
+ \label{sgt:geo:word-law}
+\end{gathered}
+\end{equation}
+The same calculation permits smooth scalar position insertions,
+fixed matrix insertions, and a smooth bounded Fourier multiplier
+$\psi(hD_s)$: its shifted values also converge uniformly for any
+fixed shift on the relevant compact frequency set.  No factors have
+been commuted in this calculation.
+
+Uniform polynomial approximation on the bounded spectra of the
+cutoff models, with approximating polynomials zero at zero, extends
+\eqref{sgt:geo:word-law} to words in their $g$ functions.  The error
+cost after multiplication by $h$ is $O(R\eta)$, since all ranges lie
+in a common space of dimension $O(R/h)$.  The difference of two such
+self-adjoint functions need not commute with either factor.
+Approximate the continuous function $|x|$ on its bounded spectral
+interval by polynomials zero at zero, using that same finite range.
+This proves, for any real $c,c_0$,
+\[
+\begin{gathered}
+ h\Tr\left|c\,g(\mathcal A_h^{d,R})
+                   -c_0g(\mathcal A_{0,h}^{d,R})\right|
+\\
+ \longrightarrow\frac1{2\pi}\int
+ \operatorname{tr}|c\,g(\chi B)-c_0g(\chi B_0)|\,\dd\xi\dd s.
+\end{gathered}
+\]
+On removing cutoffs, the low-frequency symbol cost is $O(d)$ because
+$g$ is bounded.  Since $g(b)=O(b^2)$ near zero and
+$\norm{B}\leq w_{\max}/(2|\xi|)$, the high-frequency symbol has an
+integrable $C|\xi|^{-2}$ bound, uniformly in $\chi$.
+Use \eqref{sgt:geo:cutoff-removal} on the operator side and
+$|\Tr|X|-\Tr|Y||\leq\norm{X-Y}_1$ for absolute traces.
+Finally \eqref{sgt:geo:actual-model} transfers all conclusions to the
+actual geometry.  In particular
+\begin{gather}
+ h\Tr[(M_q\otimes V)g(X_h)]
+\\
+ \longrightarrow\frac1{2\pi}\int
+              q(s)\operatorname{tr}[Vg(B)]\,\dd\xi\dd s,
+ \label{sgt:geo:general-trace}\\
+ h\Tr|c\,g(X_h)-c_0g(X_{0,h})|
+\\
+ \longrightarrow\frac1{2\pi}\int
+             \operatorname{tr}|c\,g(B)-c_0g(B_0)|\,\dd\xi\dd s,
+ \label{sgt:geo:general-absolute}
+\end{gather}
+for smooth $q$ and fixed matrix $V$, with the analogous reference law.
+Fourier insertions described above are also allowed.  All estimates
+include the singular low-frequency end and the infinite high-frequency
+tail.  For heat a stronger symbol bound is
+\begin{equation}
+ 0\leq F(s,\xi)\leq
+       \ee^{-\tau(2|\xi|/w_{\max})^\gamma}I_M.
+ \label{sgt:geo:heat-majorant}
+\end{equation}
+This is spectral calculus against a scalar multiple of $I_M$, not
+operator monotonicity of the exponential.
+
+For later receiver constructions it is useful to include sharp
+Fourier bands explicitly.  Let $\Pi_{h;d,R}$ project onto
+$d<|hk_n|<R$ in every component, where $0\leq d<R<\infty$.
+For either heat operator and any fixed matrix $V$,
+\begin{equation}
+ h\Tr[\Pi_{h;d,R}V A_h(\tau)]
+ \longrightarrow\frac1{2\pi}\int_\Gamma
+            \int_{d<|\xi|<R}\operatorname{tr}(VF)\,\dd\xi\dd s.
+ \label{sgt:geo:band-law}
+\end{equation}
+To see this, approximate the band indicator by a smooth Fourier
+multiplier differing only in intervals of total length $O(\delta)$
+around its endpoints.  The difference has norm at most one and rank
+$O(\delta/h)+O(1)$.  Because $\norm{A_h}\leq1$, its trace against
+$VA_h$ costs at most $\norm{V}$ times this rank; after multiplying by
+$h$ this is $O(\delta)+O(h)$.  The symbol edge cost has the same bound.
+Let $h\downarrow0$ and then $\delta\downarrow0$.  The possible
+$n=0$ ambiguity costs only $M$ dimensions.  The smooth insertion
+argument applies to the full heat by \eqref{sgt:geo:cutoff-removal}
+and \eqref{sgt:geo:actual-model}.  Subtracting the $|hk_n|\leq R$ law
+from the complete trace law proves the $|hk_n|>R$ law as well.
+In particular its $V=Q$ or $V=I_M$ heat coefficient tends to zero as
+$R\uparrow\infty$ by \eqref{sgt:geo:heat-majorant}.
+
+Taking $g=f_{\tau,\gamma}$ now proves \eqref{sgt:geo:heat-law} and
+the numerator in \eqref{sgt:geo:q-law}; the reference integral is
+elementary and uses $\int w\dd s=1$.  If $c_h=hZ_h$ and $c_{0,h}=hZ_{0,h}$,
+then
+$\rho_h-\rho_{0,h}=h(A_h/c_h-A_{0,h}/c_{0,h})$.
+Replacing these denominators by their positive limits costs $o(1)$
+in trace norm, since each heat operator is positive.  Apply
+\eqref{sgt:geo:general-absolute} with the limiting denominators to
+obtain \eqref{sgt:geo:distance}.
+For $M\geq2$, $F$ is positive definite at every $\xi\ne0$, so
+$\operatorname{tr}(QF)>0$.  The variational characterization of trace
+distance with the effect $Q$ gives $p_Q\leq D$, because
+$Q\rho_{0,h}=0$.  Finally positive matrices $X,Y$ satisfy
+$\operatorname{tr}|X-Y|\leq\operatorname{tr}X+\operatorname{tr}Y$,
+with equality exactly when their supports are orthogonal.  This follows
+by evaluating $X-Y$ on its positive and negative spectral projections:
+equality forces each positive matrix into the corresponding disjoint
+subspace.  Here $F/C_\gamma$ is positive definite and $F_0/C_{\rm col}$
+is nonzero, so the inequality is strict pointwise.  The integral of
+their summed traces is two, proving $D<1$.
+
+\section{Growing-index counting, a strict deficit, and transverse rotation}
+\label{sgt:geo:counting-section}
+\label{sgt:geo:structure}
+
+For fixed $s$, order the eigenvalues of $B(s,q)$ as
+$b_1>\cdots>b_M>0$ and put $e_j=1/b_j$, with simplicity justified
+below.  The free one-dimensional resolvent gives
+\begin{equation}
+ x^*\frac{T(q)}{2q}x
+ =\frac1{2\pi}\int_{\mathbb R}
+ \frac{|\sum_j\sqrt{\alpha_j}x_j\ee^{ita_j}|^2}{t^2+q^2}\,\dd t.
+ \label{sgt:geo:free-resolvent}
+\end{equation}
+Subtracting this formula at $q_2>q_1>0$ proves a positive definite
+difference.  Thus all ordered $b_j(s,q)$ strictly decrease and all
+$e_j(s,q)$ strictly increase.  This is a statement about $T(q)/(2q)$;
+the eigenvalues of $T(q)$ itself cannot all decrease since its trace
+is one.
+
+Set $\Delta_i=a_{i+1}-a_i>0$ and $A_\alpha=\operatorname{diag}\alpha_i$.
+The exact energy matrix is
+\begin{equation}
+ B(s,q)^{-1}=w(s)^{-1}A_\alpha^{-1/2}J(q)A_\alpha^{-1/2},
+ \label{sgt:geo:path-inverse}
+\end{equation}
+where, for $M\geq2$,
+\begin{gather*}
+ J_{11}=q[1+\coth(q\Delta_1)],\\
+ J_{MM}=q[1+\coth(q\Delta_{M-1})],\\
+ J_{ii}=q[\coth(q\Delta_{i-1})+\coth(q\Delta_i)]\\
+(1<i<M),\\
+ J_{i,i+1}=J_{i+1,i}=-q\operatorname{csch}(q\Delta_i),
+\end{gather*}
+and the other entries vanish.  For $M=1$ use $J(q)=2q$.
+An energy derivation fixes every constant.  Minimize
+$\int_{\mathbb R}(|u'|^2+q^2|u|^2)\dd a$ subject to $u(a_i)=x_i$.
+On the interval of length $\Delta_i$, the hyperbolic interpolation
+solving $-u''+q^2u=0$ has energy
+\[
+ q\coth(q\Delta_i)(|x_i|^2+|x_{i+1}|^2)
+ -2q\operatorname{csch}(q\Delta_i)
+                 \operatorname{Re}(\overline{x_i}x_{i+1}).
+\]
+The two exterior half-lines contribute $q|x_1|^2+q|x_M|^2$.
+The reproducing kernel for the same energy is
+$\ee^{-q|a-b|}/(2q)$, so its evaluation Gram matrix has inverse $J(q)$.
+Conjugating by the masses proves \eqref{sgt:geo:path-inverse}.
+
+As $q\downarrow0$, $J(q)$ tends to the nearest-neighbor path Laplacian
+$J(0)$ with quadratic form
+$\sum_i|x_{i+1}-x_i|^2/\Delta_i$.  Write
+\begin{equation}
+ \Lambda_\alpha=A_\alpha^{-1/2}J(0)A_\alpha^{-1/2},
+ \qquad 0=\ell_1<\ell_2<\cdots<\ell_M.
+ \label{sgt:geo:thresholds}
+\end{equation}
+The kernel is spanned by $v$.  Positivity of the other eigenvalues
+follows from the quadratic form, and simplicity follows from the
+irreducible symmetric tridiagonal recurrence: an eigenvector is
+determined by its first component, which cannot vanish.  The same
+argument applies for $q>0$ and proves simplicity in the definition of
+$e_j$.  Consequently
+\[
+\begin{gathered}
+ e_j(s,0+)=\ell_j/w(s),\\
+ e_j(s,q)\geq2q/w(s),
+ \\
+ e_j(s,q)\longrightarrow\infty\\
+(q\to\infty).
+\end{gathered}
+\]
+The bound uses $b_j\leq\operatorname{tr}B=w/(2q)$.
+Every branch therefore has exactly one positive-width energy cutoff
+at energy $E$ when $w(s)E>\ell_j$, and none when $w(s)E\leq\ell_j$.
+
+For $g>0$ let $-\kappa_j(g)^2$ be the negative eigenvalues of the
+attractive delta Hamiltonian
+\[
+ -\frac{\dd^2}{\dd a^2}-g\sum_i\alpha_i\delta_{a_i}
+ \quad\hbox{on }L^2(\mathbb R),
+\]
+defined by the form
+$\int|u'|^2\dd a-g\sum_i\alpha_i|u(a_i)|^2$ on $H^1(\mathbb R)$.
+Point evaluation is infinitesimally form bounded: for instance
+$|u(a)|^2\leq\norm{u}_2\norm{u'}_2$, followed by Young's inequality,
+gives an arbitrarily small coefficient of $\norm{u'}_2^2$.
+Thus the form is closed and lower bounded.  Its negative index is at
+most $M$, because the perturbation factors through $M$ evaluations.
+Factoring those evaluations through
+$(-\dd^2/\dd a^2+q^2)^{-1/2}$ shows that the negative index after adding
+$q^2$ equals the number of eigenvalues of $gT(q)/(2q)$ above one;
+the nonzero spectra of $XX^*$ and $X^*X$ coincide.  Equality with one
+also gives the eigenspace at energy $-q^2$ by the weak equation.
+The top eigenvalue diverges as $q\downarrow0$, so a lowest negative
+state always exists.  We set $\kappa_j(g)=0$ for absent branches.
+The preceding strictly monotone energy branches imply
+\begin{equation}
+ \#\{j:b_j(s,q)\geq E^{-1}\}
+ =\#\{j:\kappa_j(w(s)E)\geq q\}\quad(q>0),
+ \label{sgt:geo:birman-schwinger}
+\end{equation}
+including the equality threshold.  In particular the number of
+negative states is $\#\{j:\ell_j<g\}$; equality at a threshold does
+not add a negative state.
+
+The actual growing-index count is
+\begin{equation}
+\begin{gathered}
+ h\#\{k:\lambda_k(L_h)\leq E/h\}
+ \longrightarrow
+\\
+ \mathcal N_\alpha(E)=\frac1\pi\int_\Gamma
+                    \sum_{j=1}^M\kappa_j(w(s)E)\,\dd s,
+ \\
+ E>0.
+ \label{sgt:geo:counting}
+\end{gathered}
+\end{equation}
+To pass rigorously from continuous tests to this cutoff, approximate
+$1_{[1/E,\infty]}$ on $[0,\infty]$ from above and below by continuous
+functions zero near zero.  They belong to the class used in
+\eqref{sgt:geo:general-trace}.  For each $s$, strict monotonicity gives
+at most one positive $q$ with $b_j(s,q)=1/E$.  Fubini proves that the
+phase-space level has measure zero.  The transition interval is
+supported in a bounded frequency region, because
+$b_j\leq w_{\max}/(2q)$.  Dominated convergence squeezes the two
+phase-space approximations together.  Integrating
+\eqref{sgt:geo:birman-schwinger} then gives \eqref{sgt:geo:counting}.
+This proof controls the whole growing count, rather than a sum of
+fixed-eigenvalue approximations.  For $L_h^\gamma$ below $U/h^\gamma$,
+replace $E$ by $U^{1/\gamma}$.
+
+\subsection{A self-contained finite-profile form of the classical sharp bound}
+\label{sgt:geo:hlt}
+
+The inequality $\sum_j\kappa_j(g)\leq g/2$, with equality only for a
+single point mass, is the sharp measure Lieb--Thirring result of
+Hundertmark, Lieb, and Thomas, Theorem~5 of
+Ref.~\cite{HundertmarkLiebThomas1998}.
+Here is a finite-matrix derivation sufficient for the present profile,
+so the counting application does not require a measure approximation.
+
+Write $\mathcal L(q)=gT(q)$ and
+$\Sigma_j(q)=\sum_{i=1}^j\lambda_i(\mathcal L(q))$.
+For $q_2>q_1\geq0$, set $t=q_2-q_1$ and
+$U_\zeta=\operatorname{diag}(\ee^{i\zeta a_i})$.  The Fourier transform
+of the Cauchy density gives the exact unitary average
+\[
+ \mathcal L(q_2)=\int_{\mathbb R}U_\zeta\mathcal L(q_1)U_\zeta^*
+                   \frac{t\,\dd\zeta}{\pi(t^2+\zeta^2)}.
+\]
+The sum of the $j$ largest eigenvalues of a Hermitian matrix is
+$\sup\{\operatorname{tr}(EX):0\leq E\leq I,\operatorname{tr}E=j\}$,
+which is convex and unitarily invariant.  Therefore
+$\Sigma_j(q_2)\leq\Sigma_j(q_1)$.
+For $M\geq2$ the top eigenvalue is strictly decreasing: the positive
+matrix $\mathcal L(q_2)$ has a strictly positive top eigenvector, and
+every off-diagonal entry strictly increases on changing $q_2$ to
+$q_1$.  Its Rayleigh quotient strictly increases as well.
+
+Order $\kappa_1>\kappa_2>\cdots$ over the existing states and append
+zeros to length $M$.  The energy simplicity established above gives
+the strict first inequality.  The Birman--Schwinger equation gives
+$2\kappa_j=\lambda_j(\mathcal L(\kappa_j))$ for existing states.
+For absent states this is also true: $\mathcal L(0)=gP$ has all
+eigenvalues after the first equal to zero.  Telescoping partial sums
+gives the exact identity
+\begin{equation}
+\begin{gathered}
+ 2\sum_{j=1}^M\kappa_j
+\\
+ =\Sigma_M(\kappa_M)
+    +\sum_{j=1}^{M-1}
+             [\Sigma_j(\kappa_j)-\Sigma_j(\kappa_{j+1})]
+\\
+ \leq g+\Sigma_1(\kappa_1)-\Sigma_1(\kappa_2)<g.
+ \label{sgt:geo:strict-local}
+\end{gathered}
+\end{equation}
+The trace $\Sigma_M(q)$ equals $g$ at every $q$.  Every bracket is
+nonpositive, and the first is strictly negative, including when only
+one negative state exists and $\kappa_2=0$.  For $M=1$ directly
+$\kappa_1=g/2$.  Repeated heights, if initially allowed, are first
+merged; equality is therefore exactly the single-point case.
+The sharp inequality and its rigidity are classical; their use here
+is after the actual physical-symbol identification.
+
+Define $\delta_\alpha(g)=g/2-\sum_j\kappa_j(g)$.  Equations
+\eqref{sgt:geo:counting} and \eqref{sgt:geo:strict-local} imply
+\begin{equation}
+\begin{gathered}
+ 0<\mathcal N_\alpha(E)<\frac E{2\pi},\\
+ \frac E{2\pi}-\mathcal N_\alpha(E)
+       =\frac1\pi\int_\Gamma\delta_\alpha(w(s)E)\,\dd s
+ \\
+(M\geq2).
+ \label{sgt:geo:count-deficit}
+\end{gathered}
+\end{equation}
+The symbol heat is the Stieltjes integral against this counting
+function.  Integration by parts, or positive layer-cake integration,
+gives
+\begin{gather}
+ C_\gamma(\tau)=\tau\gamma\int_0^\infty
+             E^{\gamma-1}\ee^{-\tau E^\gamma}
+             \mathcal N_\alpha(E)\,\dd E,\notag\\
+ C_{\mathrm{col},\gamma}(\tau)-C_\gamma(\tau)
+\\
+ =\frac{\tau\gamma}{\pi}\int_\Gamma\int_0^\infty
+ E^{\gamma-1}\ee^{-\tau E^\gamma}\delta_\alpha(w(s)E)
+                   \,\dd E\dd s>0.
+ \label{sgt:geo:partition-deficit}
+\end{gather}
+There are no boundary terms because
+$0\leq\mathcal N_\alpha(E)\leq E/(2\pi)$ and
+$\mathcal N_\alpha(0)=0$.  This proves strict partition deficit for
+every finite $\tau>0$ and every $\gamma>0$, with equality only for the
+merged single-point profile.
+
+\subsection{Algebraic transverse occupation from the lowest branch}
+\label{sgt:geo:rotation}
+
+Define profile and density statistics
+\begin{equation}
+\begin{gathered}
+ d_i=\sum_j\alpha_j|a_i-a_j|,\\
+ G=\sum_i\alpha_i d_i,\\
+ V=\sum_i\alpha_i(d_i-G)^2,\\
+ I_k=\int_\Gamma w(s)^k\,\dd s.
+ \label{sgt:geo:profile-statistics}
+\end{gathered}
+\end{equation}
+Let $\mathsf D_{ij}=\sqrt{\alpha_i\alpha_j}|a_i-a_j|$.
+The finite matrix $T(q)=P-q\mathsf D+O(q^2)$ is analytic at zero.
+Its simple top eigenpair, normalized by $v^*u(q)>0$, therefore obeys
+\begin{equation}
+\begin{gathered}
+ \mu(q)=1-Gq+O(q^2),\\
+ u(q)=v-qQ\mathsf Dv+O(q^2),\\
+ \norm{Qu(q)}^2=Vq^2+O(q^3).
+ \label{sgt:geo:eigenvector-rotation}
+\end{gathered}
+\end{equation}
+These coefficients also follow directly by differentiating
+$T(q)u(q)=\mu(q)u(q)$: the $v$ component gives $\mu'(0)=-G$;
+the $Q$ component and normalization give $u'(0)=-Q\mathsf Dv$;
+and $(Q\mathsf Dv)_i=\sqrt{\alpha_i}(d_i-G)$.
+For small $g$ only the first bound state exists, by
+\eqref{sgt:geo:thresholds}.  Its equation $2\kappa=g\mu(\kappa)$
+and the implicit function theorem give
+\begin{equation}
+ \kappa(g)=\frac g2-\frac G4g^2+O(g^3),\qquad
+ \kappa'(g)=\frac12-\frac G2g+O(g^2).
+ \label{sgt:geo:weak-coupling}
+\end{equation}
+For $M=1$ the same expressions hold with $G=V=0$.
+The mean-distance coefficient $G$ is the familiar one-dimensional
+weak-coupling statistic \cite{Simon1976,Simon2022}; see
+Theorem~8.5 and Eq.~(9.24) of Ref.~\cite{Simon2022}.
+The finite atomic coefficient used here has been derived directly;
+its occurrence alone is not a new scalar invariant.
+
+Choose a small fixed energy $E_0$ below $\ell_2/w_{\max}$ when $M\geq2$,
+and small enough for \eqref{sgt:geo:weak-coupling} uniformly over $s$.
+On the lowest branch put $q=\kappa(w(s)E)$.  Then
+\begin{align}
+ \frac{\dd q}{\dd E}
+ &=\frac{w(s)}2-\frac{Gw(s)^2}2E+O(E^2),\notag\\
+ \norm{Qu(\kappa(w(s)E))}^2\frac{\dd q}{\dd E}
+ &=\frac{Vw(s)^3}{8}E^2+O(E^3),
+ \label{sgt:geo:jacobian}
+\end{align}
+with uniform errors.  The Taylor formulas are used only on that fixed
+small interval.  To bound the rest of every branch, put
+$a_*=\ell_2/w_{\max}>0$.  For $j\geq2$,
+$e_j(s,q)\geq a_*$ and $e_j(s,q)\geq2q/w_{\max}$, whence
+\begin{equation}
+\begin{gathered}
+ C_{\mathrm{exc},\gamma}(\tau):=
+ \frac1\pi\int_\Gamma\int_0^\infty
+       \sum_{j=2}^M\ee^{-\tau e_j(s,q)^\gamma}\,\dd q\dd s
+\\
+ \leq C\tau^{-1/\gamma}\ee^{-\tau a_*^\gamma/2}.
+ \label{sgt:geo:excited-tail}
+\end{gathered}
+\end{equation}
+This follows from the integrable product bound
+$\ee^{-\tau e_j^\gamma}
+\leq\ee^{-\tau a_*^\gamma/2}
+\ee^{-(\tau/2)(2q/w_{\max})^\gamma}$.
+The portion of the lowest branch with $E\geq E_0$ has the identical
+bound with $a_*$ replaced by $E_0$, by integrating in $q$.
+Thus the infinite tails are exponentially small, including their
+phase volume.
+
+Now use
+$\int_0^\infty E^r\ee^{-\tau E^\gamma}\dd E
+=\Gamma((r+1)/\gamma)\tau^{-(r+1)/\gamma}/\gamma$ for $r>-1$.
+Integrating \eqref{sgt:geo:jacobian} and its uniformly bounded
+remainders gives
+\begin{gather}
+ C_\gamma(\tau)
+ =\frac{G_\gamma}{2\pi}\tau^{-1/\gamma}
+ -\frac{GI_2\Gamma(1+2/\gamma)}{4\pi}\tau^{-2/\gamma}
+ +O(\tau^{-3/\gamma}),
+ \label{sgt:geo:cold-partition}\\
+ C_{Q,\gamma}(\tau)
+ =\frac{VI_3\Gamma(1+3/\gamma)}{24\pi}\tau^{-3/\gamma}
+ +O(\tau^{-4/\gamma}),\notag\\
+ p_{Q,\gamma}(\tau)
+ =\frac{VI_3\Gamma(1+3/\gamma)}{12G_\gamma}
+                       \tau^{-2/\gamma}
+ +O(\tau^{-3/\gamma}).
+ \label{sgt:geo:cold-q}
+\end{gather}
+For $\gamma=1$ the latter leading coefficient is $VI_3/2$;
+for $\gamma=1/2$ it is $30VI_3$.  The excited fraction in
+\eqref{sgt:geo:excited-tail}, divided by $C_\gamma$, is exponentially
+small.  The algebraic term in \eqref{sgt:geo:cold-q} comes instead
+from the rotation of the lowest symbol eigenspace relative to the
+fixed comparison $P$.  These are limiting symbol branches, not a
+claim of exact global band labels for individual curved eigenstates.
+
+The vanishing cases of $V$ can be determined exactly.  With
+$F_i=\sum_{j\leq i}\alpha_j$,
+\[
+ d_{i+1}-d_i=\Delta_i(2F_i-1).
+\]
+Since all weights and gaps are positive, $V=0$ means all $d_i$ coincide.
+For $M\geq2$ this forces every $F_i$ to equal $1/2$, which is possible
+only for $M=2$ with equal weights.  For that profile $T(q)$ has constant
+row sums and $v$ is its top eigenvector at every $q$; the lowest branch
+has exactly zero $Q$ weight and $C_Q=C_{\rm exc}$ is exponentially
+small.  For $M=1$, $Q=0$.  Every unequal two-layer profile and every
+profile with $M\geq3$ has $V>0$ and the algebraic leading term is
+strictly positive.
+
+\section{One-excitation scalar agreement and recoverable information}
+\label{sgt:geo:information-section}
+
+For each fixed integer $p\geq0$ the test
+$g_{p,\tau,\gamma}(b)=(\tau b^{-\gamma})^p\ee^{-\tau b^{-\gamma}}$
+with value zero at $b=0$ belongs to the class already proved.
+It is exponentially flat at zero and has a finite limit at infinity,
+equal to one for $p=0$ and zero for $p>0$.
+Thus, independently of differentiating any asymptotic remainder,
+\begin{equation}
+\begin{gathered}
+ h\Tr[(\tau X_h^{-\gamma})^pA_h(\tau)]
+\\
+ \longrightarrow C_{p,\gamma}(\tau):=\\
+ \frac1{2\pi}\int_\Gamma\int_{\mathbb R}
+\\
+ \operatorname{tr}[(\tau B^{-\gamma})^p\ee^{-\tau B^{-\gamma}}]
+                         \,\dd\xi\dd s,
+ \\
+ C_{0,\gamma}=C_\gamma.
+ \label{sgt:geo:weighted-heat}
+\end{gathered}
+\end{equation}
+Products with inverse powers here denote their bounded spectral
+functions, zero on the inverse kernel.  The same result holds for
+each fixed real $p\geq0$ if desired.  The high-frequency estimate is
+$x^p\ee^{-x}\leq C_p\ee^{-x/2}$; the low-frequency estimate is simply
+boundedness of this scalar test.  These also justify differentiation
+of the limiting symbol integrals:
+$C_{1,\gamma}=-\tau C_\gamma'$ and
+$C_{2,\gamma}=\tau^2C_\gamma''$.
+
+For every fixed $r>0$, $r\ne1$, the exact Gibbs identity
+$\Tr\rho_h^r=Z_h(r\tau)/Z_h(\tau)^r$ gives the Renyi entropy
+\begin{equation}
+ S_r(\rho_h)=\log(1/h)+
+ \frac{\log C_\gamma(r\tau)-r\log C_\gamma(\tau)}{1-r}+o(1).
+ \label{sgt:geo:renyi}
+\end{equation}
+The von Neumann entropy is treated separately, using its exact Gibbs
+identity and the $p=1$ case of \eqref{sgt:geo:weighted-heat}:
+\begin{equation}
+ S(\rho_h)=\log(1/h)+\log C_\gamma(\tau)
+                 +\frac{C_{1,\gamma}(\tau)}{C_\gamma(\tau)}+o(1).
+ \label{sgt:geo:entropy}
+\end{equation}
+Their finiteness at fixed $h$ follows from the spectral exponential
+estimate given after \eqref{sgt:geo:unitary}; no dimension-free entropy
+continuity is used.  Likewise
+\begin{equation}
+ \beta\langle L_h^\gamma\rangle\longrightarrow
+       \frac{C_{1,\gamma}}{C_\gamma},\qquad
+ \beta^2\operatorname{Var}(L_h^\gamma)\longrightarrow
+       \frac{C_{2,\gamma}}{C_\gamma}
+          -\left(\frac{C_{1,\gamma}}{C_\gamma}\right)^2.
+ \label{sgt:geo:energy}
+\end{equation}
+All reference formulas replace $C_\gamma$ by $C_{\mathrm{col},\gamma}$.
+No uniformity in entropy order approaching zero or one, or in an
+unbounded family of moments, is asserted.
+
+To take either endpoint in $\tau$, set
+$\xi=w(s)u/\tau^{1/\gamma}$.  The heat matrix becomes
+\[
+ f_{(2|u|)^\gamma,\gamma}
+       \bigl(T(w(s)|u|/\tau^{1/\gamma})\bigr).
+\]
+Its eigenvalues are bounded by $\ee^{-(2|u|)^\gamma}$ since
+$\norm{T(q)}\leq1$.  This is an integrable common majorant independent
+of $s$ and $\tau$; weighted energy tests have the analogous majorant
+$C_p\ee^{-(2|u|)^\gamma/2}$.  For $u\ne0$, distinct heights give
+$T(w|u|/\tau^{1/\gamma})\to\operatorname{diag}\alpha_i$ as
+$\tau\downarrow0$.  As $\tau\uparrow\infty$ the same matrix tends to
+$P$, and continuity of the spectral function at zero includes its
+kernel.  Dominated convergence applies to traces and matrix trace
+norms, with the extra spatial weight $w(s)$ integrating to one.
+Writing
+$A_{\alpha,\gamma}(u)=\operatorname{diag}
+(\ee^{-(2|u|/\alpha_i)^\gamma})$ and
+$b_\gamma(u)=\ee^{-(2|u|)^\gamma}$, this proves
+\begin{gather}
+ \frac{C_\gamma(\tau)}{C_{\mathrm{col},\gamma}(\tau)}\longrightarrow1,
+ \\
+p_{Q,\gamma}(\tau)\longrightarrow1-\sum_i\alpha_i^2,
+ \notag\\
+ D_\gamma(\tau)\longrightarrow
+ D^*_{\alpha,\gamma}:=\frac1{G_\gamma}\int_0^\infty
+       \operatorname{tr}|A_{\alpha,\gamma}(u)-b_\gamma(u)P|\,\dd u
+ \\
+(\tau\downarrow0),
+ \label{sgt:geo:hot-endpoint}\\
+ \frac{C_\gamma(\tau)}{C_{\mathrm{col},\gamma}(\tau)}\longrightarrow1,
+ \\
+p_{Q,\gamma}(\tau)\longrightarrow0,\\
+ D_\gamma(\tau)\longrightarrow0\\
+(\tau\uparrow\infty).
+ \label{sgt:geo:cold-endpoint}
+\end{gather}
+For normalization, the integral over $\mathbb R$ of the $i$th
+diagonal high-resolution heat is $\alpha_iG_\gamma$, while the
+reference integral is $G_\gamma$.  Thus the normalized trace-distance
+prefactor is $1/(2G_\gamma)$ on the full line, or $1/G_\gamma$ on the
+positive half-line, as written.  Positive limiting denominators and
+the common majorant justify their replacement inside the integral.
+
+The same substitution with $x=(2u/\alpha_i)^\gamma$ gives
+\begin{equation}
+ \frac{C_{p,\gamma}(\tau)}{C_\gamma(\tau)}
+ \longrightarrow\frac{\Gamma(p+1/\gamma)}{\Gamma(1/\gamma)}
+ \quad(\tau\downarrow0).
+ \label{sgt:geo:moment-endpoint}
+\end{equation}
+Indeed the positive-half-line integral of $x^p\ee^{-x}$ is
+$\alpha_i\Gamma(p+1/\gamma)/(2\gamma)$, and the weights sum to one.
+The dimensionless mean and variance in \eqref{sgt:geo:energy} both
+tend to $1/\gamma$.  From \eqref{sgt:geo:renyi}, the partition ratio
+at $\tau$ and at fixed $r\tau$, and \eqref{sgt:geo:entropy}, one obtains
+\begin{equation}
+\begin{gathered}
+ \lim_{\tau\downarrow0}\lim_{h\downarrow0}
+     [S_r(\rho_h)-S_r(\rho_{0,h})]=0,
+ \\
+ \lim_{\tau\downarrow0}\lim_{h\downarrow0}
+     [S(\rho_h)-S(\rho_{0,h})]=0.
+ \label{sgt:geo:scalar-agreement}
+\end{gathered}
+\end{equation}
+These are additive entropy differences.  The limits do not merely
+compare two divergent entropies by their ratio.
+
+For equal weights $\alpha_i=1/M$, put
+$a(u)=\ee^{-(2M u)^\gamma}$ and $b(u)=\ee^{-(2u)^\gamma}$ on $u>0$.
+Since $a\leq b$, the eigenvalues of $aI_M-bP$ give
+$\operatorname{tr}|aI_M-bP|=b+(M-2)a$.
+The integrals of $b$ and $a$ are respectively $G_\gamma/2$ and
+$G_\gamma/(2M)$.  Hence
+\begin{equation}
+ \lim_{\tau\downarrow0}\lim_{h\downarrow0}
+       \frac12\norm{\rho_h-\rho_{0,h}}_1
+ =\lim_{\tau\downarrow0}\lim_{h\downarrow0}\Tr(Q\rho_h)
+ =1-\frac1M.
+ \label{sgt:geo:equal-information}
+\end{equation}
+The binary decision ``multilayer on a $Q$ click, collapsed otherwise''
+has equal-prior error $(1-\Tr(Q\rho_h))/2$, since the reference never
+clicks.  Its iterated limit is $1/(2M)$, equal to the single-copy
+Helstrom optimum from \eqref{sgt:geo:equal-information}.
+For any fixed finite number $N$ of independent copies its any-click
+error tends to $1/(2M^N)$; collective optimality is not needed for this
+last statement.  For unequal weights the $Q$ limit
+$1-\sum_i\alpha_i^2$ remains a valid lower bound on the distance,
+but need not equal the full matrix absolute-value integral.
+
+For completeness that unequal-weight integral has a scalar
+characterization.  The rank-one subtraction
+$A_{\alpha,\gamma}(u)-b_\gamma(u)P$ has exactly one negative eigenvalue
+$-r(u)$ for $u>0$, where $r(u)>0$ is the unique solution of
+\[
+ b_\gamma(u)\sum_i
+ \frac{\alpha_i}{\ee^{-(2u/\alpha_i)^\gamma}+r(u)}=1.
+\]
+The left side at $r=0$ is strictly larger than one for $M\geq2$;
+it decreases continuously to zero.  The rank-one eigenvector equation
+gives the displayed condition and shows that there are no other
+negative eigenvalues.  The signed trace integrates to zero, so
+$D^*_{\alpha,\gamma}=(2/G_\gamma)\int_0^\infty r(u)\dd u$.
+In particular $1-\sum_i\alpha_i^2\leq D^*_{\alpha,\gamma}<1$,
+the strict upper bound following from positive definiteness and the
+strict trace-norm inequality used above.
+
+Every finite-accuracy consequence has the same quantifiers.  First
+choose a finite profile, an accuracy, and a finite list of entropy
+orders, energy moments, and effects.  Choose a sufficiently small
+$\tau$ for their limiting functions, and then a sufficiently small
+$h$ at that fixed $\tau$.  The displayed agreements and distinctions
+then hold simultaneously to that accuracy.  A large but fixed $M$
+can be selected before these limits.  This gives no numerical onset
+or uniform prescription for $M(h)$ or $\tau(h)$.
+
+Finally, a physical bounded Lipschitz multiplication detector $q$ on
+the tube pulls back to
+$\operatorname{diag}(q(T_{i,h}(s)))$.  It differs in norm from
+$q(\mathbf r(s))I_M$ by at most
+$h\max_i|a_i|\operatorname{Lip}(q)$.
+Smooth spatial insertions in \eqref{sgt:geo:general-trace}, followed
+by the same endpoint substitution, give the common limiting
+tangential density $w(s)\dd s$ at both endpoints; uniform approximation
+extends this to continuous bounded spatial tests on the curve.
+The large $Q$ distinction requires coherent comparison of sheet
+amplitudes in the declared alignment.  Neither that unitary
+identification nor the one-excitation entropy calculation supplies
+a common laboratory vacuum, an equilibration mechanism, or a
+many-oscillator thermodynamic assertion.
+
+% Included by the standalone SG-T manuscript; no independent preamble.
+\section{Controlled preparation of the actual one-excitation states}
+\label{sgt:prep:appendix}
+
+Throughout this section the curve, its interior tube, the positive smooth
+density $w$, the distinct layer heights $a_i$, their positive weights
+$\alpha_i$, and the finite layer number $M$ are fixed. We normalize
+$\int_\Gamma w\,\dd s=\sum_i\alpha_i=1$ and use
+\[
+\begin{gathered}
+ \mathcal H=L^2(\Gamma,\dd s)\otimes\mathbb C^M,\\
+ v=(\sqrt{\alpha_1},\ldots,\sqrt{\alpha_M})^T,\\
+ P=vv^*,\\
+ Q=I-P.
+\end{gathered}
+\]
+Here and below $P,Q$ also denote their tensor extensions to $\mathcal H$.
+Let $R_\varepsilon$ be the actual positive Green inverse after conjugation
+from the pushforward masses $\alpha_iw(s)\dd s$ on
+$T_{i,\varepsilon}(s)=\gamma(s)+\varepsilon a_i n(s)$.
+The reference is $R_0=R_{\rm base}\otimes P$.
+The physical eigenvalues of $L_h=R_h^{-1}$, $h\in\{0,\varepsilon\}$,
+are $\lambda_j(L_h)=r_j(R_h)^{-1}$, where $r_j$ lists the positive
+eigenvalues in decreasing order. The reference alignment complement is
+assigned heat zero; it is never inserted as a set of zero-energy modes.
+Here $\varepsilon$ is the geometric separation denoted by $h$ in the
+main text; the local index $h\in\{0,\varepsilon\}$ only selects the
+reference or split candidate in this preparation section.
+All estimates below are uniform only for sufficiently small
+$\varepsilon>0$ with these fixed data.
+
+\subsection{An actual-operator weak trace-ideal estimate}
+\label{sgt:prep:weakS1}
+
+We prove, including the cross-layer coupling, that
+\begin{equation}
+ r_j(R_h)\le \frac{K}{j},\qquad
+ \lambda_j(L_h)\ge c j,\qquad c=K^{-1}>0.
+ \label{sgt:prep:spectral-bound}
+\end{equation}
+Thus $R_h$ is uniformly in the weak trace ideal $\mathfrak S_{1,\infty}$.
+The assertion for $h=0$ concerns only its nonzero physical spectrum.
+
+\paragraph{Uniform diagonal regularity.}
+Let $\ell$ be the length of $\Gamma$, parametrized by arclength.
+On a fixed closed interval $0\le\varepsilon\le\varepsilon_*$, every
+individual offset remains embedded, has speed bounded away from zero,
+and has uniformly bounded derivatives. Its diagonal layer kernel is
+\[
+ R_{ii,\varepsilon}(s,t)=\alpha_i\sqrt{w(s)w(t)}
+ G(T_{i,\varepsilon}(s),T_{i,\varepsilon}(t)).
+\]
+The regular part of the Dirichlet Green function is smooth on the tube
+product, also with any fixed distant Dirichlet masks. The quotient
+\[
+ \frac{|T_{i,\varepsilon}(s)-T_{i,\varepsilon}(t)|}
+ {(\ell/\pi)|\sin(\pi(s-t)/\ell)|}
+\]
+extends positively and smoothly across $s=t$ as a periodic function.
+Indeed, near the diagonal division of the chord by $s-t$ gives the
+integral of the nonvanishing tangent; division of the squared norms
+followed by the positive square root proves smoothness. Away from the
+diagonal compactness and uniform embeddedness give a positive lower
+bound. All fixed orders of derivatives are uniformly bounded.
+Subtracting $-(2\pi)^{-1}\log|2\sin(\pi(s-t)/\ell)|$ therefore leaves
+a uniformly smooth family. For the nonzero Fourier frequencies
+$k_n=2\pi n/\ell$, this logarithmic convolution has multiplier
+$1/(2|k_n|)$. Its zero multiplier is bounded and immaterial to the
+estimate. It maps $L^2$ to $H^1$ boundedly, as do the smooth remainders
+and multiplication by $\sqrt w$. Consequently
+\[
+ \sup_{i,\varepsilon}\|R_{ii,\varepsilon}:L^2\longrightarrow H^1\|<\infty.
+\]
+The embedding $H^1(\Gamma)\hookrightarrow L^2(\Gamma)$ has singular
+values bounded by $C/j$, by the same Fourier basis. Factoring each
+diagonal block through this embedding yields
+$s_j(R_{ii,\varepsilon})\le C_d/j$ with one common constant.
+The base curve obeys the same estimate.
+
+\paragraph{The cross blocks are controlled by positivity.}
+For every positive operator $R$ on a sum of $M$ Hilbert spaces, let
+$E_i$ inject the $i$th summand. Then
+\[
+\begin{gathered}
+ \langle f,Rf\rangle
+ =\left\|\sum_iR^{1/2}E_if_i\right\|^2
+\\
+ \le M\sum_i\|R^{1/2}E_if_i\|^2
+ =M\sum_i\langle f_i,R_{ii}f_i\rangle.
+\end{gathered}
+\]
+Hence, as a form inequality of bounded positive operators,
+\begin{equation}
+ 0\le R_\varepsilon\le
+ M\,\operatorname{diag}(R_{11,\varepsilon},\ldots,R_{MM,\varepsilon}).
+ \label{sgt:prep:positive-block-bound}
+\end{equation}
+Each diagonal block is positive because it is a compression of
+$R_\varepsilon$. The number of its eigenvalues exceeding $t>0$ is at
+most $C_d/t$. The direct sum consequently has at most $MC_d/t$ such
+eigenvalues. Min--max applied to
+\eqref{sgt:prep:positive-block-bound} proves
+\eqref{sgt:prep:spectral-bound}, after enlarging a fixed constant to
+include the reference. No uniform smoothness of a cross-layer kernel
+was assumed. Such a smoothness assertion would fail as the layers
+collide. No constant uniform in growing $M$ or vanishing weights is
+claimed.
+
+\subsection{Heat tails and a common tensor encoding}
+\label{sgt:prep:encoding}
+
+Fix $\tau,\gamma>0$, set $\beta=\tau\varepsilon^\gamma$, and write
+$A_h=\exp(-\beta L_h^\gamma)$ with the reference convention above.
+Retain its first $J$ physical spectral terms in $A_{h,J}$, and put
+$Z_h=\Tr A_h$, $Z_{h,J}=\Tr A_{h,J}$ and
+$T_{h,J}=Z_h-Z_{h,J}$. For $a=\tau c^\gamma$, monotonicity and an
+integral comparison give the explicit all-mode estimate
+\begin{align}
+ T_{h,J}
+ &\le\sum_{j>J}\exp[-a(\varepsilon j)^\gamma]
+ \le\frac1\varepsilon\int_{\varepsilon J}^\infty
+                   \exp(-a x^\gamma)\,\dd x\notag\\
+ &=\frac{\Gamma(1/\gamma,a(\varepsilon J)^\gamma)}
+          {\varepsilon\gamma a^{1/\gamma}}.
+ \label{sgt:prep:tail}
+\end{align}
+Here $\Gamma(s,y)=\int_y^\infty t^{s-1}e^{-t}\dd t$.
+For fixed $s>0$ and $y\ge1$ it is at most $B_s e^{-y/2}$:
+bound $t^{s-1}e^{-t/2}$ on $[1,\infty)$ and integrate the remaining
+exponential. The actual joint heat law, Eq.~\eqref{sgt:geo:heat-law}, gives constants
+$0<z_*\le z^*<\infty$ such that, eventually, under either hypothesis,
+\begin{equation}
+ \frac{z_*}{\varepsilon}\le Z_h\le\frac{z^*}{\varepsilon}.
+ \label{sgt:prep:partition-scale}
+\end{equation}
+For any $0<\delta<1$, equations \eqref{sgt:prep:tail} and
+\eqref{sgt:prep:partition-scale} allow
+\begin{equation}
+ J=\left\lceil\frac{\kappa_\delta}{\varepsilon}\right\rceil,
+ \qquad
+ \kappa_\delta=O\bigl([1+\log(1/\delta)]^{1/\gamma}\bigr),
+ \qquad \frac{T_{h,J}}{Z_h}\le\delta.
+ \label{sgt:prep:cutoff}
+\end{equation}
+The retained and discarded spectral supports are orthogonal, so
+\begin{equation}
+ \frac12\left\|\frac{A_h}{Z_h}
+                  -\frac{A_{h,J}}{Z_{h,J}}\right\|_1
+ =\frac{T_{h,J}}{Z_h}\le\delta.
+ \label{sgt:prep:trace-distance}
+\end{equation}
+This is an asymptotic existence estimate with no certified finite onset.
+
+Let $W\subset L^2(\Gamma,\dd s)$ be the span of all $M$ scalar
+components of the $J$ retained target eigenvectors and the $J$ retained
+base-curve eigenfunctions. Then $n=\dim W\le(M+1)J$ and
+\begin{equation}
+ \mathcal S=W\otimes\mathbb C^M,\qquad
+ D=Mn\le M(M+1)J.
+ \label{sgt:prep:dimension}
+\end{equation}
+Both retained state ranges lie in $\mathcal S$, which reduces every
+fixed transverse matrix. For an orthonormal-basis isometry
+$V_W:\mathbb C^n\to W$, set $V=V_W\otimes I_M$. Thus
+\begin{equation}
+\begin{gathered}
+ \rho_{D,h}=\frac{V^*A_{h,J}V}{Z_{h,J}},\\
+ Q_D=V^*QV=I_n\otimes Q,\\
+ Q_D\rho_{D,0}=0.
+ \label{sgt:prep:common-Q}
+\end{gathered}
+\end{equation}
+The eigenbases of the two actual candidates need not agree.
+For an original physical spatial multiplication effect $M_f$, its
+encoded effect is precisely $V^*M_fV$, generally a dense matrix.
+The physical spatial measurement class remains this compressed family;
+arbitrary output-port effects do not acquire spatial locality by
+being assigned a coordinate label. A fixed layer unitary sending $v$
+to one output implements $Q_D$ in each of the $n$ longitudinal modes.
+Combining one known $M$-component vector uses $M-1$ two-mode rotations,
+hence $O(D)$ elements overall; the physical conversion into the modes
+$W$, routing, and transmission have separate costs.
+
+\paragraph{Weighted tails, rather than an entropy continuity shortcut.}
+Let $y_j=\beta\lambda_j^\gamma$, $q=T_J/Z$, and
+$m=Z^{-1}\sum_j y_je^{-y_j}$. With $m_J$ its retained normalized
+version and $m_{\rm tail}=Z^{-1}\sum_{j>J}y_je^{-y_j}$,
+\[
+\begin{gathered}
+ S(\rho)-S(\rho_J)=-\log(1-q)+m-m_J,
+ \\
+ |m-m_J|\le\frac{m_{\rm tail}+qm}{1-q}.
+\end{gathered}
+\]
+For each fixed $p\ge0$, $y^pe^{-y}\le C_pe^{-y/2}$, so
+\eqref{sgt:prep:tail} at $\tau/2$ controls each chosen moment tail.
+The weighted joint law bounds the full moments. For any selected
+positive R\'enyi order $r\ne1$, use also the cutoff estimate at
+$r\tau$ and the identity
+$S_r=(\log Z(r\beta)-r\log Z(\beta))/(1-r)$.
+Thus a fixed finite list of thermal scalars has controlled truncation
+error with the same dimension order, without an extra
+$\log(1/\varepsilon)$ factor. Arbitrary preparation errors small only
+in trace distance do not imply this stronger assertion at growing
+dimension or for unbounded energy observables.
+
+\subsection{Deliberate single-excitation preparation and its costs}
+\label{sgt:prep:success}
+
+On the common encoded space let $A_{D,h}=V^*A_{h,J}V$ and
+$F_h=A_{D,h}^{1/2}$. Inject a heralded excitation into a uniformly
+random input port, giving $I_D/D$, and apply the passive contraction
+$F_h$. The surviving block, success probability, and conditional state
+are exactly
+\begin{equation}
+ \sigma_h=\frac{A_{D,h}}D,\qquad
+ s_h=\frac{Z_{h,J}}D,\qquad
+ \frac{\sigma_h}{s_h}=\rho_{D,h}.
+ \label{sgt:prep:filter-identity}
+\end{equation}
+In particular,
+\begin{equation}
+ s_h\ge
+ \frac{(1-\delta)z_*}
+ {M(M+1)(\kappa_\delta+\varepsilon)}.
+ \label{sgt:prep:success-floor}
+\end{equation}
+At each fixed accuracy this is a positive lower bound independent of
+small $\varepsilon$. It is preparation of an injected excitation,
+not selection of one quantum from an equilibrium Bose sample. In that
+different protocol the probability is $Z_1/Z_{\rm B}$ and can be
+exponentially small on the joint scale.
+
+The exact dilation
+\[
+ U_F=\begin{pmatrix}
+ F&(I-F^2)^{1/2}\\ (I-F^2)^{1/2}&-F
+ \end{pmatrix}
+\]
+is unitary because its blocks commute. Vacuum auxiliary ports realize
+$F$ on the surviving one-excitation sector. Generic universal
+compilation takes $O(D^2)$ two-mode elements and $O(D)$ depth
+\cite{Clements2016}. Those counts do not establish constant
+transmission: fixed loss per traversal at depth proportional to $D$
+may make the collection probability exponentially small.
+
+An alternative is to draw a retained eigenlabel with its normalized
+Gibbs probability and prepare that known encoded vector. For
+$c\in\mathbb C^D$, pad to $D'=2^d$, $d=\lceil\log_2D\rceil$.
+At each node of a binary splitter tree, split power according to
+the two descendant sums of $|c_i|^2$; at the leaves impose phases
+$\arg c_i$. Induction gives the desired vector with $D'-1=O(D)$
+splitters and depth $d$. Under the explicit assumption of a common
+intensity transmission $\vartheta\in(0,1]$ per level, balanced paths
+and calibrated phases, conditioning on survival preserves the vector
+and
+\[
+ q_{\rm tree}\ge\vartheta^{\lceil\log_2D\rceil}
+ \ge\vartheta D^{-\kappa},\qquad
+ \kappa=-\frac{\log\vartheta}{\log2}.
+\]
+A mere lower bound on unequal path transmissions would not preserve
+the vector. If known label-dependent transmissions $q_j$ preserve
+each individual vector, sample label $j$ with probabilities
+proportional to $p_j/q_j$. Its accepted mixture then has weights $p_j$
+and acceptance $(\sum_jp_j/q_j)^{-1}\ge\min_jq_j$.
+The eigenvectors, their certified approximation, $O(DJ)$ dense
+coefficient storage, $O(D)$ settings per reconfiguration, settling and
+reset are paid resources. This proves a polynomial transmission budget
+only under the stated balanced-loss and polynomial-control assumptions.
+It is neither an efficient continuum eigensolver nor an unknown-specimen
+oracle: a programmed matrix is already known, whereas a specimen
+experiment requires physical access to the unknown generator.
+
+For $N$ accepted copies, source delivery and state-independent
+collection factors $q_{\rm src},q_{\rm col}$ yield mean raw attempt
+count $N/(s_hq_{\rm src}q_{\rm col})$. Failures, source reset and
+filtering time remain charged. A final destructive click can certify
+a completed measured trial; availability of a stored excitation
+requires an actual nondestructive herald. A failed arrival is not a
+measurement of $I-Q$. Acceptance rates, input labels, waiting times,
+or resolved failure channels may themselves reveal the hypothesis;
+claims about conditional normalized copies are not bounds on an
+enlarged experiment retaining those records.
+
+\subsection{Square-root Gibbs weights from ordinary loss}
+\label{sgt:prep:subordination}
+
+For $\gamma=1/2$ the classical subordination identity
+\cite{Garrigos2015} is
+\begin{equation}
+\begin{gathered}
+ e^{-\beta\sqrt L}=\int_0^\infty\ell_\beta(u)e^{-uL}\,\dd u,
+ \\
+ \ell_\beta(u)=\frac{\beta}{2\sqrt\pi\,u^{3/2}}
+              e^{-\beta^2/(4u)}.
+ \label{sgt:prep:subordination-identity}
+\end{gathered}
+\end{equation}
+For completeness, set
+$I(b)=\int_0^\infty e^{-x^2-b^2/x^2}\dd x$ for $b>0$.
+Differentiation under the integral and the substitution $x=b/y$
+give $I'(b)=-2I(b)$. Since $I(0)=\sqrt\pi/2$ by dominated
+convergence, $I(b)=(\sqrt\pi/2)e^{-2b}$.
+The substitution $x=\beta/(2\sqrt u)$ proves the scalar Laplace
+identity in \eqref{sgt:prep:subordination-identity}; the spectral
+theorem proves its operator form. Taking the scalar spectral value
+zero proves that $\ell_\beta$ integrates to one.
+
+Suppose a finite positive supported matrix $L$ has accessible linear
+loss jumps $J_\mu=\sum_i b_{\mu i}a_i$ with $B^*B=L$.
+Under the Lindblad convention
+\[
+ \dot\rho=\sum_\mu
+ \left(J_\mu\rho J_\mu^*
+       -\tfrac12\{J_\mu^*J_\mu,\rho\}\right),
+\]
+every jump from the one-excitation sector enters vacuum. Its surviving
+block therefore evolves as
+$\rho_{\rm surv}(u)=e^{-uL/2}\rho_{\rm surv}(0)e^{-uL/2}$,
+the standard conditional-loss evolution \cite{PlenioKnight1998}.
+Apply this with $L$ the restriction of the actual $L_h$ to its $J$
+retained physical eigenvectors. Project the input $I_D/D$ onto that
+support, counting its unused coordinates as initial failures.
+For sampled duration $u$ the unnormalized survivor is $e^{-uL}/D$.
+Pooling these unnormalized survivors with density $\ell_\beta$
+gives $e^{-\beta\sqrt L}/D$ and hence exactly the state and success
+in \eqref{sgt:prep:filter-identity}. Normalizing at each duration
+before averaging would change the preparation. A commuting coherent
+drift leaves the diagonal surviving block unchanged; a general
+noncommuting drift needs its own control estimate.
+
+\paragraph{A finite maximum duration.}
+The sampled duration has infinite mean. Abort proposed draws $u>U$
+before injection, or resample them classically. Their probability is
+\begin{equation}
+ q_U=\operatorname{erf}\!\left(\frac{\beta}{2\sqrt U}\right)
+ \le\frac{\beta}{\sqrt{\pi U}}.
+ \label{sgt:prep:duration-tail}
+\end{equation}
+Put $A=e^{-\beta\sqrt L}$,
+$A_U=\int_0^U\ell_\beta(u)e^{-uL}\dd u$ and
+$b=\Tr(A-A_U)$. Then $0\le A-A_U\le q_UI_J$ and
+$b\le Jq_U\le Dq_U$. Adding and subtracting $A_U/\Tr A$ gives
+\begin{equation}
+ \frac12\left\|\frac A{\Tr A}-\frac{A_U}{\Tr A_U}\right\|_1
+ \le\frac b{\Tr A}\le\frac{q_U}s,
+ \qquad s=\frac{\Tr A}D.
+ \label{sgt:prep:duration-bias}
+\end{equation}
+If $s_*\le s$ and additional state distance $\delta_p\in(0,1)$
+is allowed, choose
+\begin{equation}
+ U\ge\frac{\beta^2}{\pi\delta_p^2s_*^2}.
+ \label{sgt:prep:duration-cutoff}
+\end{equation}
+Counting all proposed draws gives success at least $(1-\delta_p)s$.
+Resampling before injection gives per-injection success
+$\Tr A_U/[D(1-q_U)]$ and mean classical draw count $1/(1-q_U)$.
+Every injected filtering run lasts at most $U$. At
+$\beta=\tau\sqrt\varepsilon$ and fixed accuracies the chosen $U$
+is $O(\varepsilon)$ in the mathematical clock of $L$.
+
+\paragraph{Exact finite mean with first-loss stopping.}
+Alternatively, assume all losses are promptly and reliably monitored.
+Sample the full duration distribution but stop at the first loss or
+the sampled endpoint. In input eigenmode $j$, the loss time is
+exponential with rate $\lambda_j$, independently of the sampled
+duration. Tonelli's theorem and its Laplace transform give
+\[
+ \mathbb E\min(u,T_j)
+ =\int_0^\infty\Pr(u>t)e^{-\lambda_jt}\dd t
+ =\frac{1-e^{-\beta\sqrt{\lambda_j}}}{\lambda_j}.
+\]
+Including initial support failures with zero filtering time,
+\begin{align}
+ \mathbb ET_{\rm attempt}
+ &=\frac1D\sum_{j\le J}
+     \frac{1-e^{-\beta\sqrt{\lambda_j}}}{\lambda_j}
+ \le\frac{\beta}{D}\sum_{j\le J}\lambda_j^{-1/2}\notag\\
+ &\le\frac{2\beta\sqrt J}{D\sqrt c}=O(\varepsilon),
+ \label{sgt:prep:first-loss}
+\end{align}
+because $D\ge J$ and \eqref{sgt:prep:cutoff} holds.
+The renewal equation gives mean total filter time until acceptance
+$\mathbb ET_{\rm attempt}/s$; time and success need not be independent
+within a trial. The accepted state remains exact on the supported
+spectrum. This supplies a mean, not a maximum, and assumes prompt
+jump registration, controlled false aborts and finite resets. Input
+support sorting and reset times are additional costs.
+
+\subsection{The physical clock, locality, and finite reference support}
+\label{sgt:prep:physical-scope}
+
+Let $\Lambda=\max_{j\le J}\lambda_j$. With maximal implementable loss
+rate $\Gamma_{\rm hw}$ use
+$L_{\rm ph}=(\Gamma_{\rm hw}/\Lambda)L$, so that
+\begin{equation}
+ t_{\rm ph}=\frac{\Lambda}{\Gamma_{\rm hw}}u.
+ \label{sgt:prep:physical-clock}
+\end{equation}
+The needed upper bound $\Lambda=O_\delta(\varepsilon^{-1})$
+does not follow from the lower spectral bound
+\eqref{sgt:prep:spectral-bound}. It follows instead from the actual
+counting law, Eq.~\eqref{sgt:geo:counting}: its coefficient satisfies
+$\mathcal N_\alpha(E)/E\to1/(2\pi)$ as $E\to\infty$.
+Indeed the local matrix $S(q)$ tends to
+$\operatorname{diag}(\alpha_i)$, its inverse-energy branches obey
+$e_i(s,q)\sim2q/[w(s)\alpha_i]$, and their radial crossings satisfy
+$q_i(s,E)/E\to w(s)\alpha_i/2$, uniformly in $s$.
+Integrate and use the two angular signs and total mass one.
+Choose a fixed $E$ with $\mathcal N_\alpha(E)>\kappa_\delta$,
+and similarly for the base reference. The strict margin in the actual
+limit $\varepsilon\#\{\lambda_j\le E/\varepsilon\}
+\to\mathcal N_\alpha(E)$ pays the ceiling in $J$.
+Thus \eqref{sgt:prep:duration-cutoff} gives a bounded maximum
+physical filter time $O_{\delta,\delta_p,\tau}(\Gamma_{\rm hw}^{-1})$,
+and \eqref{sgt:prep:first-loss} gives a bounded mean with monitoring.
+This does not provide a numerical onset, a uniform simultaneous
+$\delta(\varepsilon)\to0$ estimate, or a size-independent realizable
+$\Gamma_{\rm hw}$.
+
+If a mass-normalized graph stiffness actually has
+\[
+\begin{gathered}
+ K=\sum_{ij}g_{ij}(e_i-e_j)(e_i-e_j)^*
+       +\sum_i g_{i0}e_ie_i^*,\\
+ L=M_b^{-1/2}KM_b^{-1/2},\\
+ M_b=\operatorname{diag}(m_i)>0,
+\end{gathered}
+\]
+the jumps
+$\sqrt{g_{ij}}(a_i/\sqrt{m_i}-a_j/\sqrt{m_j})$ and
+$\sqrt{g_{i0}/m_i}\,a_i$ implement that $L$.
+Their neighboring modes require a common loss reservoir.
+For the actual curve operator, eliminating the carrier gives a
+Dirichlet-to-Neumann map, or on a mesh the Schur complement
+\[
+\begin{gathered}
+ K_{\rm eff}=K_{BB}-K_{BI}K_{II}^{-1}K_{IB},\\
+ L_{\rm eff}=M_B^{-1/2}K_{\rm eff}M_B^{-1/2}.
+\end{gathered}
+\]
+This is generally dense even if the uneliminated carrier is local
+\cite{DorflerBullo2013}. Static elimination does not establish that
+ordinary local bulk damping produces $e^{-uL_{\rm eff}}$ on the
+boundary. Positive bulk inertia adds dynamical modes and a
+frequency-dependent elimination. A specimen construction must prove
+its common mode map, generator approximation, heat and weighted-tail
+errors, and resources across the growing band.
+
+When $\lambda_j$ denotes squared mechanical frequency, a retained
+single excitation has maximum frequency
+$O_\delta(\varepsilon^{-1/2})$ and its energy, in fixed physical
+units, must be supplied and reset. An optical path encoding at a
+fixed photon carrier reproduces the encoded state; that carrier
+energy is not the mechanical excitation energy. Native mechanical
+oscillators with different frequency matrices generally have
+different annihilation operators and vacua, related by a Bogoliubov
+transformation. Second quantization of the mathematical $L^2$
+alignment specifies a common number-conserving Fock model; it does
+not prove a passive, vacuum-preserving laboratory identification.
+
+A valid continuum soft reference retaining longitudinal coercivity is
+\[
+ H_{\rm soft}=L_{\rm base}^{\gamma}\otimes I_M+\Delta I\otimes Q.
+\]
+Its one-excitation Gibbs weight on $Q$ and its trace distance from the
+hard reference are both
+\begin{equation}
+ p_{Q,\rm soft}=
+ \frac{(M-1)e^{-\beta\Delta}}
+ {1+(M-1)e^{-\beta\Delta}}.
+ \label{sgt:prep:soft-reference}
+\end{equation}
+Hence error at most $\delta_{\rm ref}$ follows from
+$\beta\Delta\ge
+\log[(M-1)(1-\delta_{\rm ref})/\delta_{\rm ref}]$ when this is positive.
+A constant penalty on an otherwise dispersionless infinite $Q$ space
+would have infinite thermal degeneracy. Also a spring changes squared
+frequencies; it does not automatically realize the displayed additive
+frequency-Hamiltonian penalty. Full Bose vacuum-reference accuracy
+has a separate population budget, as discussed with the Bose model.
+
+\paragraph{Error and resource bookkeeping.}
+If the continuum truncation distance is $\delta$, the additional
+preparation distance is $\delta_p$, and the effect error is at most
+$\delta_Q$ in operator norm, the measured $Q$ probability differs
+from its continuum value by at most $\delta+\delta_p+\delta_Q$.
+For two contractions $F,\widetilde F$ with
+$\|\widetilde F-F\|\le d_F$,
+\[
+ \left\|\frac{\widetilde F\widetilde F^*-FF^*}{D}\right\|_1
+ \le2d_F,
+ \qquad D_{\rm tr}(\widetilde\rho,\rho)\le\frac{2d_F}{s},
+\]
+provided the perturbed successful output is nonzero. The first bound
+follows by expanding the difference into two products and using
+$\|X\|_1\le D\|X\|$; the second follows by comparing normalizations.
+This is a whole-device norm tolerance, not a constant allowance on
+each of $O(D^2)$ optical elements. Mode-dependent damping changes
+the state. Even an extra scalar damping rate reweights the random
+durations in the pooled subordination experiment and cannot generally
+be removed as one overall transmission number. A sufficient small-loss
+condition over a physical shot of duration $T$ is
+$\max_j\kappa_jT\le\delta_{\rm loss}$; for
+$\kappa_j=\omega_j/Q_{{\rm mech},j}$ this requires
+$Q_{{\rm mech},j}\ge\omega_jT/\delta_{\rm loss}$.
+Preparation and measured-copy cost therefore includes geometry and
+coefficient computation, compilation and calibration, followed by
+\[
+ \frac{N}{s q_{\rm src}q_{\rm col}}
+ \bigl(\text{injection}+
+       \text{filter time}+\text{reset}+\text{readout}\bigr),
+\]
+with a renewal expectation for variable-duration trials and actual
+conditional transmission where it is state dependent. Storage,
+number resolution, dark counts, additional mode conversion and
+control updates are separate resources. Only the ideal acceptance
+floor and the displayed conditional filter-time estimates are proved
+here.
+
+% Standalone proof content for the SG-T manuscript.  Included after the
+% geometric and controlled-preparation appendices; no private-note inputs.
+\section{Full Bose ensembles: counting, thermodynamics and receiver costs}
+\label{sgt:bose:appendix}
+
+The normalized one-excitation heat state and the full bosonic equilibrium
+state are different statistical experiments.  This appendix constructs the
+second experiment in a specified common number-conserving representation,
+proves its counting and thermodynamic laws, and identifies the resources
+behind its discrimination bounds.  Its physical premise is a common
+annihilation-mode encoding.  The geometric $L^2$ identification alone does
+not establish that premise.
+
+\subsection{The ensemble and the spectral estimates used below}
+\label{sgt:bose:model}
+
+Fix the curve, carrier and permitted distant masks, the smooth positive
+density $w$ with $\int_\Gamma w\,\dd s=1$, and a finite profile with $M\ge2$
+distinct heights $a_j$ and weights $\alpha_j>0$, $\sum_j\alpha_j=1$.
+All these data, the exponent $\gamma>0$ and $\tau>0$ are fixed before
+$h\downarrow0$.  Set
+\begin{equation}
+\begin{gathered}
+ \mathfrak h=L^2(\Gamma,\dd s)\otimes\mathbb C^M,
+ \\
+ v=(\sqrt{\alpha_j})_{j=1}^M,\\
+ P=vv^*,\\
+ Q=I-P,\\
+ \beta=\tau h^\gamma.
+ \label{sgt:bose:parameters}
+\end{gathered}
+\end{equation}
+We also use $P,Q$ for their tensor extensions to $\mathfrak h$.
+Write $R_{1,h}=R_h$ for the actual positive Green operator and
+$L_{1,h}=R_h^{-1}$ for its positive mass eigenvalue operator.  The
+collapsed physical Green operator is $R_{0,h}=\widetilde R$ on
+$L^2(\Gamma)$, independent of $h$, and
+$L_{0,h}=L_0=\widetilde R^{-1}$.  The map $f\mapsto f\otimes v$
+identifies this scalar physical space with $P\mathfrak h$.  An inverse power of the aligned collapsed operator
+is used only through its heat, extended by zero on $Q\mathfrak h$.
+In particular define
+\begin{equation}
+\begin{gathered}
+ \Theta_{1,h}=A_h=\ee^{-\beta L_{1,h}^{\gamma}},\\
+ \Theta_{0,h}=A_{0,h}=\ee^{-\beta L_0^{\gamma}}\otimes P,
+ \\
+ N_{i,h}=\Theta_{i,h}(I-\Theta_{i,h})^{-1}.
+ \label{sgt:bose:heat-covariance}
+\end{gathered}
+\end{equation}
+Thus $\Theta_{1,h},\Theta_{0,h}$ are local aliases for the heat
+operators $A_h,A_{0,h}$, whereas the scaled Green operator in the
+geometric appendix is $X_h=R_h/h$.  The index $i=0$ always refers to the
+physical collapsed spectrum with a vacuum extension on $Q$.
+
+The uniform spectral bound proved in
+\eqref{sgt:prep:spectral-bound} gives constants $c,C>0$, independent of sufficiently
+small $h$, such that the nonzero physical eigenvalues satisfy
+\begin{equation}
+\begin{gathered}
+ r_j(R_{i,h})\le Cj^{-1},\\
+ \lambda_j(L_{i,h})\ge cj,\\
+ j\ge1,\\
+ i=0,1.
+ \label{sgt:bose:spectral-input}
+\end{gathered}
+\end{equation}
+There are no additional zero-energy eigenvalues on the reference
+complement.  Recall why the estimate is uniform: each diagonal self-curve
+Green block is a weighted periodic logarithmic operator plus a uniformly
+smooth remainder and maps $L^2$ to $H^1$ uniformly.  Its singular values
+are $O(j^{-1})$.  Positivity of the full block operator gives
+$0\le R_h\le M\operatorname{diag}(R_{11,h},\ldots,R_{MM,h})$ by applying
+$\|\sum_{j=1}^M y_j\|^2\le M\sum_j\|y_j\|^2$ to
+$y_j=R_h^{1/2}I_jx_j$.  Min--max and the fixed finite direct sum give
+\eqref{sgt:bose:spectral-input}.  Thus this argument never requires
+off-diagonal collision kernels to remain uniformly smooth.
+
+For any $t>0$, decreasing-integral comparison yields
+\begin{gather}
+ \Tr\ee^{-tL_{i,h}^{\gamma}}
+ \le\sum_{j\ge1}\ee^{-t(cj)^\gamma}
+ \le\int_0^\infty\ee^{-t(cx)^\gamma}\,\dd x
+ \le K_\gamma t^{-1/\gamma},
+ \label{sgt:bose:heat-bound}\\
+ h\Tr\!\left[(k\beta L_{i,h}^{\gamma})^p
+                 \ee^{-k\beta L_{i,h}^{\gamma}}\right]
+ \le K_{p,\gamma}(k\tau)^{-1/\gamma},
+ \\
+ k\ge1,\\
+ p=0,1,2.
+ \label{sgt:bose:weighted-bound}
+\end{gather}
+The second estimate follows for $p>0$ from
+$x^p\ee^{-x}\le c_p\ee^{-x/2}$; all reference traces are on its
+physical spectrum.  For each fixed $h>0$, $\Theta_{i,h}$ is positive
+trace class with norm less than one.  Therefore $N_{i,h}$ is positive
+trace class.  The same lower spectral bound implies
+\begin{equation}
+ \|N_{i,h}\|\le C h^{-\gamma},\qquad
+ \nu_j(N_{i,h})\le C h^{-\gamma}j^{-\gamma},
+ \label{sgt:bose:occupation-bound}
+\end{equation}
+where $\nu_j$ are the decreasing nonzero eigenvalues.  These estimates,
+not the bounded heat-test theorem alone, control the Bose singularity
+at small dimensionless energy.
+
+For a contraction $T$ on $\mathfrak h$, let
+$\Gamma_{\mathrm s}(T)=\bigoplus_{n\ge0}T^{\otimes_{\mathrm s}n}$,
+with value one on the vacuum sector.  On
+$\mathcal F_{\mathrm s}(\mathfrak h)$, define
+\begin{equation}
+ \mathcal Z_{i,h}=\det(I-\Theta_{i,h})^{-1},\qquad
+ \varrho_{i,h}=\det(I-\Theta_{i,h})\Gamma_{\mathrm s}(\Theta_{i,h}).
+ \label{sgt:bose:state}
+\end{equation}
+Diagonalizing $\Theta$ with eigenvalues $0\le\theta_j<1$ gives
+$\Tr_{\mathcal F}\Gamma_{\mathrm s}(\Theta)=\prod_j(1-\theta_j)^{-1}$.
+The product is finite because
+$\sum_j-\log(1-\theta_j)\le\Tr\Theta/(1-\|\Theta\|)$.
+This proves existence and normalization, including the infinite number
+of physical modes.  The signal has excitation Hamiltonian
+$\mathcal H_{1,h}=\mathrm d\Gamma(L_{1,h}^{\gamma})$.
+The reference is the Gibbs state of $\mathrm d\Gamma(L_0^\gamma)$ on
+$\mathcal F_{\mathrm s}(P\mathfrak h)$, tensored with exact vacuum on
+$\mathcal F_{\mathrm s}(Q\mathfrak h)$.  It can be described as exclusion
+of that sector at infinite energy; it is not a finite-energy Gibbs
+Hamiltonian on the whole common space.  All energies below are excitation
+energies relative to these stipulated vacua; no zero-point or Casimir
+energy comparison is included.  The isolated Hamiltonian conserves total
+number, while preparation at zero chemical potential allows a bath to
+exchange quanta.  A fixed-total-number canonical ensemble is a different
+model.
+
+\subsection{A noncommuting counting determinant}
+\label{sgt:bose:determinant-section}
+
+Let $E$ be any orthogonal projection on $\mathfrak h$ and
+$0\le\eta\le1$ the independent detection efficiency.  The no-detection
+effect is $\Gamma_{\mathrm s}(I-\eta E)$, since its value on $m$ quanta
+in $E\mathfrak h$ is $(1-\eta)^m$.  At $\eta=1$ this means the vacuum
+projector on that factor, including value one at $m=0$.
+For either state in \eqref{sgt:bose:state}, or for any positive
+trace-class $\Theta$ of norm less than one, one has
+\begin{equation}
+ p_{\mathrm{no}}(\eta,E)
+ =\det_{E\mathfrak h}(I_E+\eta ENE)^{-1},
+ \qquad N=\Theta(I-\Theta)^{-1}.
+ \label{sgt:bose:no-click}
+\end{equation}
+In particular $E$ need not commute with $\Theta$, $N$ or the energy.
+
+To prove the formula, put $T=I-\eta E$.  Multiplicativity of second
+quantization and a positive cyclic sandwich give
+\begin{align*}
+ \Tr_{\mathcal F}\bigl[\Gamma_{\mathrm s}(\Theta)
+                                \Gamma_{\mathrm s}(T)\bigr]
+ &=\Tr_{\mathcal F}\Gamma_{\mathrm s}
+                  (\Theta^{1/2}T\Theta^{1/2})\\
+ &=\det(I-\Theta+\eta\Theta^{1/2}E\Theta^{1/2})^{-1}.
+\end{align*}
+The cyclic step is legitimate: $\Gamma_{\mathrm s}(\Theta^{1/2})$ is
+Hilbert--Schmidt because its squared Hilbert--Schmidt norm equals
+$\Tr_{\mathcal F}\Gamma_{\mathrm s}(\Theta)<\infty$, and
+$\Gamma_{\mathrm s}(T)$ is bounded.  The sandwich is positive, trace
+class and bounded above by $\Theta$, so the partition product applies.
+Factor the one-particle determinant by $I-\Theta$ to obtain
+$\det(I+\eta N^{1/2}EN^{1/2})^{-1}$ after normalization.
+For completeness, the required determinant algebra can first be applied
+to spectral truncations $\Theta_m$; then
+$\Theta_m\to\Theta$ and $N_m\to N$ in trace norm, and all displayed
+positive sandwiches converge in trace norm.  Continuity of the
+Fredholm determinant passes the finite-dimensional identities to the
+limit.  Finally $N^{1/2}E$ and $EN^{1/2}$ are Hilbert--Schmidt and the
+identity $\det(I+XY)=\det(I+YX)$ moves the determinant to
+$E\mathfrak h$.  This proves \eqref{sgt:bose:no-click}.  The
+finite-dimensional Fock trace identity is classical
+\cite{Klich2002}; the preceding argument supplies the needed trace-class
+extension.
+
+The same calculation gives the probability generating function for the
+detected $E$-count $K$:
+\begin{equation}
+ \mathbb E z^K
+   =\det_{E\mathfrak h}
+       [I_E+\eta(1-z)ENE]^{-1},\qquad 0\le z\le1.
+ \label{sgt:bose:pgf}
+\end{equation}
+It follows either by conditioning the independent loss on the number
+in $E$, or by replacing $\eta$ in the no-click identity with
+$\eta(1-z)$.
+
+For $q=|\xi|>0$, retain the geometric symbol
+\begin{equation}
+\begin{gathered}
+ B(s,\xi)=\frac{w(s)}{2q}
+   [\sqrt{\alpha_i\alpha_j}\ee^{-q|a_i-a_j|}]_{i,j=1}^M,
+ \\
+ C_{Q,\gamma}(t)=\frac1{2\pi}\int_\Gamma\int_{\mathbb R}
+            \operatorname{tr}(Q\ee^{-tB(s,\xi)^{-\gamma}})
+                         \,\dd\xi\,\dd s.
+ \label{sgt:bose:Q-coefficient}
+\end{gathered}
+\end{equation}
+The heat law \eqref{sgt:geo:heat-law}, with its fixed matrix insertion,
+gives $h\Tr(Q\Theta_{1,h})\to C_{Q,\gamma}(\tau)>0$.
+Positivity is strict: $B(s,\xi)>0$ for $\xi\ne0$, and $Q$ is a
+nonzero projection.  Since $N\ge\Theta$, positive compression,
+eigenvalue monotonicity and
+$\log(1+\eta x)\ge x\log(1+\eta)$ for $0\le x\le1$ show that
+\begin{equation}
+\begin{gathered}
+ -\log p_{\mathrm{no}}(\eta,Q)
+ =\Tr_Q\log(I_Q+\eta QNQ)
+\\
+ \ge\log(1+\eta)\Tr(Q\Theta).
+ \label{sgt:bose:exponent}
+\end{gathered}
+\end{equation}
+Consequently, for every fixed $0<\eta\le1$ and any
+$0<c<\log(1+\eta)C_{Q,\gamma}(\tau)$, all sufficiently small $h$ satisfy
+\begin{equation}
+\begin{gathered}
+ p_{\mathrm{no},1}(\eta,Q)\le\ee^{-c/h},\\
+ P_{\mathrm{err}}^{\mathrm{click}}
+   =\tfrac12p_{\mathrm{no},1}(\eta,Q)\le\tfrac12\ee^{-c/h},
+ \\
+ \tfrac12\|\varrho_{1,h}-\varrho_{0,h}\|_1
+     \ge1-p_{\mathrm{no},1}(\eta,Q)\longrightarrow1.
+ \label{sgt:bose:ideal-error}
+\end{gathered}
+\end{equation}
+The equal-prior rule declares the signal if any transverse quantum is
+detected.  The reference has zero false-positive probability because
+$QN_{0,h}=0$.  The trace-distance lower bound follows by using this
+same effect in the variational characterization of trace distance.
+No claim of finite-$h$ Helstrom optimality is made.  For $k$ independent
+whole preparations and the ideal reference, an any-click-across-gates
+rule has error $p_{\mathrm{no},1}^k/2$; it consumes $k$ whole thermal
+samples.
+
+Finite Fourier detection suffices.  If $D_s=-\mathrm i\partial_s$ on
+the periodic curve of length $\ell_\Gamma$ and $0<d<R<\infty$ are fixed,
+let $E_h=\one_{\{d<|hD_s|<R\}}\otimes Q$.  Then
+\begin{gather}
+ \operatorname{rank}E_h
+   =\frac{(M-1)\ell_\Gamma(R-d)}{\pi h}+O(1),
+ \label{sgt:bose:band-rank}\\
+ h\Tr(E_h\Theta_{1,h})
+\\
+   \longrightarrow\frac1{2\pi}
+       \int_\Gamma\int_{d<|\xi|<R}
+          \operatorname{tr}(Q\ee^{-\tau B^{-\gamma}})
+                       \,\dd\xi\,\dd s>0.
+ \label{sgt:bose:band-signal}
+\end{gather}
+The second assertion is the sharp Fourier insertion law
+\eqref{sgt:geo:band-law}.  Its treatment of the discontinuous band edges
+uses smooth multiplier insertions, then bounds the two transition strips
+by their $O(\text{strip width}/h)$ ranks and $0\le\Theta\le I$.
+Thus it concerns the actual geometric heat and its complete tails.
+Applying \eqref{sgt:bose:exponent} to $E_h$ proves an exponential
+error bound with finitely many, $O(h^{-1})$, measured modes.  This rank
+count does not supply a bandwidth, a mode converter or a simultaneous
+readout apparatus.
+
+\subsection{All-mode Bose thermodynamics and the price of one sample}
+\label{sgt:bose:thermodynamics}
+
+For $p=0,1,2$ define the split coefficients
+\begin{equation}
+\begin{gathered}
+ C_{p,\gamma}(t)=\frac1{2\pi}
+  \int_\Gamma\int_{\mathbb R}
+   \operatorname{tr}\bigl[(tB^{-\gamma})^p
+                              \ee^{-tB^{-\gamma}}\bigr]
+                             \,\dd\xi\,\dd s,
+ \\
+ C_\gamma=C_{0,\gamma}.
+ \label{sgt:bose:weighted-coefficients}
+\end{gathered}
+\end{equation}
+Reference coefficients will carry a superscript $\mathrm{col}$, to
+distinguish a collapsed index from the moment order $p=0$.
+The actual convergence to these integrals is
+\eqref{sgt:geo:weighted-heat}.  Put
+\begin{equation}
+\begin{gathered}
+ \mathcal L_\gamma(\tau)=\sum_{k\ge1}\frac{C_\gamma(k\tau)}k,
+ \\
+ \mathcal E_\gamma(\tau)=\sum_{k\ge1}\frac{C_{1,\gamma}(k\tau)}k,
+ \\
+ \mathcal V_\gamma(\tau)=\sum_{k\ge1}\frac{C_{2,\gamma}(k\tau)}k.
+ \label{sgt:bose:scalar-coefficients}
+\end{gathered}
+\end{equation}
+All three series converge for every fixed $\gamma>0$ and $\tau>0$.
+With $\langle\cdot\rangle_{1,h}$ denoting expectation in the signal
+state, the limits are
+\begin{gather}
+ h\log\mathcal Z_{1,h}\longrightarrow\mathcal L_\gamma(\tau),
+ \\
+h\beta\langle\mathcal H_{1,h}\rangle_{1,h}
+    \longrightarrow\mathcal E_\gamma(\tau),\nonumber\\
+ h\beta^2\operatorname{Var}_{1,h}(\mathcal H_{1,h})
+    \longrightarrow\mathcal V_\gamma(\tau),
+ \\
+hS(\varrho_{1,h})
+    \longrightarrow\mathcal L_\gamma(\tau)+\mathcal E_\gamma(\tau).
+ \label{sgt:bose:scalar-laws}
+\end{gather}
+For each fixed $r>0$, $r\ne1$, the R\'enyi entropy satisfies
+\begin{equation}
+ hS_r(\varrho_{1,h})\longrightarrow
+ \frac{\mathcal L_\gamma(r\tau)-r\mathcal L_\gamma(\tau)}{1-r}.
+ \label{sgt:bose:renyi-law}
+\end{equation}
+The same statements hold for the collapsed physical ensemble.
+
+Here are the convergent expansions that prove these claims.  Each
+physical normal mode of energy $\omega$ has a geometric occupation of
+mean $(\ee^{\beta\omega}-1)^{-1}$ and variance
+$\ee^{\beta\omega}/(\ee^{\beta\omega}-1)^2$; different normal modes
+are independent by the product state.  Expanding the geometric series
+and using nonnegative sums gives
+\begin{align}
+ \log\mathcal Z_{1,h}
+    &=\sum_{k\ge1}\frac1k\Tr\Theta_{1,h}^k,
+ \nonumber\\
+ \beta\langle\mathcal H_{1,h}\rangle_{1,h}
+    &=\sum_{k\ge1}\frac1k
+      \Tr\bigl[(k\beta L_{1,h}^{\gamma})
+                   \ee^{-k\beta L_{1,h}^{\gamma}}\bigr],
+ \nonumber\\
+ \beta^2\operatorname{Var}_{1,h}(\mathcal H_{1,h})
+    &=\sum_{k\ge1}\frac1k
+      \Tr\bigl[(k\beta L_{1,h}^{\gamma})^2
+                   \ee^{-k\beta L_{1,h}^{\gamma}}\bigr].
+ \label{sgt:bose:series-proof}
+\end{align}
+After multiplication by $h$, \eqref{sgt:bose:weighted-bound} dominates
+each term by a constant times $k^{-1-1/\gamma}$, a summable sequence for
+every $\gamma>0$.  The weighted heat theorem therefore applies
+term by term, proving the first three limits.  Finiteness at each $h$
+and the exact Gibbs identity
+$S=\log\mathcal Z+\beta\langle\mathcal H\rangle$ prove the entropy
+limit.  Similarly
+$\Tr\varrho_{1,h}^r=\mathcal Z_{1,h}(r\beta)/\mathcal Z_{1,h}(\beta)^r$
+proves \eqref{sgt:bose:renyi-law}.  This argument does not differentiate
+an uncontrolled asymptotic remainder or invoke entropy continuity in
+unbounded dimension.
+
+Occupation laws require the additional restriction $0<\gamma<1$.
+In this range define
+\begin{equation}
+\begin{gathered}
+ \mathsf n_1=\mathcal N_\gamma(\tau)=\sum_{k\ge1}C_\gamma(k\tau),
+ \\
+ \mathsf n_Q=\mathcal N_{Q,\gamma}(\tau)
+      =\sum_{k\ge1}C_{Q,\gamma}(k\tau)>0.
+ \label{sgt:bose:number-coefficients}
+\end{gathered}
+\end{equation}
+Because $N_{1,h}=\sum_{k\ge1}\Theta_{1,h}^k$ in trace norm, the heat
+bound now supplies the summable majorant $k^{-1/\gamma}$.  Positivity
+also bounds a $Q$-inserted trace by the total trace.  Hence
+\begin{equation}
+\begin{gathered}
+ h\Tr N_{1,h}\longrightarrow \mathsf n_1,
+ \\
+ h\Tr(QN_{1,h})\longrightarrow \mathsf n_Q,
+ \\
+ h\Tr N_{0,h}\longrightarrow \mathsf n_0
+      :=\mathcal N^{\mathrm{col}}_\gamma(\tau).
+ \label{sgt:bose:number-law}
+\end{gathered}
+\end{equation}
+For $\gamma\ge1$ this dominating series is not summable, so no
+$h^{-1}$ occupation law is asserted here.  This restriction does not
+affect \eqref{sgt:bose:scalar-laws}--\eqref{sgt:bose:renyi-law}.
+The cost of a whole preparation, for $0<\gamma<1$, is consequently
+\begin{equation}
+ \langle\mathrm d\Gamma(I)\rangle_{1,h}
+     =\frac{\mathsf n_1+o(1)}h,
+ \qquad
+ \langle\mathcal H_{1,h}\rangle_{1,h}
+     =\frac{\mathcal E_\gamma(\tau)+o(1)}{\tau h^{1+\gamma}}.
+ \label{sgt:bose:resources}
+\end{equation}
+In particular the frequency exponent $\gamma=1/2$ requires
+$O(h^{-1})$ mean quanta and $O(h^{-3/2})$ mean excitation energy, with
+strictly positive leading coefficients.  Equilibration, source and
+reset times, dissipation, and conversion work are additional resources.
+
+Conditioning \eqref{sgt:bose:state} on exactly one excitation gives
+the normalized one-particle heat state.  Its exact probability is
+\begin{equation}
+\begin{gathered}
+ p_{1,h}=\frac{\Tr\Theta_{1,h}}{\mathcal Z_{1,h}},
+ \\
+ p_{1,h}\le(\Tr\Theta_{1,h})\ee^{-\Tr\Theta_{1,h}},
+ \\
+ h\log p_{1,h}\longrightarrow-\mathcal L_\gamma(\tau)<0.
+ \label{sgt:bose:postselection}
+\end{gathered}
+\end{equation}
+The inequality follows from $-\log(1-x)\ge x$.  For the last limit,
+$h\Tr\Theta_{1,h}\to C_\gamma(\tau)>0$ implies
+$h\log\Tr\Theta_{1,h}\to0$, while the partition limit is already
+proved.  Thus the full-ensemble receiver avoids an exponentially rare
+conditioning event by using a different sample, with the extensive
+cost in \eqref{sgt:bose:resources}.
+
+The reference coefficients can be evaluated explicitly.  Put
+$\sigma=1/\gamma$ and $d_\gamma=\Gamma(1+\sigma)/(2\pi)$.
+Integration of the rank-one reference symbol gives
+$C_\gamma^{\mathrm{col}}(t)=d_\gamma t^{-\sigma}$,
+$C_{1,\gamma}^{\mathrm{col}}=\sigma C_\gamma^{\mathrm{col}}$ and
+$C_{2,\gamma}^{\mathrm{col}}=\sigma(\sigma+1)C_\gamma^{\mathrm{col}}$.
+The corresponding Bose constants are
+\begin{gather}
+ \mathcal L_\gamma^{\mathrm{col}}
+  =d_\gamma\zeta(1+\sigma)\tau^{-\sigma},
+ \\
+\mathcal E_\gamma^{\mathrm{col}}
+  =\sigma d_\gamma\zeta(1+\sigma)\tau^{-\sigma},\nonumber\\
+ \mathcal V_\gamma^{\mathrm{col}}
+  =\sigma(\sigma+1)d_\gamma\zeta(1+\sigma)\tau^{-\sigma},
+ \\
+\mathcal N_\gamma^{\mathrm{col}}
+  =d_\gamma\zeta(\sigma)\tau^{-\sigma}\\
+(\sigma>1).
+ \label{sgt:bose:reference-coefficients}
+\end{gather}
+The zeta function here is simply $\zeta(s)=\sum_{k\ge1}k^{-s}$ on
+its convergent real range.
+
+The high-resolution endpoints of the geometric theorem,
+\eqref{sgt:geo:hot-endpoint} and \eqref{sgt:geo:moment-endpoint},
+extend to these convergent sums:
+\begin{equation}
+ \frac{\mathcal L_\gamma}{\mathcal L_\gamma^{\mathrm{col}}},\quad
+ \frac{\mathcal E_\gamma}{\mathcal E_\gamma^{\mathrm{col}}},\quad
+ \frac{\mathcal V_\gamma}{\mathcal V_\gamma^{\mathrm{col}}}
+ \longrightarrow1\qquad(\tau\downarrow0),
+ \label{sgt:bose:hot-scalars}
+\end{equation}
+and, for $0<\gamma<1$,
+\begin{equation}
+ \frac{\mathcal N_\gamma}{\mathcal N_\gamma^{\mathrm{col}}}
+   \longrightarrow1,
+ \qquad
+ \frac{\mathcal N_{Q,\gamma}}{\mathcal N_\gamma}
+   \longrightarrow1-\sum_{j=1}^M\alpha_j^2.
+ \label{sgt:bose:hot-numbers}
+\end{equation}
+To check the interchange in this second, successive limit, the eigenvalues
+of the transverse matrix in $B$ are at most its trace one.  With
+$\xi=w(s)t^{-1/\gamma}u$, this gives
+$C_{p,\gamma}(t)\le c_p t^{-1/\gamma}$ for all $t>0$, using
+$x^p\ee^{-x}\le c_p\ee^{-x/2}$ if necessary.  Thus
+$\tau^{1/\gamma}C_{p,\gamma}(k\tau)$ is bounded by a constant times
+$k^{-1/\gamma}$, independently of $\tau$.  The already proved hot
+endpoint for each fixed $k$ and dominated convergence prove
+\eqref{sgt:bose:hot-scalars}; for numbers the same argument is summable
+exactly when $\gamma<1$.  The $Q$ endpoint has the extra factor
+$1-\sum_j\alpha_j^2$, proving \eqref{sgt:bose:hot-numbers}.
+It follows in particular that the von Neumann entropy coefficient and
+each fixed positive-order R\'enyi entropy coefficient have ratio one
+to their collapsed counterparts.  For $r\ne1$ the latter counterpart is
+\begin{equation}
+ d_\gamma\zeta(1+\sigma)\tau^{-\sigma}
+                  \frac{r^{-\sigma}-r}{1-r}>0;
+ \label{sgt:bose:reference-renyi}
+\end{equation}
+the separate $r=1$ coefficient is
+$(1+\sigma)d_\gamma\zeta(1+\sigma)\tau^{-\sigma}$.
+
+These are ratios of extensive full-Fock coefficients.  They are not the
+additive one-excitation entropy agreement.  Indeed the strict geometric
+partition deficit \eqref{sgt:geo:partition-deficit} implies, term by term,
+\begin{equation}
+\begin{gathered}
+ \Delta_\gamma(\tau)
+   :=\mathcal L_\gamma^{\mathrm{col}}(\tau)
+                  -\mathcal L_\gamma(\tau)>0,
+ \\
+ \frac{\mathcal Z_{1,h}}{\mathcal Z_{0,h}}
+   =\exp\!\left[-\frac{\Delta_\gamma(\tau)+o(1)}h\right]
+   \longrightarrow0
+ \label{sgt:bose:partition-ratio}
+\end{gathered}
+\end{equation}
+for every fixed $\tau>0$ and every nontrivial fixed profile.
+No arbitrary simultaneous $h,\tau$ limit, no moving profile, and no
+uniform limit in increasing $M$ is included in these conclusions.
+
+\subsection{The efficiency threshold and its Poisson transition}
+\label{sgt:bose:efficiency}
+
+Assume $0<\gamma<1$ in this subsection.  For any efficiency sequence
+$0\le\eta_h\le1$, \eqref{sgt:bose:exponent} and
+$\log(1+x)\le x$ give
+\begin{equation}
+\begin{gathered}
+ \log(1+\eta_h)\Tr(Q\Theta_{1,h})
+\\
+ \le-\log p_{\mathrm{no},1}(\eta_h,Q)
+ \le\eta_h\Tr(QN_{1,h}).
+ \label{sgt:bose:loss-sandwich}
+\end{gathered}
+\end{equation}
+Since $\log(1+\eta_h)\ge\eta_h/2$, the heat and number laws imply
+\begin{equation}
+\begin{gathered}
+ p_{\mathrm{no},1}(\eta_h,Q)\to0
+       \\
+\Longleftrightarrow\\
+\eta_h/h\to\infty,
+ \\
+ \eta_h/h\to0\\
+\Longrightarrow\\
+ p_{\mathrm{no},1}\to1.
+ \label{sgt:bose:loss-threshold}
+\end{gathered}
+\end{equation}
+For necessity in the equivalence, failure of $\eta_h/h\to\infty$
+produces a subsequence with bounded $\eta_h/h$, on which the upper bound
+in \eqref{sgt:bose:loss-sandwich} keeps the no-click probability bounded
+away from zero.  This is an exact consistency criterion for this specified
+vacuum-reference receiver, not an optimality theorem for all measurements.
+
+If $\eta_h/h\to\kappa\in[0,\infty)$, let
+$X_h=\eta_h QN_{1,h}Q$.  Then
+$\Tr X_h\to\kappa \mathsf n_Q$ and
+$\|X_h\|=O(h^{1-\gamma})\to0$.  Spectral calculus and the scalar
+bound $0\le x-\log(1+x)\le x^2/2$ give
+\begin{equation}
+ 0\le\Tr X_h-\Tr\log(I+X_h)
+   \le\tfrac12\|X_h\|\Tr X_h\longrightarrow0.
+ \label{sgt:bose:poisson-remainder}
+\end{equation}
+Apply this bound to $(1-z)X_h$ in \eqref{sgt:bose:pgf}.  The generating
+function tends to $\exp[-(1-z)\kappa \mathsf n_Q]$ on $0\le z\le1$.
+Equivalently, evaluating at $z=\ee^{-t}$ gives convergence of the
+nonnegative-variable Laplace transforms to a transform continuous at
+$t=0$.  Hence
+\begin{equation}
+ K_h\ \Longrightarrow\ \operatorname{Poisson}(\kappa \mathsf n_Q),
+ \qquad
+ p_{\mathrm{no},1}(\eta_h,Q)\longrightarrow\ee^{-\kappa \mathsf n_Q}.
+ \label{sgt:bose:poisson}
+\end{equation}
+The Poisson approximation is valid in this vanishing-efficiency regime.
+It is not used for the highly occupied modes of a fixed-efficiency
+thermal sample.
+
+\subsection{Why an any-click decision is fragile}
+\label{sgt:bose:fragility}
+
+Suppose a whole detection gate has an independent dark-click probability
+$d_h$, common to the hypotheses.  Write $p_1,p_0$ for their no-click
+probabilities before this background.  The equal-prior any-click error
+is exactly
+\begin{equation}
+ P_{\mathrm{err}}=\tfrac12
+       \{1-(1-d_h)p_0+(1-d_h)p_1\}.
+ \label{sgt:bose:dark-any-click}
+\end{equation}
+For the ideal reference $p_0=1$, the limiting floor is $d_h/2$ when
+$p_1\to0$.  If a fixed $d<1$ applies independently to each of $k$
+independent preparations, the rule declaring signal only when every
+gate clicks has instead
+\begin{equation}
+ P_{\mathrm{err}}^{(k)}
+  =\tfrac12\{d^k+1-[1-(1-d)p_1]^k\}
+  \le\tfrac12\{d^k+k(1-d)p_1\}.
+ \label{sgt:bose:dark-repeated}
+\end{equation}
+Thus a finite $k$ suffices for each fixed target error when $p_1$ is
+small enough; it pays $k$ preparation costs.  When $D_h$ independent
+channels each have dark-click probability $\delta_h$,
+$d_h=1-(1-\delta_h)^{D_h}$.  For $D_h=O(h^{-1})$,
+$\delta_h=o(h)$ suffices for a vanishing gate-level dark floor.
+If instead $D_h\asymp h^{-1}$ and $\delta_h$ is a fixed positive
+constant below one, $1-d_h$ is exponentially small in $h^{-1}$ and
+making $d_h^k$ small can itself require exponentially many gates.
+An aggregated detector has its own gate-level dark probability; the
+independent-channel formula applies only when that is the actual model.
+
+For a passive unitary sorter $V$, the detected projection is
+$E=V^*QV$.  If $\theta_h=\|QVP\|$, the reference covariance satisfies
+\begin{equation}
+\begin{gathered}
+ \Tr(EN_{0,h})=\Tr(PV^*QVPN_{0,h})
+       \le\theta_h^2\Tr N_{0,h},\\
+ \mathbb P_0(K\ge1)\le\eta\theta_h^2\Tr N_{0,h}.
+ \label{sgt:bose:sorter-leakage}
+\end{gathered}
+\end{equation}
+The last step is Markov's inequality.  For $0<\gamma<1$, keeping this
+sufficient upper bound below a chosen small fixed $\delta$ requires
+an amplitude budget of order
+$\theta_h^2=O(\delta h/\eta)$, with the constant chosen from $\mathsf n_0$.
+This is a worst-case sufficient bound, not a necessary bound for each
+sorter.  The danger from fixed mixing is real: a fixed rotation from
+$v$ into one fixed unit vector of $Q\mathbb C^M$ at every tangential
+coordinate produces the reference output covariance
+$\theta^2N_{0,h}$ on the rotated output channel.  For $\theta>0$ fixed,
+\eqref{sgt:bose:exponent}, applied to the physical reference heat with
+effective efficiency $\eta\theta^2$, makes its no-click probability
+tend to zero exponentially.  Thus an extensive bright reference can
+click almost surely under fixed coherent leakage.
+
+A finite-energy reference has a separate quantitative budget.  Assume
+it is defined in the same annihilation representation, has a positive
+trace-class thermal covariance $N_{\mathrm r,h}$, commutes with $Q$,
+and its one-particle energy restricted to $Q$ is at least
+$\Delta_h I_Q$.  For a detected projection $E_h\le Q$ of finite rank
+$D_h$, functional calculus gives
+\begin{equation}
+ 1-p_{\mathrm r}\le\eta_h\Tr(E_hN_{\mathrm r,h})
+   \le\frac{\eta_hD_h}{\ee^{\beta\Delta_h}-1}.
+ \label{sgt:bose:reference-gap}
+\end{equation}
+Consequently the signal bound and \eqref{sgt:bose:dark-any-click} imply
+\begin{equation}
+\begin{gathered}
+ P_{\mathrm{err}}
+ \le\frac12\bigl\{d_h+
+       \frac{\eta_hD_h}{\ee^{\beta\Delta_h}-1}
+\\
+       +\exp[-\log(1+\eta_h)\Tr(E_h\Theta_{1,h})]\bigr\}.
+ \label{sgt:bose:reference-error}
+\end{gathered}
+\end{equation}
+A spectral gap alone does not make an infinite-dimensional thermal
+trace finite; existence of this reference and the finite detector rank
+are explicit assumptions.  At fixed efficiency and $D_h=O(h^{-1})$,
+the condition $\beta\Delta_h-\log D_h\to+\infty$ is sufficient for
+a vanishing reference term.  Matching an $\ee^{-c/h}$ target by this
+bound requires a corresponding additional $c/h$ in
+$\beta\Delta_h$ and an equally controlled dark term.  These are
+requirements of the vacuum-null decision rule.  The count threshold
+below uses a calibrated, possibly nonzero, reference mean.
+
+\subsection{Passive output covariances and a Bose concentration bound}
+\label{sgt:bose:concentration-section}
+
+We first justify the statistics after a common imperfect passive
+receiver.  A gauge-invariant thermal state with positive trace-class
+covariance $N$ has the exact coherent-state representation
+\begin{equation}
+ \varrho_N=\mathbb E\,|Z\rangle\langle Z|,
+ \qquad \mathbb E Z=0,\qquad
+ \mathbb E[ZZ^*]=N,
+ \label{sgt:bose:gaussian-mixture}
+\end{equation}
+where $Z$ is a circular complex Gaussian vector in $\mathfrak h$ and
+$|Z\rangle$ is the normalized coherent vector.  This assertion also
+has an elementary infinite-dimensional justification.  In an eigenbasis
+of $N$, put $Z_j=\sqrt{n_j}\xi_j$ with independent standard circular
+complex Gaussians $\mathbb E|\xi_j|^2=1$.  Since $\sum_jn_j<\infty$,
+Tonelli gives $\sum_j|Z_j|^2<\infty$ almost surely, so $Z$ lies in
+$\mathfrak h$.  The integral of the positive rank-one projectors is a
+trace-one operator.  In one mode, angular integration annihilates
+off-diagonal number matrix elements and radial integration gives
+\begin{equation}
+ \int_{\mathbb C}\frac{\ee^{-|z|^2/n}}{\pi n}
+       |z\rangle\langle z|\,\dd^2z
+   =\sum_{m\ge0}\frac1{1+n}
+                \left(\frac{n}{1+n}\right)^m|m\rangle\langle m|.
+ \label{sgt:bose:one-mode-mixture}
+\end{equation}
+At $n=0$ use the vacuum delta measure.  Products give the equality on
+every finite set of modes; increasing finite sets and the finite mean
+total number identify the full trace-one states.  Taking
+$n_j=\theta_j/(1-\theta_j)$ proves \eqref{sgt:bose:gaussian-mixture}
+for \eqref{sgt:bose:state}.
+
+A contraction $T:\mathfrak h\to\mathfrak g$, implemented by passive
+mixing with vacuum ancillas followed by discarding unused outputs,
+sends a coherent vector to a coherent vector of amplitude $TZ$ at
+the measured output.  Equation \eqref{sgt:bose:gaussian-mixture}
+therefore gives the output covariance $TNT^*$.  With a separate
+efficiency $\eta$, it is
+\begin{equation}
+ C=\eta TNT^*.
+ \label{sgt:bose:passive-covariance}
+\end{equation}
+For a detection effect $0\le E\le I$, take $T=\sqrt E$.  Diagonalizing
+$C$ is a mathematical step only: total number is invariant under
+passive output rotations, so the receiver need not know which
+hypothesis-specific eigenbasis diagonalizes $C$.  Its total count is
+a sum of independent geometric variables whose means are the
+eigenvalues $c_j$ of $C$.
+
+Set $\mu=\Tr C$ and $B_C=\|C\|$.  For
+$|t|\le[4(1+B_C)]^{-1}$, the logarithmic moment generating function is
+\begin{align}
+ F(t)&=-\sum_j\log[1-c_j(\ee^t-1)],\nonumber\\
+ F''(t)&=\sum_j
+       \frac{c_j(1+c_j)\ee^t}{[1-c_j(\ee^t-1)]^2}.
+ \label{sgt:bose:mgf}
+\end{align}
+For $0\le t\le[4(1+B_C)]^{-1}$ one has
+$\ee^t\le4/3$ and $\ee^t-1\le(4/3)t$; every denominator before
+squaring is at least $2/3$.  Thus
+$F''(t)\le3\mu(1+B_C)$.  For negative $t$ each denominator is at
+least one and the same bound follows.  These estimates also justify
+termwise differentiation on compact interior intervals by
+$\sum_jc_j<\infty$; continuity gives the endpoints.  Since
+$F(0)=0$ and $F'(0)=\mu$, integration twice proves
+\begin{equation}
+ \log\mathbb E\ee^{t(K-\mu)}
+       \le2\mu(1+B_C)t^2,
+ \qquad |t|\le\frac1{4(1+B_C)}.
+ \label{sgt:bose:centered-mgf}
+\end{equation}
+For either tail choose
+$|t|=u/[4(1+B_C)(\mu+u)]$ in Chernoff's inequality.  Substitution
+gives, for every $u>0$,
+\begin{equation}
+\begin{gathered}
+ \mathbb P(K-\mu\ge u),\\
+\mathbb P(K-\mu\le-u)
+   \le\exp\!\left[-\frac{u^2}
+                         {8(1+B_C)(\mu+u)}\right].
+ \label{sgt:bose:concentration}
+\end{gathered}
+\end{equation}
+If $\mu=0$, $K=0$ almost surely and the same tail bounds hold.
+
+If $D$ is an independent Poisson dark count of known mean $\nu$, then
+$\log\mathbb E\ee^{t(D-\nu)}=\nu(\ee^t-1-t)\le\nu t^2$ for
+$|t|\le1/4$.  Combining with \eqref{sgt:bose:centered-mgf} proves
+\eqref{sgt:bose:concentration} for $K+D$, centered at $\mu+\nu$,
+with $\mu$ in the denominator replaced by $\mu+\nu$ and $B_C$
+unchanged.  This is an independent calibrated Poisson allowance;
+it is not a claim for arbitrary correlated noise or unknown drift.
+
+\subsection{A count threshold tolerates fixed small effect error}
+\label{sgt:bose:unfiltered}
+
+Fix $0<\gamma<1$, $\tau>0$ and $0<\eta\le1$.  The constants
+$\mathsf n_1,\mathsf n_0,\mathsf n_Q$ are those in \eqref{sgt:bose:number-law}.
+Suppose the same effect $E_h$ is used under both hypotheses and
+\begin{equation}
+\begin{gathered}
+ 0\le E_h\le I,\\
+ \|E_h-Q\|\le e,
+ \\
+ g:=\eta[\mathsf n_Q-e(\mathsf n_1+\mathsf n_0)]>0,
+ \label{sgt:bose:effect-hypothesis}
+\end{gathered}
+\end{equation}
+where $e$ is fixed.  The output covariances are
+$C_{i,h}=\eta\sqrt{E_h}N_{i,h}\sqrt{E_h}$, with means
+$\mu_{i,h}=\Tr C_{i,h}$.  Since $QN_{0,h}=0$, trace duality gives
+\begin{gather}
+ \mu_{1,h}-\mu_{0,h}
+ \ge\eta\{\Tr(QN_{1,h})-e[\Tr N_{1,h}+\Tr N_{0,h}]\}
+\\
+   =\frac{g+o(1)}h,\nonumber\\
+ \mu_{i,h}=O(h^{-1}),\\
+ \|C_{i,h}\|=O(h^{-\gamma}).
+ \label{sgt:bose:mean-gap}
+\end{gather}
+Take the threshold nearest to
+$(\mu_{1,h}+\mu_{0,h})/2$, declaring signal for counts above it.
+The two error margins are at least
+$(\mu_{1,h}-\mu_{0,h})/2-1\ge c_1/h$ for all sufficiently small $h$.
+Applying \eqref{sgt:bose:concentration} to both hypotheses yields a
+constant $c_2>0$ such that
+\begin{equation}
+ P_{\mathrm{err}}^{\mathrm{threshold}}
+      \le\exp[-c_2h^{\gamma-1}].
+ \label{sgt:bose:unfiltered-rate}
+\end{equation}
+Thus the frequency exponent $\gamma=1/2$ gives
+$\exp(-c_2/\sqrt h)$.  The occupation norm in
+\eqref{sgt:bose:mean-gap} retains Bose bunching; replacing those
+fluctuations by Poisson ones at fixed efficiency would not prove the
+stated result.
+
+An independent common Poisson dark count with known mean
+$\nu_h\le C_\nu/h$ is included by adding $\nu_h$ to the threshold and
+using the preceding concentration result.  It changes constants, not
+the rate.  More generally a threshold is valid whenever known background
+means, or rigorous calibration intervals for them, leave a positive
+$h^{-1}$ separation and obey the same moment bound.  This condition
+must be checked; arbitrary unknown offsets are not covered.  Total-count
+readout must resolve counts over a range of order $h^{-1}$; a saturated
+one-bit detector does not implement this decision.
+
+A reference need not be nearly vacuum for such a threshold.  In a
+finite detected sector of rank at most $d/h$, a reference occupation
+bounded by $n_\Delta=(\ee^{\beta\Delta_h}-1)^{-1}$ contributes mean
+at most $\eta d n_\Delta/h$.  It can be included in a calibrated null
+provided the mean separation and covariance bound remain valid.  A
+sufficiently large fixed $\beta\Delta_h$ may then suffice.  On an
+infinite sector a constant gap without dispersion is not a trace-class
+thermal state.  If instead $H_Q=H_{\mathrm{long}}+\Delta_h I$ with
+positive confining $H_{\mathrm{long}}$, then the spectral inequality
+\begin{equation}
+ \Tr(\ee^{\beta H_Q}-1)^{-1}
+  \le\frac{\ee^{-\beta\Delta_h}}{1-\ee^{-\beta\Delta_h}}
+                         \Tr\ee^{-\beta H_{\mathrm{long}}}
+ \label{sgt:bose:dispersive-reference}
+\end{equation}
+follows by expanding its geometric series, or by bounding the
+denominator mode by mode.  A controlled $O(h^{-1})$ heat trace thus
+supplies a finite reference number budget.  This is a model of an
+additive frequency-energy gap, not an assertion that a stiffness
+penalty adds linearly after taking a square root.
+
+\subsection{One common low-frequency rejection space}
+\label{sgt:bose:filter}
+
+The previous rate is limited by the covariance of low-energy Bose
+modes.  We now construct one common filter, designed from the two
+specified candidate operators, that rejects those modes without
+discarding the extensive transverse signal.  Continue to assume
+$0<\gamma<1$ and fixed $\tau,\eta>0$.
+
+For a fixed $b>0$, let
+$F_{1,h}=\one_{[0,b/h)}(L_{1,h})$.  Let $F_{0,h}$ be the analogous
+projection for $L_0$ on $P\mathfrak h$, extended by zero on $Q$.
+By \eqref{sgt:bose:spectral-input},
+$\operatorname{rank}F_{i,h}\le Cb/h$.  Define
+\begin{equation}
+\begin{gathered}
+ W_h=\operatorname{ran}F_{1,h}+\operatorname{ran}F_{0,h}
+                          +P\operatorname{ran}F_{1,h},
+ \\
+ r_h=\dim W_h\le C_Wb/h,
+ \\
+\Pi_h=I-\operatorname{proj}W_h.
+ \label{sgt:bose:rejected-space}
+\end{gathered}
+\end{equation}
+The space $W_h$ is invariant under $P$: $P$ maps its first summand
+into its third, fixes its second, and fixes the image of $P$.
+As $P=P^*$, its orthogonal complement is invariant too.  Hence
+$[\Pi_h,P]=[\Pi_h,Q]=0$ and $\Pi_h\le I-F_{i,h}$ for both candidates.
+Every vector in its range belongs to the high-energy spectral subspace
+of each candidate, even though these two spectral projections need
+not commute.  Functional calculus for each one separately gives
+\begin{equation}
+ \Pi_hN_{i,h}\Pi_h\le n_b\Pi_h,
+ \qquad n_b=(\ee^{\tau b^\gamma}-1)^{-1},\quad i=0,1.
+ \label{sgt:bose:bounded-filter-covariance}
+\end{equation}
+For the reference, the additional $Q$ component simply has zero
+covariance.
+
+For any rank-$r$ orthogonal projection $J$, Ky Fan's variational
+inequality and \eqref{sgt:bose:occupation-bound} give
+\begin{equation}
+ \Tr(JN_{1,h})\le\sum_{j=1}^r\nu_j(N_{1,h})
+   \le\frac{C}{1-\gamma}h^{-\gamma}r^{1-\gamma}.
+ \label{sgt:bose:ky-fan}
+\end{equation}
+To see the inequality without any commutation hypothesis, diagonalize
+$N$ and write $\Tr(JN)=\sum_j\nu_j\langle e_j,Je_j\rangle$; its
+coefficients lie in $[0,1]$ and sum to $r$, so their largest possible
+weighted sum fills the first $r$ entries.  The remaining bound uses
+$\sum_{j=1}^rj^{-\gamma}\le r^{1-\gamma}/(1-\gamma)$.
+Because $Q(I-\Pi_h)$ is itself an orthogonal projection of rank at
+most $r_h$, this implies
+\begin{equation}
+\begin{gathered}
+ 0\le\Tr(QN_{1,h})-\Tr(Q\Pi_hN_{1,h}\Pi_h)
+\\
+   =\Tr[Q(I-\Pi_h)N_{1,h}]
+\\
+   \le C_*b^{1-\gamma}/h.
+ \label{sgt:bose:filter-loss}
+\end{gathered}
+\end{equation}
+The constant $C_*$ is independent of $b$ and sufficiently small $h$,
+with the fixed geometric data, $\gamma$ and $\tau$ understood.
+Choosing $b$ small therefore preserves a positive fraction of the
+$\mathsf n_Q/h$ signal.  The choice is not uniform as $\gamma\uparrow1$.
+
+A finite Fourier realization requires an intersection of spaces,
+not a product of noncommuting projections.  Fix $R>0$ and let
+$T_{R,h}=\one_{\{|hD_s|\le R\}}\otimes I_M$.  Let $J_{R,h}$ be the
+orthogonal projection onto the finite-dimensional space $T_{R,h}W_h$,
+and set
+\begin{equation}
+ \Xi_h=T_{R,h}-J_{R,h}.
+ \label{sgt:bose:intersection-definition}
+\end{equation}
+The range of $J_{R,h}$ is contained in that of $T_{R,h}$, so $\Xi_h$
+is an orthogonal projection.  For $x\in\operatorname{ran}T_{R,h}$,
+$\langle x,T_{R,h}w\rangle=\langle x,w\rangle$ for every $w\in W_h$.
+Consequently
+\begin{equation}
+\begin{gathered}
+ \operatorname{ran}\Xi_h
+   =\operatorname{ran}T_{R,h}\cap W_h^\perp,
+ \\
+\Xi_h\le\Pi_h,
+ \\
+[\Xi_h,P]=[\Xi_h,Q]=0.
+ \label{sgt:bose:intersection}
+\end{gathered}
+\end{equation}
+The commutation follows because $T_{R,h}$ commutes with $P$ and
+$W_h$ is $P$-invariant, hence so is $T_{R,h}W_h$ and its orthogonal
+projection.  In particular
+\begin{equation}
+ \operatorname{rank}\Xi_h
+   \le\frac{M\ell_\Gamma R}{\pi h}+O(1),
+ \qquad \Xi_hN_{i,h}\Xi_h\le n_b\Xi_h.
+ \label{sgt:bose:finite-filter-bound}
+\end{equation}
+No commutation of $T_{R,h}$ with $\Pi_h$ or of $\Xi_h$ with either
+Hamiltonian was used.
+
+Since $I-\Xi_h=(I-T_{R,h})+J_{R,h}$ and all these projections commute
+with $Q$, the exact loss of $Q$-number splits into two nonnegative
+terms.  The rank of $J_{R,h}$ is at most $r_h$, so
+\begin{equation}
+\begin{gathered}
+ \Tr(Q\Xi_hN_{1,h}\Xi_h)
+\\
+  \ge\Tr(QN_{1,h})-\Tr[Q(I-T_{R,h})N_{1,h}]
+                         -C_*b^{1-\gamma}/h.
+ \label{sgt:bose:finite-retention}
+\end{gathered}
+\end{equation}
+The remaining high-frequency occupation tail is controlled on the
+actual geometry.  Expand $N_{1,h}=\sum_{k\ge1}\Theta_{1,h}^k$, apply
+the Fourier insertion law \eqref{sgt:geo:band-law} at each fixed
+$k\tau$, and then use \eqref{sgt:bose:heat-bound} with the summable
+$k^{-1/\gamma}$ majorant.  This proves
+\begin{gather}
+ h\Tr[Q(I-T_{R,h})N_{1,h}]\longrightarrow\mathcal T_Q(R),\nonumber\\
+ \mathcal T_Q(R)
+ =\frac1{2\pi}\int_\Gamma\int_{|\xi|>R}
+    \sum_{k\ge1}\operatorname{tr}
+        (Q\ee^{-k\tau B(s,\xi)^{-\gamma}})
+                                      \,\dd\xi\,\dd s
+   \longrightarrow0\\
+(R\to\infty).
+ \label{sgt:bose:fourier-number-tail}
+\end{gather}
+The final limit follows from positivity and finiteness of the full
+integral $\mathsf n_Q$.  For example choose $b>0$ with
+$C_*b^{1-\gamma}<\mathsf n_Q/8$ and then $R$ with
+$\mathcal T_Q(R)<\mathsf n_Q/8$.  These constants are fixed before $h$ tends
+to zero.  Equations \eqref{sgt:bose:number-law} and
+\eqref{sgt:bose:finite-retention} then imply, for all sufficiently
+small $h$,
+\begin{equation}
+ \Tr(Q\Xi_hN_{1,h}\Xi_h)\ge\frac{\mathsf n_Q}{2h},
+ \qquad\Tr(Q\Xi_hN_{0,h}\Xi_h)=0.
+ \label{sgt:bose:retained-gap}
+\end{equation}
+This proves a finite common receiver with bounded covariance and a
+strictly extensive retained signal.
+
+Suppose its actual effect has exact rejected-space exclusion and fixed
+small error inside the retained space:
+\begin{equation}
+\begin{gathered}
+ 0\le E_h\le\Xi_h,\\
+ \|E_h-\Xi_hQ\|\le e,
+ \\
+ e(\mathsf n_1+\mathsf n_0)<\mathsf n_Q/4.
+ \label{sgt:bose:supported-effect}
+\end{gathered}
+\end{equation}
+The inequality $0\le E_h\le\Xi_h$ implies
+$E_h=\Xi_hE_h\Xi_h$ and
+$\sqrt{E_h}=\Xi_h\sqrt{E_h}$.  Thus
+\begin{equation}
+ C_{i,h}=\eta\sqrt{E_h}N_{i,h}\sqrt{E_h}
+   \le\eta n_bE_h,\qquad
+ \|C_{i,h}\|\le\eta n_b.
+ \label{sgt:bose:supported-covariance}
+\end{equation}
+Trace duality, \eqref{sgt:bose:retained-gap} and
+\eqref{sgt:bose:number-law} leave a positive gap of order $h^{-1}$
+between the two means.  Both means are $O(h^{-1})$.  The midpoint
+threshold and \eqref{sgt:bose:concentration} now give
+\begin{equation}
+ P_{\mathrm{err}}^{\mathrm{filtered}}\le\ee^{-c/h}
+ \label{sgt:bose:filtered-rate}
+\end{equation}
+for some $c>0$ and all sufficiently small $h$, also with an independent
+calibrated Poisson dark mean at most $C_\nu/h$.  The exact support
+condition in \eqref{sgt:bose:supported-effect} is substantive:
+a small unrestricted effect error alone could admit bright rejected
+modes and restore the larger covariance norm.  The following bound
+quantifies a sufficient finite rejection tolerance.
+
+\subsection{Finite amplitude leakage and the rate transition}
+\label{sgt:bose:leakage}
+
+Let the common passive receiver be a contraction
+$T_h:\mathfrak h\to\mathfrak g_h$, where the counted output dimension
+satisfies $\dim\mathfrak g_h\le D_*/h$ for a fixed $D_*$.  This explicit
+output restriction keeps the finite-channel claim valid even when
+infinitely many rejected input modes can leak.  Separate a fixed
+$0<\eta\le1$ efficiency as before, and assume
+\begin{equation}
+\begin{gathered}
+ E_{R,h}=\Xi_hT_h^*T_h\Xi_h,\\
+ \|E_{R,h}-\Xi_hQ\|\le e,
+ \\
+ \ell_h=\|T_h(I-\Xi_h)\|.
+ \label{sgt:bose:leakage-hypothesis}
+\end{gathered}
+\end{equation}
+Set $A=T_h\Xi_h$ and $B=T_h(I-\Xi_h)$.  Since $\|A\|\le1$ and
+$\|B\|=\ell_h$, the identity
+$T_h^*T_h-E_{R,h}=A^*B+B^*A+B^*B$ gives
+\begin{align}
+ \|T_h^*T_h-\Xi_hQ\|&\le e+2\ell_h+\ell_h^2,\nonumber\\
+ |\Tr[(T_h^*T_h-E_{R,h})N_{i,h}]|
+    &\le(2\ell_h+\ell_h^2)\Tr N_{i,h}.
+ \label{sgt:bose:leakage-mean}
+\end{align}
+For covariance, the positive-operator inequality
+$(A+B)N(A+B)^*\le2ANA^*+2BNB^*$ follows by expanding
+$(A-B)N(A-B)^*\ge0$.  The first term is bounded in norm by $n_b$
+and the second by $\ell_h^2\|N_{i,h}\|$.  Therefore
+\begin{equation}
+ \|T_hN_{i,h}T_h^*\|
+    \le2n_b+2\ell_h^2\|N_{i,h}\|
+    \le2n_b+C\ell_h^2h^{-\gamma}.
+ \label{sgt:bose:leakage-covariance}
+\end{equation}
+The covariance penalty is quadratic in rejected amplitude, although
+the worst-case mean change includes linear cross terms.
+
+For a precise sufficient uniform gap assumption, require
+\begin{equation}
+ \limsup_{h\downarrow0}(e+2\ell_h+\ell_h^2)
+       <\frac{\mathsf n_Q}{4(\mathsf n_1+\mathsf n_0)}.
+ \label{sgt:bose:leakage-gap}
+\end{equation}
+Together with \eqref{sgt:bose:retained-gap} and the number laws, this
+implies a fixed positive $h^{-1}$ gap for the means of
+$C_{i,h}=\eta T_hN_{i,h}T_h^*$, while both means remain $O(h^{-1})$.
+The same is true after a common independent calibrated Poisson dark
+count of mean at most $C_\nu/h$.  Using
+\eqref{sgt:bose:leakage-covariance} in the common concentration bound
+therefore proves, for some fixed $c>0$ and all sufficiently small $h$,
+\begin{equation}
+ P_{\mathrm{err}}^{\mathrm{leaky}}
+  \le\exp\!\left[-\frac{c}
+           {h(1+\ell_h^2h^{-\gamma})}\right].
+ \label{sgt:bose:leakage-rate}
+\end{equation}
+Constants depend on the fixed profile, geometry, $\gamma,\tau,\eta$,
+the chosen $b,R$, the gap margin and the dark-count bound.
+If $e<\mathsf n_Q/[4(\mathsf n_1+\mathsf n_0)]$ and
+$\ell_h=O(h^{\gamma/2})$, the gap condition is eventually satisfied
+and the covariance is uniformly bounded, preserving
+$\exp(-c/h)$.  For $\gamma=1/2$ this is the sufficient amplitude
+tolerance $O(h^{1/4})$, equivalently a power leakage $O(h^{1/2})$.
+Fixed sufficiently small leakage gives the available
+$\exp(-c h^{\gamma-1})$ guarantee; intermediate leakage scales give
+the displayed interpolation.  This is a sufficient receiver budget,
+not a necessity theorem for every conceivable detector.
+
+The common space $W_h$ uses both known candidate operators and never
+depends on which hypothesis is true.  Its finite Fourier intersection
+requires the corresponding spectral data and controlled projection
+onto $T_{R,h}W_h$.  Rank $O(h^{-1})$ does not bound numerical conditioning,
+settings precision, routing depth, stopband performance, physical mode
+conversion, transmission, reset time or reservoir count.  Moreover a
+finite detector marginal has covariance $\Xi_hN_{i,h}\Xi_h$.
+It is not generally the Bose function of a compressed Hamiltonian:
+compression and the nonlinear function $x\mapsto(\ee^{\beta x}-1)^{-1}$
+do not commute.  The proof uses covariance compression throughout.
+
+\subsection{Common vacuum, mechanical quantization and operational scope}
+\label{sgt:bose:physical-scope}
+
+The preceding laws are exact statements in the declared common
+number-conserving model.  For finitely many real canonical coordinates
+with $[x_j,p_k]=\mathrm i\delta_{jk}$ and a real symmetric positive
+matrix $H$, the common annihilators $a=(x+\mathrm ip)/\sqrt2$ satisfy
+\begin{equation}
+ a^*Ha=\tfrac12(x^THx+p^THp-\Tr H).
+ \label{sgt:bose:number-conserving-realization}
+\end{equation}
+Expansion proves the identity: the antisymmetric commutator contributes
+$-\Tr H$ and the symmetric cross terms cancel.  It realizes $H$ in
+both quadratures and conserves the chosen particle number.  It is a
+model specification, not a claim that a geometric boundary operator
+has available local couplings.
+
+An ordinary mass-normalized mechanical Hamiltonian instead has the
+form $(p^Tp+x^T\Omega^2x)/2$; its natural annihilators depend on
+$\Omega$.  Already for one oscillator, let
+\begin{equation}
+ a_\omega=\sqrt{\omega/2}\,x+
+                 \frac{\mathrm ip}{\sqrt{2\omega}},\qquad
+ a_{\mathrm r}=\sqrt{\omega_{\mathrm r}/2}\,x+
+                 \frac{\mathrm ip}{\sqrt{2\omega_{\mathrm r}}}.
+ \label{sgt:bose:oscillator-modes}
+\end{equation}
+Solving for $x,p$ and substituting gives
+\begin{equation}
+ a_\omega=\cosh r\,a_{\mathrm r}
+                 +\sinh r\,a_{\mathrm r}^*,
+ \qquad r=\tfrac12\log(\omega/\omega_{\mathrm r}).
+ \label{sgt:bose:bogoliubov}
+\end{equation}
+Inverting this relation shows that the $\omega$-vacuum has
+$\langle a_{\mathrm r}^*a_{\mathrm r}\rangle=\sinh^2r$ quanta in the
+fixed reference basis.  Its reference-vacuum probability is
+\begin{equation}
+ |\langle0_{\mathrm r}|0_\omega\rangle|^2
+   =\frac{2\sqrt{\omega\omega_{\mathrm r}}}{\omega+\omega_{\mathrm r}}
+   =\frac1{\cosh r}.
+ \label{sgt:bose:vacuum-overlap}
+\end{equation}
+For a direct proof, integrate the normalized ground-state wavefunctions
+$(\omega/\pi)^{1/4}\ee^{-\omega x^2/2}$ and
+$(\omega_{\mathrm r}/\pi)^{1/4}\ee^{-\omega_{\mathrm r}x^2/2}$;
+squaring their Gaussian overlap gives the displayed fraction.
+Sending $\omega\to\infty$ suppresses thermal excitation in its own
+natural basis but drives this fixed-basis vacuum probability to zero.
+The conversion mixes creation and annihilation operators and is not
+a passive rotation of a common annihilation basis.
+
+Thus neither a common geometric $L^2$ space nor a growing mechanical
+transverse stiffness establishes the reference-vacuum premise of
+\eqref{sgt:bose:ideal-error} or \eqref{sgt:bose:reference-gap}.
+A proposed platform must specify its canonical variables and common
+detector modes and either realize the number-conserving model or
+account for the creation part, noise, work and bandwidth of a
+Bogoliubov conversion.  No infinite-mode unitary equivalence of Fock
+representations is inferred here.  Ordinary displacement sensing,
+passive mixing of layer coordinates and counting excitations in each
+candidate's own normal modes are not automatically the same common
+$Q$ occupation measurement.
+
+Finally \eqref{sgt:bose:gaussian-mixture} supplies a mathematical
+programmed realization of any finite output marginal: sample its
+known classical complex Gaussian amplitudes and prepare the associated
+coherent states.  This construction knows the covariance in advance.
+It is a faithful encoded test of the stated distributions, not by
+itself an unknown-specimen sensor or a computational quantum
+advantage.  The geometric theorem, the controlled one-excitation
+route and the full-Bose receiver establish distinct mathematical
+access statements.  Their native physical implementation still
+requires a geometry-to-generator approximation over the growing
+band, a common mode map, and preparation, conversion and readout
+satisfying the stated resource and noise budgets simultaneously.
+
+\section{An exact finite circular counting certificate}
+\label{sgt:finite:appendix}
+
+\subsection{Finite statement and the declared ensemble}
+\label{sgt:finite:certificate}
+
+In the unit Dirichlet disk, compare two circular pushforward masses
+of radii $r_1=99/200$ and $r_2=101/200$, each of mass $1/2$, with
+the mass-one reference circle $r_0=1/2$. All are uniform in angle.
+Use the common number-conserving Bose model with
+$\gamma=1/2$, $\beta=1/20$; equivalently
+$\varepsilon=1/100$, $\tau=1/2$.
+The reference occupies $p=(1,1)^T/\sqrt2$ and its orthogonal layer
+mode $q=(1,-1)^T/\sqrt2$ is vacuum. In every angular sector
+$50\le|n|\le500$, detect the mode
+$q_{\theta_n}=\cos\theta_n\,q+\sin\theta_n\,p$, where
+$|\theta_n|\le1/10$ radians. The same settings apply under both
+hypotheses, but may vary separately across all sectors. Detection
+efficiency is $\eta=7/10$, and independent Poisson dark counts have
+total gate mean $d\in[0,1/10]$. Declare the split state exactly when
+the total recorded occupation $K$ is at least five. Then uniformly
+over these allowances,
+\begin{equation}
+\begin{gathered}
+ \Pr_0(K\ge5)<0.0057,\\
+ \Pr_1(K\le4)<0.00072,\\
+ P_{\rm err}=\tfrac12[\Pr_0(K\ge5)+\Pr_1(K\le4)]<0.0032.
+ \label{sgt:finite:error-statement}
+\end{gathered}
+\end{equation}
+There are $902$ measured output modes and $1804$ modes in the full
+two-layer prepared band. This is a statement about the explicitly
+aligned Bose model or its exact band marginal. It is not a
+single-phonon error statement or a claim about an unmodified membrane.
+
+\subsection{Exact Green blocks with both angular signs}
+\label{sgt:finite:blocks}
+
+For $z=re^{i\theta}$ and $z'=se^{i\phi}$ in the disk,
+\[
+ G(z,z')=\frac1{2\pi}\log
+           \left|\frac{1-z\overline{z'}}{z-z'}\right|.
+\]
+Expanding $\log|1-te^{i\psi}|=-\sum_{n\ge1}t^n\cos(n\psi)/n$
+for $|t|<1$ gives
+\[
+\begin{gathered}
+ G=\frac1{2\pi}\bigl[-\log\max(r,s)
+\\
+ +\sum_{n\ge1}\frac{(\min(r,s)/\max(r,s))^n-(rs)^n}{n}
+\\
+                      \cos(n(\theta-\phi))\bigr].
+\end{gathered}
+\]
+For $r=s$ the coefficients follow by the integrable logarithmic
+limit. Convolution uses the normalized physical angular measure
+$\dd\phi/(2\pi)$; a nonzero complex Fourier coefficient of the
+cosine is $1/2$. After conjugating the masses, the $n$th block is
+\begin{equation}
+\begin{gathered}
+ (K_n)_{ij}=\frac{\sqrt{\alpha_i\alpha_j}}{4\pi n}
+ \left[\left(\frac{\min(r_i,r_j)}{\max(r_i,r_j)}\right)^n
+                         -(r_ir_j)^n\right],\\
+ n\ge1.
+ \label{sgt:finite:green-block}
+\end{gathered}
+\end{equation}
+Thus its prefactor here is $1/(8\pi n)$. The block for $-n$ is
+identical. The reference nonzero scalar eigenvalue is
+\begin{equation}
+ k_{0,n}=\frac{1-(1/2)^{2n}}{4\pi n},\qquad
+ K_{0,n}=k_{0,n}P.
+ \label{sgt:finite:reference-block}
+\end{equation}
+Both total physical masses are one. Positivity of the Green form on
+distinct layers gives positive blocks; the numerical certificate
+additionally verifies their smaller eigenvalues are strictly positive
+throughout this band. There are $451$ positive measured integers.
+The independent $-n$ sectors, equivalently the second real harmonic
+at each positive $n$, give multiplicity two. This is not a second
+copy of the experiment. Rotational invariance makes full angular
+blocks reducing for both candidates; their layer matrices need not
+commute with each other.
+
+\subsection{Covariance and sorter bounds}
+\label{sgt:finite:sorter}
+
+Let
+\[
+ g(x)=\frac1{e^{\beta/\sqrt x}-1},\qquad x>0,
+ \quad N_n=g(K_n).
+\]
+Write $k_-<k_+$ for the eigenvalues of $K_n$,
+$n_\pm=g(k_\pm)$, and $b_n=(n_+-n_-)/(k_+-k_-)>0$.
+The exact two-dimensional functional calculus
+\[
+ g(K_n)=\frac{n_++n_-}{2}I+
+ b_n\left(K_n-\frac{k_++k_-}{2}I\right)
+\]
+gives
+\begin{equation}
+\begin{gathered}
+ q_\theta^*N_nq_\theta=
+ \frac{n_++n_-}{2}
+\\
+ +b_n\bigl[\frac{K_{n,11}-K_{n,22}}2\sin(2\theta)
+\\
+                         -K_{n,12}\cos(2\theta)\bigr].
+ \label{sgt:finite:exact-sorted-covariance}
+\end{gathered}
+\end{equation}
+Since $K_{n,12}>0$ and $g$ is increasing, for $a=1/10$ the
+detected target mean is bounded below, uniformly over $|\theta|\le a$,
+by
+\begin{equation}
+\begin{gathered}
+ \ell_n=\eta\bigl[\frac{n_++n_-}{2}-b_nK_{n,12}
+\\
+ -\frac{|b_n(K_{n,11}-K_{n,22})|}{2}\sin(2a)\bigr]>0.
+ \label{sgt:finite:signal-lower}
+\end{gathered}
+\end{equation}
+The inequality uses $\cos(2\theta)\le1$ in the negative term and
+$|\sin(2\theta)|\le\sin(2a)$. These separate worst-case bounds need
+not be simultaneously attained. Under the reference the detected
+mean is exactly $\eta g(k_{0,n})\sin^2\theta$, and therefore at most
+\begin{equation}
+ u_n=\eta g(k_{0,n})\sin^2a.
+ \label{sgt:finite:null-upper}
+\end{equation}
+
+\subsection{Geometric occupation tails and interval arithmetic}
+\label{sgt:finite:tails}
+
+A single mode in a gauge-invariant Gaussian state with mean $\nu$ has
+geometric occupation distribution
+$\Pr(X=k)=\nu^k/(1+\nu)^{k+1}$, so
+\[
+ \mathbb Ez^X=[1+\nu(1-z)]^{-1}.
+\]
+One direct verification uses its positive coherent-state mixture:
+draw a circular complex Gaussian amplitude with variance $\nu$,
+then average the coherent-state Poisson generating function
+$\exp[-(1-z)|\zeta|^2]$. Loss of efficiency $\eta$ rescales the
+variance by $\eta$. Distinct angular sectors are independent
+conditional on the fixed sorter settings; no independence of the
+two layer eigenmodes after sorting is assumed or needed. The same
+count structure is classical thermal optics \cite{Lu2018,Klich2002}.
+
+For null tilt $t=3/2$, each denominator
+$1-u_n(e^t-1)$ is positive. Markov's inequality, monotonicity in the
+geometric mean and the Poisson generating function imply
+\begin{equation}
+\begin{gathered}
+ B_0=\exp\bigl[-5t-2\sum_{n=50}^{500}
+\\
+             \log(1-u_n(e^t-1))\\
++\tfrac1{10}(e^t-1)\bigr]
+\\
+ \ \ge\Pr_0(K\ge5).
+ \label{sgt:finite:null-chernoff}
+\end{gathered}
+\end{equation}
+For the miss event $K\le4$, choose $s=1$. Dropping nonnegative
+independent dark counts increases its probability. Its decreasing
+Laplace transform and \eqref{sgt:finite:signal-lower} give
+\begin{equation}
+\begin{gathered}
+ B_1=\exp\bigl[4s-2\sum_{n=50}^{500}
+\\
+              \log(1+\ell_n(1-e^{-s}))\bigr]
+\\
+ \ \ge\Pr_1(K\le4).
+ \label{sgt:finite:signal-chernoff}
+\end{gathered}
+\end{equation}
+The coefficient $4$, rather than $5$, is the largest integer in the
+miss event. These bounds hold conditional on every allowed collection
+of angles, so they also hold after any classical randomization of
+the angles independent of the prepared state, even if the angles
+are correlated across sectors.
+
+The accompanying checker evaluates these finite expressions with
+Arb ball arithmetic \cite{Johansson2017}. Every input rational is
+formed by exact integer division; $\pi$, roots, exponentials, sines
+and logarithms receive interval enclosures. For every $n$ it checks
+$k_->0$, $k_+-k_->0$, $b_n>0$, $K_{n,12}>0$, $\ell_n>0$, and
+$1-u_n(e^t-1)>0$. Explicitly, the discriminant is computed as
+\[
+ \sqrt{(K_{n,11}-K_{n,22})(K_{n,11}-K_{n,22})+4K_{n,12}K_{n,12}},
+\]
+so a tiny zero-straddling diagonal difference is handled by valid
+interval multiplication. Finally it proves, as strict interval
+inequalities against exact rationals,
+\[
+ B_0<\frac{57}{10000},\qquad
+ B_1<\frac{72}{100000},\qquad
+ \frac{B_0+B_1}{2}<\frac{32}{10000}.
+\]
+At 256-bit working precision the enclosures lie inside
+\begin{gather*}
+ B_0\in(0.00566995032088188856,\\
+ \hspace{2em}0.00566995032088188858),\\
+ B_1\in(0.00071698918995924630,\\
+ \hspace{2em}0.00071698918995924633),\\
+ (B_0+B_1)/2\in(0.00319346975542056743,\\
+ \hspace{2em}0.00319346975542056746).
+\end{gather*}
+These finite rational comparisons prove
+\eqref{sgt:finite:error-statement}. Higher-precision replay checks
+the same expressions. The quantities $B_0,B_1$ are upper bounds on
+tails, not exact tail probabilities or Monte Carlo confidence limits.
+
+\subsection{Resource values and exact scope of the marginal}
+\label{sgt:finite:scope}
+
+The full prepared band occupation and excitation-energy sums are
+\begin{gather*}
+ \overline N_1=2\sum_{n=50}^{500}(n_-+n_+),\\
+ \overline E_1=2\sum_{n=50}^{500}
+                  (n_-/\sqrt{k_-}+n_+/\sqrt{k_+}),\\
+ \overline N_0=2\sum_{n=50}^{500}g(k_{0,n}),\\
+ \overline E_0=2\sum_{n=50}^{500}g(k_{0,n})/\sqrt{k_{0,n}}.
+\end{gather*}
+Their interval-enclosed values, rounded here for interpretation, are
+\[
+\begin{gathered}
+ (\overline N_1,\overline N_0)\simeq(61.79306,81.31572),\\
+ (\overline E_1,\overline E_0)\simeq(3550.20358,3590.80726).
+\end{gathered}
+\]
+These are pre-detection band resources and omit zero-point energy.
+In contrast, the uniform detected target mean lower bound is about
+$18.00837$, and the reference upper bound before dark counts is about
+$0.56732$. A complete equilibrium sample has additional occupation
+and energy outside the band. The unequal prepared occupations are
+not equal thermal scalar data; this finite point certifies access
+and discrimination, not the asymptotic thermal-scalar comparison or
+an advantage over every receiver at matched brightness.
+
+The full two-layer angular band is an exact finite reducing subspace.
+Within each block the detected rank-one output need not reduce the
+Hamiltonian. Its marginal is nevertheless Gaussian with the exact
+compressed covariance used in
+\eqref{sgt:finite:exact-sorted-covariance}. Tracing out the remaining
+modes does not assert that they are unoccupied and introduces no
+spectral-tail approximation into this measurement. One can prepare
+the specified band marginal alone, for example by sampling correlated
+classical complex Gaussian amplitudes with its covariance. This is
+a programmed simulation with known covariance. In general the
+covariance $V^*NV$ must not be replaced by
+$(e^{\beta V^*HV}-I)^{-1}$, because compression and functional
+calculus do not commute. Reproducing this marginal is not global
+Fock-state approximation in trace distance.
+
+The finite certificate assumes ideal exclusion of angular modes
+outside $50\le|n|\le500$, the stated efficiency throughout the band,
+real within-sector rotation errors only, number resolution through
+the threshold, and the independent gate-level Poisson background.
+It gives no finite numerical allowance for stopband leakage,
+cross-sector mixing, phase errors, finite radial mass width, changing
+carrier stiffness, or bulk inertia. The general asymptotic rejection
+theorem does not by itself supply those finite tolerances.
+The common vacuum and annihilation modes are declared preparation
+assumptions. The classical mode-projection receiver and its
+crosstalk sensitivity have direct precedents
+\cite{Lu2018,Schlichtholz2024}; the result here is this exact
+geometric finite instance with its resource and tolerance ledger.
+
+% Primary sources and explicitly identified books/surveys.
+\begin{thebibliography}{99}
+
+\bibitem{KondejKrejcirik2013}
+S. Kondej and D. Krej\v{c}i\v{r}\'{\i}k,
+Spectral analysis of a quantum system with a double line singular interaction,
+\href{https://doi.org/10.4171/PRIMS/121}
+{Publ. Res. Inst. Math. Sci. \textbf{49}, 831--859 (2013)}.
+
+\bibitem{KondejKrejcirik2016}
+S. Kondej and D. Krej\v{c}i\v{r}\'{\i}k,
+Asymptotic spectral analysis in colliding leaky quantum layers,
+\href{https://arxiv.org/abs/1606.07273}
+{J. Math. Anal. Appl. \textbf{446}, 1328--1355 (2017)}
+(preprint 2016).
+
+\bibitem{HundertmarkLiebThomas1998}
+D. Hundertmark, E. H. Lieb, and L. E. Thomas,
+A sharp bound for an eigenvalue moment of the one-dimensional
+Schr\"odinger operator,
+\href{https://arxiv.org/abs/math-ph/9806012}
+{Adv. Theor. Math. Phys. \textbf{2}, 719--731 (1998)}.
+
+\bibitem{DallaRivaProvenzano2018}
+M. Dalla Riva and L. Provenzano,
+On vibrating thin membranes with mass concentrated near the boundary:
+An asymptotic analysis,
+\href{https://doi.org/10.1137/17M1118221}
+{SIAM J. Math. Anal. \textbf{50}, 2928--2967 (2018)}.
+
+\bibitem{Golovaty2022}
+Y. Golovaty,
+Membranes with thin and heavy inclusions: Asymptotics of spectra,
+\href{https://doi.org/10.3233/ASY-211743}
+{Asymptot. Anal. \textbf{130}, 23--51 (2022)}
+(published online 2021; \href{https://arxiv.org/abs/2101.10059}{arXiv:2101.10059}).
+
+\bibitem{GolovatyGomezPerezMartinez2025}
+Y. Golovaty, D. G\'omez, and M.-E. P\'erez-Mart\'inez,
+On eigenvibrations of branched structures with heterogeneous mass density,
+\href{https://doi.org/10.1016/j.jmaa.2025.129586}
+{J. Math. Anal. Appl. \textbf{549}, 129586 (2025)}.
+
+\bibitem{AssalDimassiFujii2019}
+M. Assal, M. Dimassi, and S. Fujii\'{e},
+Semiclassical trace formula and spectral shift function for systems
+via a stationary approach,
+\href{https://doi.org/10.1093/imrn/rnx149}
+{Int. Math. Res. Not. \textbf{2019}, 1227--1264 (2019)}.
+
+\bibitem{Kuster2017}
+B. K\"uster,
+On the semiclassical functional calculus for $h$-dependent functions,
+\href{https://doi.org/10.1007/s10455-017-9549-1}
+{Ann. Global Anal. Geom. \textbf{52}, 57--97 (2017)}.
+
+\bibitem{BollmannMuller2024}
+L. Bollmann and P. M\"uller,
+The Widom--Sobolev formula for discontinuous matrix-valued symbols,
+\href{https://doi.org/10.1016/j.jfa.2024.110651}
+{J. Funct. Anal. \textbf{287}, 110651 (2024)}.
+
+\bibitem{Lu2018}
+X.-M. Lu, H. Krovi, R. Nair, S. Guha, and J. H. Shapiro,
+Quantum-optimal detection of one-versus-two incoherent optical sources
+with arbitrary separation,
+\href{https://doi.org/10.1038/s41534-018-0114-y}
+{npj Quantum Inf. \textbf{4}, 64 (2018)}.
+
+\bibitem{Schlichtholz2024}
+K. Schlichtholz, T. Linowski, M. Walschaers, N. Treps,
+\L{}. Rudnicki, and G. Sorelli,
+Practical tests for sub-Rayleigh source discriminations with imperfect
+demultiplexers,
+\href{https://doi.org/10.1364/OPTICAQ.502459}
+{Optica Quantum \textbf{2}, 29--34 (2024)}.
+
+\bibitem{Liu2026}
+J.-Q. Liu, C.-N. Hu, J. Xin, and X.-M. Lu,
+Noise-robust discrimination of incoherent point sources with
+spatial-mode demultiplexing,
+\href{https://arxiv.org/abs/2608.01765}
+{arXiv:2608.01765 (2026)}.
+
+\bibitem{Klich2002}
+I. Klich,
+Full counting statistics: An elementary derivation of Levitov's formula,
+\href{https://arxiv.org/abs/cond-mat/0209642}{arXiv:cond-mat/0209642 (2002)}.
+
+\bibitem{Clements2016}
+W. R. Clements, P. C. Humphreys, B. J. Metcalf,
+W. S. Kolthammer, and I. A. Walmsley,
+Optimal design for universal multiport interferometers,
+\href{https://doi.org/10.1364/OPTICA.3.001460}
+{Optica \textbf{3}, 1460--1465 (2016)}.
+
+\bibitem{Lostaglio2015}
+M. Lostaglio, D. Jennings, and T. Rudolph,
+Description of quantum coherence in thermodynamic processes requires
+constraints beyond free energy,
+\href{https://doi.org/10.1038/ncomms7383}
+{Nat. Commun. \textbf{6}, 6383 (2015)}.
+
+\bibitem{Watrous2018}
+J. Watrous,
+\emph{The Theory of Quantum Information}
+(Cambridge University Press, Cambridge, 2018), Theorem 3.4;
+\href{https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf}{author's text}.
+
+\bibitem{Simon1976}
+B. Simon,
+The bound state of weakly coupled Schr\"odinger operators in one and
+two dimensions,
+\href{https://doi.org/10.1016/0003-4916(76)90038-5}
+{Ann. Phys. \textbf{97}, 279--288 (1976)}.
+
+\bibitem{Simon2022}
+B. Simon,
+Twelve tales in mathematical physics: An expanded Heineman prize lecture,
+\href{https://doi.org/10.1063/5.0056008}
+{J. Math. Phys. \textbf{63}, 021101 (2022)}.
+
+\bibitem{Quesada2018}
+N. Quesada, J. M. Arrazola, and N. Killoran,
+Gaussian boson sampling using threshold detectors,
+\href{https://doi.org/10.1103/PhysRevA.98.062322}
+{Phys. Rev. A \textbf{98}, 062322 (2018)}.
+
+\bibitem{BruneauDerezinski2007}
+L. Bruneau and J. Derezi\'{n}ski,
+Bogoliubov Hamiltonians and one-parameter groups of Bogoliubov transformations,
+\href{https://bruneau.perso.math.cnrs.fr/bogoliubovJMP.pdf}
+{J. Math. Phys. \textbf{48}, 022101 (2007)}.
+
+\bibitem{Aspelmeyer2014}
+M. Aspelmeyer, T. J. Kippenberg, and F. Marquardt,
+Cavity optomechanics,
+\href{https://doi.org/10.1103/RevModPhys.86.1391}
+{Rev. Mod. Phys. \textbf{86}, 1391--1452 (2014)}.
+
+\bibitem{Garrigos2015}
+G. Garrig\'{o}s,
+A weak 2-weight problem for the Poisson--Hermite semigroup,
+in \emph{Advanced Courses of Mathematical Analysis VI}
+(World Scientific, 2017), pp. 153--171,
+\href{https://doi.org/10.1142/9789813147645_0006}
+{doi:10.1142/9789813147645\_0006};
+\href{https://webs.um.es/gustavo.garrigos/papers/garrigos_antequera_proc_june2015.pdf}
+{author's 2015 draft}, Eq. (1.1).
+
+\bibitem{PlenioKnight1998}
+M. B. Plenio and P. L. Knight,
+The quantum-jump approach to dissipative dynamics in quantum optics,
+\href{https://doi.org/10.1103/RevModPhys.70.101}
+{Rev. Mod. Phys. \textbf{70}, 101--144 (1998)}.
+
+\bibitem{DorflerBullo2013}
+F. D\"orfler and F. Bullo,
+Kron reduction of graphs with applications to electrical networks,
+\href{https://doi.org/10.1109/TCSI.2012.2215780}
+{IEEE Trans. Circuits Syst. I \textbf{60}, 150--163 (2013)}.
+
+\bibitem{Johansson2017}
+F. Johansson,
+Arb: Efficient arbitrary-precision midpoint-radius interval arithmetic,
+\href{https://doi.org/10.1109/TC.2017.2690633}
+{IEEE Trans. Comput. \textbf{66}, 1281--1292 (2017)}.
+
+\end{thebibliography}
+
+\end{document}

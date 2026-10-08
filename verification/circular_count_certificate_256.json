@@ -1,0 +1,57 @@
+{
+  "status": "validated finite-band common-Fock discrimination, not a device",
+  "source_sha256": "ca177eaed233a1460c24e4a9ce2f3f8a64f3e619045301ac6f74aff3f1545ad3",
+  "parameters": {
+    "carrier": "unit Euclidean disk, Dirichlet boundary",
+    "circle_radii": [
+      "99/200",
+      "101/200"
+    ],
+    "layer_masses": [
+      "1/2",
+      "1/2"
+    ],
+    "reference_radius": "1/2",
+    "reference_mass": "1",
+    "gamma": "1/2",
+    "epsilon": "1/100",
+    "tau": "1/2",
+    "beta": "1/20",
+    "efficiency": "7/10",
+    "per_angular_mode_sorter_angle_range_radians": [
+      "-1/10",
+      "1/10"
+    ],
+    "independent_Poisson_dark_mean_range": [
+      "0",
+      "1/10"
+    ],
+    "angular_indices": "50<=|n|<=500",
+    "detected_modes": 902,
+    "prepared_band_modes": 1804,
+    "decision_threshold": 5,
+    "null_Chernoff_tilt": "3/2",
+    "signal_Laplace_tilt": "1"
+  },
+  "certificate": {
+    "precision_bits": 256,
+    "false_positive_upper_ball": "[0.0056699503208818885698382658408161338414248708595612021988631824541083465639 +/- 9.55e-77]",
+    "false_negative_upper_ball": "[0.0007169891899592463117364413514682842851179522631591410523206991632296064521 +/- 8.33e-77]",
+    "equal_prior_error_upper_ball": "[0.0031934697554205674407873535961422090632714115613601716255919408086689765080 +/- 8.12e-77]",
+    "null_mean_upper_without_dark_ball": "[0.56731523281815354928553541528734324021527215390627518476475979897062897868 +/- 7.36e-75]",
+    "signal_mean_lower_without_dark_ball": "[18.008371726218775515322551858883301300429429956067399194254475760892202298 +/- 4.81e-73]",
+    "prepared_signal_band_mean_quanta_ball": "[61.793059966559986529961967333692946024261833228291207511673041268108443015 +/- 3.16e-73]",
+    "prepared_reference_band_mean_quanta_ball": "[81.315724529645368278935754914669276863000170692316241368619202348411828431 +/- 5.93e-73]",
+    "prepared_signal_band_excitation_energy_ball": "[3550.2035832738048210772838150445878240651635122077574834450751767597300402 +/- 2.91e-71]",
+    "prepared_reference_band_excitation_energy_ball": "[3590.8072569043229589034979608850344288347068561982956489621113217192251710 +/- 4.28e-71]",
+    "assertions_passed": true
+  },
+  "scope": [
+    "Exact actual-circle Green blocks; no Weyl or collision approximation.",
+    "Constant sorter errors confined to each selected angular two-layer block.",
+    "Ideal rejection of unmeasured angular modes; no stopband leakage certified.",
+    "Full number-conserving Bose state or exactly its measured-band marginal.",
+    "All signals cost many prepared quanta; no per-phonon or quantum advantage.",
+    "No claim that the aligned Fock model is an unmodified mechanical membrane."
+  ]
+}
